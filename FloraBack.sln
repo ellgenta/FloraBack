@@ -1,9 +1,33 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.14.37012.4 d17.14
+VisualStudioVersion = 17.14.37012.4
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FloraBack.Api", "FloraBack.api\FloraBack.Api.csproj", "{80995286-8996-4613-81B2-88D61E4E537A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FloraBack.BusinessLogic", "FloraBack.BusinessLogic\FloraBack.BusinessLogic.csproj", "{5C602230-0A86-4718-BA46-FD0626CB3E51}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FloraBack.Domains", "FloraBack.Domains\FloraBack.Domains.csproj", "{88DA1F8A-41B7-4D00-AEB3-F46D8C671E48}"
+EndProject
 Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{80995286-8996-4613-81B2-88D61E4E537A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{80995286-8996-4613-81B2-88D61E4E537A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{80995286-8996-4613-81B2-88D61E4E537A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{80995286-8996-4613-81B2-88D61E4E537A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5C602230-0A86-4718-BA46-FD0626CB3E51}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5C602230-0A86-4718-BA46-FD0626CB3E51}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5C602230-0A86-4718-BA46-FD0626CB3E51}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5C602230-0A86-4718-BA46-FD0626CB3E51}.Release|Any CPU.Build.0 = Release|Any CPU
+		{88DA1F8A-41B7-4D00-AEB3-F46D8C671E48}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{88DA1F8A-41B7-4D00-AEB3-F46D8C671E48}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{88DA1F8A-41B7-4D00-AEB3-F46D8C671E48}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{88DA1F8A-41B7-4D00-AEB3-F46D8C671E48}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
