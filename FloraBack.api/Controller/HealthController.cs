@@ -11,7 +11,7 @@ namespace FloraBack.api.Controller
         
         public IActionResult Ping()
         {
-            return Ok("pong");
+            return Ok("popong");
         }
     }
 }
