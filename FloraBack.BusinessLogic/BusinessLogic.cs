@@ -1,7 +1,8 @@
 ﻿using FloraBack.BusinessLogic.Functions.Auth;
+using FloraBack.BusinessLogic.Functions.Products;
 using FloraBack.BusinessLogic.Interface;
 
-namespace eUShop.BusinessLogic
+namespace FloraBack.BusinessLogic
 {
     public class BusinessLogic
     {
@@ -11,6 +12,10 @@ namespace eUShop.BusinessLogic
             return new AuthFlow();
         }
 
+        public IProduct GetProductActions()
+        {
+            return new ProductFlow();
+        }
     }
 }
 
