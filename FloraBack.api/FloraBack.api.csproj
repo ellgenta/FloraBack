@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\FloraBack.BusinessLogic\FloraBack.BusinessLogic.csproj" />
     <ProjectReference Include="..\FloraBack.Domains\FloraBack.Domains.csproj" />
   </ItemGroup>
 
