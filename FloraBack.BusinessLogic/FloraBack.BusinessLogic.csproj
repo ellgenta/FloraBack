@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Include="Interface\IUserActions.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\FloraBack.Domains\FloraBack.Domains.csproj" />
   </ItemGroup>
 

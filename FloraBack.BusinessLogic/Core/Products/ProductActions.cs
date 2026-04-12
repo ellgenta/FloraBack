@@ -9,7 +9,7 @@ using FloraBack.Domains.Models.Product;
 
 namespace FloraBack.BusinessLogic.Core.Products
 {
-    public class ProductAction
+    public class ProductActions
     {
         protected List<ProductDto> ExecuteGetAllProductsAction()
         {

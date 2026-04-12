@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FloraBack.Domains.Models.User
+namespace FloraBack.Domains.Entities.User
 {
     public class UserData
     {
