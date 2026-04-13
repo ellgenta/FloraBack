@@ -13,5 +13,7 @@ namespace FloraBack.BusinessLogic.Interface
         List<UserDto> GetAllUsersAction();
 
         UserDto? GetUserByIdAction(int id);
+
+        UserDto? CreateUserAction(UserData user);
     }
 }

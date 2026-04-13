@@ -34,7 +34,20 @@ namespace FloraBack.api.Controller
                 return Ok(_user);
             }
 
-            return NotFound(_user);
+            return NotFound(new { Message = $"User with ID {id} not found" });
+        }
+
+        [HttpPost]
+        public IActionResult CreateUser([FromBody] UserData user)
+        {
+            var _user = _userActions.CreateUserAction(user);
+
+            if (_user != null)
+            {
+                return Ok(_user);
+            }
+
+            return Conflict(new { Message = $"User with ID {user.Id} or email {user.Email} already exists!" } ); 
         }
     }
 }

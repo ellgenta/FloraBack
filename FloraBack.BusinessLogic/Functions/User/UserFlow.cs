@@ -23,5 +23,11 @@ namespace FloraBack.BusinessLogic.Functions.User
             var _user = ExecuteGetUserByIdAction(id);
             return _user;
         }
+
+        public UserDto? CreateUserAction(UserData User)
+        {
+            var _user = ExecuteCreateUserAction(User);
+            return _user;
+        }
     }
 }
