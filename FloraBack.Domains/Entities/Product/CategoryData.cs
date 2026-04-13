@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FloraBack.Domains.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,6 +10,7 @@ namespace FloraBack.Domains.Entities.Product
     public class CategoryData
     {
         public int Id { get; set; }
-        public string Name { get; set; }
+        public ProductCategory Name { get; set; }
+        public List<string> SubCategories { get; set; }
     }
 }

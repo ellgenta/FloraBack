@@ -25,17 +25,11 @@ namespace FloraBack.BusinessLogic.Core.Products
                     Id = 1,
                     Description = "Description 1",
                     DescriptionAdvanced = new DescriptionAdvanced()
-                    {
-                        Id = 1,
-                        H = 20,
-                        W = 10,
-                        L = 5
-                    }
                 },
                 Category = new CategoryData()
                 {
                     Id = 1,
-                    Name = "Category 1"
+                    Name = ProductCategory.Plants
                 },
                 Images = new List<ProductImgData>()
                 {
@@ -56,7 +50,7 @@ namespace FloraBack.BusinessLogic.Core.Products
                 UpdatedAt = DateTime.Now
             };
 
-            var produc = new ProductDto()
+            var product = new ProductDto()
             {
                 Id = productFromDb.Id,
                 Name = productFromDb.Name,
@@ -67,7 +61,7 @@ namespace FloraBack.BusinessLogic.Core.Products
             };
 
 
-            products.Add(produc);
+            products.Add(product);
             return products;
         }
     }
