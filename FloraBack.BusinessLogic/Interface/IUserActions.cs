@@ -1,16 +1,17 @@
-﻿using System;
+﻿using FloraBack.Domains.Entities.User;
+using FloraBack.Domains.Models.User;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using FloraBack.Domains.Entities.User;
 
 namespace FloraBack.BusinessLogic.Interface
 {
     public interface IUserActions
     {
-        List<UserData> GetAllUsersAction();
+        List<UserDto> GetAllUsersAction();
 
-        UserData? GetUserByIdAction(int id);
+        UserDto? GetUserByIdAction(int id);
     }
 }

@@ -1,6 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using FloraBack.BusinessLogic.Interface;
 using FloraBack.Domains.Entities.User;
-using FloraBack.BusinessLogic.Interface;
+using FloraBack.Domains.Models.User;
+using Microsoft.AspNetCore.Mvc;
 
 namespace FloraBack.api.Controller
 {
@@ -26,7 +27,7 @@ namespace FloraBack.api.Controller
         [HttpGet("{id}")]
         public IActionResult GetUserById(int id)
         {
-            UserData? _user = _userActions.GetUserByIdAction(id);
+            var _user = _userActions.GetUserByIdAction(id);
 
             if (_user != null)
             {
