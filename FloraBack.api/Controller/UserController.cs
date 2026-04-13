@@ -16,11 +16,24 @@ namespace FloraBack.api.Controller
             _userActions = bl.GetUserActions();
         }
 
-        [HttpGet("getAll")]
+        [HttpGet("all")]
         public IActionResult GetAllUser()
         {
             var _users = _userActions.GetAllUsersAction();
             return Ok(_users);
+        }
+
+        [HttpGet("{id}")]
+        public IActionResult GetUserById(int id)
+        {
+            UserData? _user = _userActions.GetUserByIdAction(id);
+
+            if (_user != null)
+            {
+                return Ok(_user);
+            }
+
+            return NotFound(_user);
         }
     }
 }

@@ -10,5 +10,7 @@ namespace FloraBack.BusinessLogic.Interface
     public interface IUserActions
     {
         List<UserData> GetAllUsersAction();
+
+        UserData? GetUserByIdAction(int id);
     }
 }
