@@ -35,5 +35,11 @@ namespace FloraBack.BusinessLogic.Functions.User
             var wasDeleted = ExecuteDeleteUserAction(id);
             return wasDeleted;
         }
+
+        public UserDto? UpdateUserAction(int id, UserData user)
+        {
+            var _user = ExecuteUpdateUserAction(id, user);
+            return _user;
+        }
     }
 }
