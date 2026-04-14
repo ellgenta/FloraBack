@@ -11,101 +11,19 @@ namespace FloraBack.BusinessLogic.Core.User
 {
     public class UserActions
     {
+        static List<UserDto> _DtoRepo = new List<UserDto>();
         public List<UserDto> ExecuteGetAllUsersAction()
         {
-            var _users = new List<UserDto>();
-
-            var _user1 = new UserData
-            {
-                Id = 1,
-                UserName = "Test 1",
-                Password = "password1",
-                Email = "test1@example.com",
-                DOB = DateTime.Now,
-                Gender = GenderTypes.Other
-            };
-
-            var _user2 = new UserData
-            {
-                Id = 2,
-                UserName = "Test 2",
-                Password = "password2",
-                Email = "test2@example.com",
-                DOB = DateTime.Now,
-                Gender = GenderTypes.Other
-            };
-
-            var _user1Dto = new UserDto()
-            {
-                Id = _user1.Id,
-                UserName = _user1.UserName,
-                Email = _user1.Email,
-                Gender = _user1.Gender,
-            };
-
-            var _user2Dto = new UserDto()
-            {
-                Id = _user2.Id,
-                UserName = _user2.UserName,
-                Email = _user2.Email,
-                Gender = _user2.Gender,
-            };
-
-            _users.Add(_user1Dto);
-            _users.Add(_user2Dto);
-
-            return _users;
+            return _DtoRepo;
         }
 
         public UserDto? ExecuteGetUserByIdAction(int id)
         {
-            var _users = new List<UserDto>();
-
-            var _user1 = new UserData
+            foreach (var _user in _DtoRepo)
             {
-                Id = 1,
-                UserName = "Test 1",
-                Password = "password1",
-                Email = "test1@example.com",
-                DOB = DateTime.Now,
-                Gender = GenderTypes.Other
-            };
-
-            var _user2 = new UserData
-            {
-                Id = 2,
-                UserName = "Test 2",
-                Password = "password2",
-                Email = "test2@example.com",
-                DOB = DateTime.Now,
-                Gender = GenderTypes.Other
-            };
-
-            var _user1Dto = new UserDto()
-            {
-                Id = _user1.Id,
-                UserName = _user1.UserName,
-                Email = _user1.Email,
-                Gender = _user1.Gender,
-            };
-
-            var _user2Dto = new UserDto()
-            {
-                Id = _user2.Id,
-                UserName = _user2.UserName,
-                Email = _user2.Email,
-                Gender = _user2.Gender,
-            };
-
-            _users.Add(_user1Dto);
-            _users.Add(_user2Dto);
-
-
-            foreach (var user in _users)
-            {
-                if(user.Id == id)
+                if(_user.Id == id)
                 {
-                    return user;
+                    return _user;
                 }
             }
 
@@ -114,48 +32,7 @@ namespace FloraBack.BusinessLogic.Core.User
 
         public UserDto? ExecuteCreateUserAction(UserData user)
         {
-            var _users = new List<UserDto>();
-
-            var _user1 = new UserData
-            {
-                Id = 1,
-                UserName = "Test 1",
-                Password = "password1",
-                Email = "test1@example.com",
-                DOB = DateTime.Now,
-                Gender = GenderTypes.Other
-            };
-
-            var _user2 = new UserData
-            {
-                Id = 2,
-                UserName = "Test 2",
-                Password = "password2",
-                Email = "test2@example.com",
-                DOB = DateTime.Now,
-                Gender = GenderTypes.Other
-            };
-
-            var _user1Dto = new UserDto()
-            {
-                Id = _user1.Id,
-                UserName = _user1.UserName,
-                Email = _user1.Email,
-                Gender = _user1.Gender,
-            };
-
-            var _user2Dto = new UserDto()
-            {
-                Id = _user2.Id,
-                UserName = _user2.UserName,
-                Email = _user2.Email,
-                Gender = _user2.Gender,
-            };
-
-            _users.Add(_user1Dto);
-            _users.Add(_user2Dto);
-
-            foreach (var _user in _users)
+            foreach (var _user in _DtoRepo)
             {
                 if (user.Id == _user.Id || user.Email.Equals(_user.Email))
                 {
@@ -171,59 +48,18 @@ namespace FloraBack.BusinessLogic.Core.User
                 Gender = user.Gender,
             };
 
-            _users.Add(user3Dto);
+            _DtoRepo.Add(user3Dto);
 
             return user3Dto;
         }
 
         public bool ExecuteDeleteUserAction(int id)
         {
-            var _users = new List<UserDto>();
-
-            var _user1 = new UserData
-            {
-                Id = 1,
-                UserName = "Test 1",
-                Password = "password1",
-                Email = "test1@example.com",
-                DOB = DateTime.Now,
-                Gender = GenderTypes.Other
-            };
-
-            var _user2 = new UserData
-            {
-                Id = 2,
-                UserName = "Test 2",
-                Password = "password2",
-                Email = "test2@example.com",
-                DOB = DateTime.Now,
-                Gender = GenderTypes.Other
-            };
-
-            var _user1Dto = new UserDto()
-            {
-                Id = _user1.Id,
-                UserName = _user1.UserName,
-                Email = _user1.Email,
-                Gender = _user1.Gender,
-            };
-
-            var _user2Dto = new UserDto()
-            {
-                Id = _user2.Id,
-                UserName = _user2.UserName,
-                Email = _user2.Email,
-                Gender = _user2.Gender,
-            };
-
-            _users.Add(_user1Dto);
-            _users.Add(_user2Dto);
-
-            foreach (var _user in _users)
+            foreach (var _user in _DtoRepo)
             {
                 if (_user.Id == id)
                 {
-                    _users.Remove(_user);
+                    _DtoRepo.Remove(_user);
                     return true;
                 }
             }
@@ -233,29 +69,7 @@ namespace FloraBack.BusinessLogic.Core.User
 
         public UserDto? ExecuteUpdateUserAction(int id, UserData user)
         {
-            var _users = new List<UserDto>();
-
-            var _user1 = new UserData
-            {
-                Id = 1,
-                UserName = "Test 1",
-                Password = "password1",
-                Email = "test1@example.com",
-                DOB = DateTime.Now,
-                Gender = GenderTypes.Other
-            };
-
-            var _user1Dto = new UserDto()
-            {
-                Id = _user1.Id,
-                UserName = _user1.UserName,
-                Email = _user1.Email,
-                Gender = _user1.Gender,
-            };
-
-            _users.Add(_user1Dto);
-
-            foreach (var _user in _users)
+            foreach (var _user in _DtoRepo)
             {
                 if (_user.Id == id)
                 {
