@@ -29,5 +29,11 @@ namespace FloraBack.BusinessLogic.Functions.User
             var _user = ExecuteCreateUserAction(User);
             return _user;
         }
+
+        public bool DeleteUserAction(int id)
+        {
+            var wasDeleted = ExecuteDeleteUserAction(id);
+            return wasDeleted;
+        }
     }
 }

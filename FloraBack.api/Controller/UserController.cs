@@ -47,7 +47,21 @@ namespace FloraBack.api.Controller
                 return Ok(_user);
             }
 
-            return Conflict(new { Message = $"User with ID {user.Id} or email {user.Email} already exists!" } ); 
+            return Conflict(new { Message = $"User with ID {user.Id} or email {user.Email} already exists" });
         }
+
+        [HttpDelete("{id}")]
+        public IActionResult DeleteUser(int id)
+        {
+            var wasDeleted = _userActions.DeleteUserAction(id);
+
+            if (wasDeleted == true)
+            {
+                return NoContent();
+            }
+
+            return NotFound(new { Message = $"User with ID {id} not found" });
+        }
+
     }
 }

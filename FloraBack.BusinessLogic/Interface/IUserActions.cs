@@ -15,5 +15,7 @@ namespace FloraBack.BusinessLogic.Interface
         UserDto? GetUserByIdAction(int id);
 
         UserDto? CreateUserAction(UserData user);
+
+        bool DeleteUserAction(int id);
     }
 }
