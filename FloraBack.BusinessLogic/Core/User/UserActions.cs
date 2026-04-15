@@ -11,15 +11,18 @@ namespace FloraBack.BusinessLogic.Core.User
 {
     public class UserActions
     {
-        static List<UserDto> _DtoRepo = new List<UserDto>();
-        public List<UserDto> ExecuteGetAllUsersAction()
+        static List<UserData> _DataRepo = new List<UserData>();
+
+        static int _nextId = 1;
+
+        public List<UserData> ExecuteGetAllUsersAction()
         {
-            return _DtoRepo;
+            return _DataRepo;
         }
 
-        public UserDto? ExecuteGetUserByIdAction(int id)
+        public UserData? ExecuteGetUserByIdAction(int id)
         {
-            foreach (var _user in _DtoRepo)
+            foreach (var _user in _DataRepo)
             {
                 if(_user.Id == id)
                 {
@@ -30,36 +33,38 @@ namespace FloraBack.BusinessLogic.Core.User
             return null;
         }
 
-        public UserDto? ExecuteCreateUserAction(UserData user)
+        public UserData? ExecuteCreateUserAction(UserData user)
         {
-            foreach (var _user in _DtoRepo)
+            foreach (var _user in _DataRepo)
             {
-                if (user.Id == _user.Id || user.Email.Equals(_user.Email))
+                if (user.Email.Equals(_user.Email))
                 {
                     return null;
                 }
             }
 
-            var user3Dto = new UserDto()
+            var _newUser = new UserData()
             {
-                Id = user.Id,
+                Id = _nextId++,
                 UserName = user.UserName,
+                Password = user.Password,
                 Email = user.Email,
+                DOB = DateTime.Now,
                 Gender = user.Gender,
             };
 
-            _DtoRepo.Add(user3Dto);
+            _DataRepo.Add(_newUser);
 
-            return user3Dto;
+            return _newUser;
         }
 
         public bool ExecuteDeleteUserAction(int id)
         {
-            foreach (var _user in _DtoRepo)
+            foreach (var _user in _DataRepo)
             {
                 if (_user.Id == id)
                 {
-                    _DtoRepo.Remove(_user);
+                    _DataRepo.Remove(_user);
                     return true;
                 }
             }
@@ -67,9 +72,9 @@ namespace FloraBack.BusinessLogic.Core.User
             return false;
         }
 
-        public UserDto? ExecuteUpdateUserAction(int id, UserData user)
+        public UserData? ExecuteUpdateUserAction(int id, UserData user)
         {
-            foreach (var _user in _DtoRepo)
+            foreach (var _user in _DataRepo)
             {
                 if (_user.Id == id)
                 {

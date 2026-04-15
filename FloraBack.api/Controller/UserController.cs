@@ -19,7 +19,7 @@ namespace FloraBack.api.Controller
         }
 
         [HttpGet("all")]
-        public IActionResult GetAllUser()
+        public IActionResult GetAllUsers()
         {
             var _users = _userActions.GetAllUsersAction();
             return Ok(_users);
@@ -48,7 +48,7 @@ namespace FloraBack.api.Controller
                 return Created($"api/users{_user.Id}", _user);
             }
 
-            return Conflict(new { Message = $"User with ID {user.Id} or email {user.Email} already exists" });
+            return Conflict(new { Message = $"User with email {user.Email} already exists" });
         }
 
         [HttpDelete("{id}")]

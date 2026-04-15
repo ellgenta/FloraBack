@@ -15,19 +15,63 @@ namespace FloraBack.BusinessLogic.Functions.User
         public List<UserDto> GetAllUsersAction()
         {
             var _users = ExecuteGetAllUsersAction();
-            return _users;
+
+            List<UserDto> _DtoList = new List<UserDto>();
+
+            foreach (var _user in _users)
+            {
+                var _userDto = new UserDto()
+                {
+                    Id = _user.Id,
+                    UserName = _user.UserName,
+                    Email = _user.Email,
+                    Gender = _user.Gender,
+                };
+
+                _DtoList.Add(_userDto);
+            }
+
+            return _DtoList;
         }
 
         public UserDto? GetUserByIdAction(int id)
         {
             var _user = ExecuteGetUserByIdAction(id);
-            return _user;
+
+            if (_user == null)
+            {
+                return null;
+            }
+
+            var _userDto = new UserDto()
+            {
+                Id = _user.Id,
+                UserName = _user.UserName,
+                Email = _user.Email,
+                Gender = _user.Gender,
+            };
+
+            return _userDto;
         }
 
         public UserDto? CreateUserAction(UserData User)
         {
             var _user = ExecuteCreateUserAction(User);
-            return _user;
+
+            if (_user == null)
+            {
+                return null;
+            }
+
+            var _userDto = new UserDto()
+            {
+                Id = _user.Id,
+                UserName = _user.UserName,
+                Email = _user.Email,
+                Gender = _user.Gender,
+            };
+
+            return _userDto;
         }
 
         public bool DeleteUserAction(int id)
@@ -39,7 +83,21 @@ namespace FloraBack.BusinessLogic.Functions.User
         public UserDto? UpdateUserAction(int id, UserData user)
         {
             var _user = ExecuteUpdateUserAction(id, user);
-            return _user;
+
+            if (_user == null)
+            {
+                return null;
+            }
+
+            var _userDto = new UserDto()
+            {
+                Id = _user.Id,
+                UserName = _user.UserName,
+                Email = _user.Email,
+                Gender = _user.Gender,
+            };
+
+            return _userDto;
         }
     }
 }
