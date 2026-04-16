@@ -4,8 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-//sample
-
 namespace FloraBack.Domains.Models.User
 {
     public class UserAuthAction

@@ -11,6 +11,10 @@ namespace FloraBack.BusinessLogic.Functions.Auth
 {
     public class AuthFlow : AuthActions, IAuthActions
     {
-        
+        public object? LoginActionFlow(UserAuthAction auth)
+        {
+            var isValid = ValidateLogin(auth);
+            return isValid ? GenToken(auth) : null;
+        }
     }
 }
