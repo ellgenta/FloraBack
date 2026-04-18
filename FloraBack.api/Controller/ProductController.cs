@@ -22,5 +22,17 @@ namespace FloraBack.Api.Controller
             var products = _product.GetAllProductsAction();
             return Ok(products);
         }
+
+        [HttpGet("getById")]
+        public IActionResult GetProductById(int id) {
+            var product = _product.GetProductByIdAction(id);
+
+            if (product == null)
+            {
+                return NotFound("Product not found");
+            }
+
+            return Ok(product);
+        }
     }
 }
