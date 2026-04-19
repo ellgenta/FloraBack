@@ -18,6 +18,7 @@ namespace FloraBack.Api.Controller
         }
 
         [HttpGet("getAll")]
+        
         public IActionResult GetAllProducts()
         {
             var products = _product.GetAllProductsAction();
@@ -25,7 +26,13 @@ namespace FloraBack.Api.Controller
         }
 
         [HttpGet("getById")]
-        public IActionResult GetProductById(int id) {
+         public IActionResult GetProductById(int id)
+        {
+            if (id <= 0)
+            {
+                return BadRequest("Invalid product id");
+            }
+
             var product = _product.GetProductByIdAction(id);
 
             if (product == null)
@@ -36,7 +43,7 @@ namespace FloraBack.Api.Controller
             return Ok(product);
         }
 
-        [HttpPost("Post")]
+        [HttpPost("create")]
         public IActionResult CreateProduct([FromBody] ProductDto product)
         {
             if (product == null)
@@ -52,6 +59,28 @@ namespace FloraBack.Api.Controller
             var createdProduct = _product.CreateProductAction(product);
 
             return Created($"/api/product/getById/{createdProduct.Id}", createdProduct);
+        }
+
+        [HttpPut("update/{id}")]
+        public IActionResult UpdateProduct(int id, [FromBody] ProductDto product)
+        {
+            if (product == null)
+            {
+                return BadRequest("Invalid product data");
+            }
+
+            if (string.IsNullOrWhiteSpace(product.Name))
+            {
+                return BadRequest("Product name is required");
+            }
+            var updatedProduct = _product.UpdateProductAction(id, product);
+
+            if (updatedProduct == null)
+            {
+                return NotFound("Product not found");
+            }
+
+            return Ok(updatedProduct);
         }
     }
 }

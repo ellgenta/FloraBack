@@ -12,5 +12,6 @@ namespace FloraBack.BusinessLogic.Interface
         List<ProductDto> GetAllProductsAction();
         ProductDto? GetProductByIdAction(int id);
         ProductDto CreateProductAction(ProductDto product);
+        ProductDto? UpdateProductAction(int id, ProductDto product);
     }
 }
