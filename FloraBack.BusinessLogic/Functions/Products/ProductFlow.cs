@@ -1,5 +1,6 @@
 ﻿using FloraBack.BusinessLogic.Core.Products;
 using FloraBack.BusinessLogic.Interface;
+using FloraBack.Domains.Enums;
 using FloraBack.Domains.Models.Product;
 
 namespace FloraBack.BusinessLogic.Functions.Products
@@ -18,6 +19,11 @@ namespace FloraBack.BusinessLogic.Functions.Products
             return product;
         }
 
+        public List<ProductDto> GetProductsByCategoryAction(ProductCategory category)
+        {
+            var products = ExecuteGetProductsByCategoryAction(category);
+            return products;
+        }
         public ProductDto CreateProductAction(ProductDto product)
         {
             var createdProduct = ExecuteCreateProductAction(product);

@@ -1,4 +1,5 @@
 ﻿using FloraBack.BusinessLogic.Interface;
+using FloraBack.Domains.Enums;
 using FloraBack.Domains.Models.Product;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -41,6 +42,13 @@ namespace FloraBack.Api.Controller
             }
 
             return Ok(product);
+        }
+
+        [HttpGet("getByCategory/{category}")]
+        public IActionResult GetProductsByCategory(ProductCategory category)
+        {
+            var products = _product.GetProductsByCategoryAction(category);
+            return Ok(products);
         }
 
         [HttpPost("create")]
