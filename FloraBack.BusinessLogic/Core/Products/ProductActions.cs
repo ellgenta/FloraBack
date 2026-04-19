@@ -127,5 +127,37 @@ namespace FloraBack.BusinessLogic.Core.Products
 
             return product;
         }
+
+        protected ProductDto ExecuteCreateProductAction(ProductDto product)
+        {
+            // DB connect - INSERT
+
+            var newId = product.Id > 0 ? product.Id : 2;
+
+            var productFromDb = new ProductData()
+            {
+                Id = newId,
+                Name = product.Name,
+                Description = product.Description,
+                Category = product.Category,
+                Images = product.Images,
+                Price = product.Price,
+                Status = ProductStatus.Active,
+                CreatedAt = DateTime.Now,
+                UpdatedAt = DateTime.Now
+            };
+
+            var createdProduct = new ProductDto()
+            {
+                Id = productFromDb.Id,
+                Name = productFromDb.Name,
+                Description = productFromDb.Description,
+                Category = productFromDb.Category,
+                Images = productFromDb.Images,
+                Price = productFromDb.Price
+            };
+
+            return createdProduct;
+        }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using FloraBack.BusinessLogic.Interface;
+using FloraBack.Domains.Models.Product;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -33,6 +34,24 @@ namespace FloraBack.Api.Controller
             }
 
             return Ok(product);
+        }
+
+        [HttpPost("Post")]
+        public IActionResult CreateProduct([FromBody] ProductDto product)
+        {
+            if (product == null)
+            {
+                return BadRequest("Invalid product data");
+            }
+
+            if (string.IsNullOrWhiteSpace(product.Name))
+            {
+                return BadRequest("Product name is required");
+            }
+
+            var createdProduct = _product.CreateProductAction(product);
+
+            return Created($"/api/product/getById/{createdProduct.Id}", createdProduct);
         }
     }
 }

@@ -17,5 +17,11 @@ namespace FloraBack.BusinessLogic.Functions.Products
             var product = ExecuteGetProductByIdAction(id);
             return product;
         }
+
+        public ProductDto CreateProductAction(ProductDto product)
+        {
+            var createdProduct = ExecuteCreateProductAction(product);
+            return createdProduct;
+        }
     }
 }
