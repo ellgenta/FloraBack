@@ -1,20 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using FloraBack.BusinessLogic.Core.Products;
+﻿using FloraBack.BusinessLogic.Core.Products;
 using FloraBack.BusinessLogic.Interface;
 using FloraBack.Domains.Models.Product;
 
 namespace FloraBack.BusinessLogic.Functions.Products
 {
-    public class ProductFlow : ProductActions, IProduct
+    public class ProductFlow : ProductAction, IProduct
     {
         public List<ProductDto> GetAllProductsAction()
         {
             var products = ExecuteGetAllProductsAction();
             return products;
+        }
+
+        public ProductDto? GetProductByIdAction(int id)
+        {
+            var product = ExecuteGetProductByIdAction(id);
+            return product;
         }
     }
 }
