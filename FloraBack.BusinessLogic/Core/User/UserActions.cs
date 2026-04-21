@@ -49,8 +49,12 @@ namespace FloraBack.BusinessLogic.Core.User
                 UserName = user.UserName,
                 Password = user.Password,
                 Email = user.Email,
-                DOB = DateTime.Now,
+                DefaultAddress = user.DefaultAddress,
+                DefaultPM = user.DefaultPM,
+                DOB = user.DOB,
                 Gender = user.Gender,
+                CreatedAt = DateTime.Now,
+                UpdatedAt = DateTime.Now,
             };
 
             _DataRepo.Add(_newUser);
@@ -80,6 +84,9 @@ namespace FloraBack.BusinessLogic.Core.User
                 {
                     _user.UserName = user.UserName;
                     _user.Email = user.Email;
+                    _user.DefaultAddress = user.DefaultAddress;
+                    _user.DefaultPM = user.DefaultPM;
+                    _user.UpdatedAt = DateTime.Now;
                     return _user;
                 }
             }
