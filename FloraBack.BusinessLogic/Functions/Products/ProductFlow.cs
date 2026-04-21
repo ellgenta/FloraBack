@@ -75,6 +75,28 @@ namespace FloraBack.BusinessLogic.Functions.Products
 
             return productsDto;
         }
+        public List<ProductDto> GetProductsBySubCategoryAction(string subCategory)
+        {
+            var productsData = ExecuteGetProductsBySubCategoryAction(subCategory);
+            var productsDto = new List<ProductDto>();
+
+            foreach (var product in productsData)
+            {
+                var productDto = new ProductDto()
+                {
+                    Id = product.Id,
+                    Name = product.Name,
+                    Description = product.Description,
+                    Category = product.Category,
+                    Images = product.Images,
+                    Price = product.Price
+                };
+
+                productsDto.Add(productDto);
+            }
+
+            return productsDto;
+        }
 
         public ProductDto CreateProductAction(ProductData product)
         {

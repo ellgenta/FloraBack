@@ -52,6 +52,14 @@ namespace FloraBack.Api.Controller
             return Ok(products);
         }
 
+        [HttpGet("getBySubCategory/{subCategory}")]
+
+        public IActionResult GetProductsBySubCategory(string subCategory)
+        {
+            var products = _product.GetProductsBySubCategoryAction(subCategory);
+            return Ok(products);
+        }
+
         [HttpPost("create")]
         public IActionResult CreateProduct([FromBody] ProductData product)
         {
