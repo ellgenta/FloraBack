@@ -6,9 +6,9 @@ namespace FloraBack.BusinessLogic.Core.Products
 {
     public class ProductAction
     {
-        protected List<ProductDto> ExecuteGetAllProductsAction()
+        protected List<ProductData> ExecuteGetAllProductsAction()
         {
-            var products = new List<ProductDto>();
+            var products = new List<ProductData>();
 
             var productFromDb = new ProductData()
             {
@@ -52,21 +52,11 @@ namespace FloraBack.BusinessLogic.Core.Products
                 UpdatedAt = DateTime.Now
             };
 
-            var product = new ProductDto()
-            {
-                Id = productFromDb.Id,
-                Name = productFromDb.Name,
-                Description = productFromDb.Description,
-                Category = productFromDb.Category,
-                Images = productFromDb.Images,
-                Price = productFromDb.Price
-            };
-
-            products.Add(product);
+            products.Add(productFromDb);
             return products;
         }
 
-        protected ProductDto? ExecuteGetProductByIdAction(int id)
+        protected ProductData? ExecuteGetProductByIdAction(int id)
         {
             var productFromDb = new ProductData()
             {
@@ -90,20 +80,14 @@ namespace FloraBack.BusinessLogic.Core.Products
                     Name = ProductCategory.Plants
                 },
                 Images = new List<ProductImgData>()
-                {
-                    new ProductImgData()
-                    {
-                        Id = 1,
-                        Url = "https://example.com/product1.jpg",
-                        ProductId = 1
-                    },
-                    new ProductImgData()
-                    {
-                        Id = 2,
-                        Url = "https://example.com/product1-2.jpg",
-                        ProductId = 1
-                    }
-                },
+        {
+            new ProductImgData()
+            {
+                Id = 1,
+                Url = "https://example.com/product1.jpg",
+                ProductId = 1
+            }
+        },
                 Price = 100.20m,
                 Status = ProductStatus.Active,
                 CreatedAt = DateTime.Now,
@@ -115,22 +99,12 @@ namespace FloraBack.BusinessLogic.Core.Products
                 return null;
             }
 
-            var product = new ProductDto()
-            {
-                Id = productFromDb.Id,
-                Name = productFromDb.Name,
-                Description = productFromDb.Description,
-                Category = productFromDb.Category,
-                Images = productFromDb.Images,
-                Price = productFromDb.Price
-            };
-
-            return product;
+            return productFromDb;
         }
 
-        protected List<ProductDto> ExecuteGetProductsByCategoryAction(ProductCategory category)
+        protected List<ProductData> ExecuteGetProductsByCategoryAction(ProductCategory category)
         {
-            var products = new List<ProductDto>();
+            var products = new List<ProductData>();
 
             var productFromDb = new ProductData()
             {
@@ -151,8 +125,7 @@ namespace FloraBack.BusinessLogic.Core.Products
                 Category = new CategoryData()
                 {
                     Id = 1,
-                    Name = ProductCategory.Plants,
-                    SubCategories = new List<string> { "Indoor", "Large" }
+                    Name = ProductCategory.Plants
                 },
                 Images = new List<ProductImgData>()
         {
@@ -171,31 +144,22 @@ namespace FloraBack.BusinessLogic.Core.Products
 
             if (productFromDb.Category.Name == category)
             {
-                var product = new ProductDto()
-                {
-                    Id = productFromDb.Id,
-                    Name = productFromDb.Name,
-                    Description = productFromDb.Description,
-                    Category = productFromDb.Category,
-                    Images = productFromDb.Images,
-                    Price = productFromDb.Price
-                };
-
-                products.Add(product);
+                products.Add(productFromDb);
             }
 
             return products;
         }
 
-        protected ProductDto ExecuteCreateProductAction(ProductDto product)
+        protected ProductData? ExecuteCreateProductAction(ProductData product)
         {
-            // DB connect - INSERT
-
-            var newId = product.Id > 0 ? product.Id : 2;
-
-            var productFromDb = new ProductData()
+            if (product == null)
             {
-                Id = newId,
+                return null;
+            }
+
+            var newProduct = new ProductData()
+            {
+                Id = product.Id > 0 ? product.Id : 2,
                 Name = product.Name,
                 Description = product.Description,
                 Category = product.Category,
@@ -206,23 +170,11 @@ namespace FloraBack.BusinessLogic.Core.Products
                 UpdatedAt = DateTime.Now
             };
 
-            var createdProduct = new ProductDto()
-            {
-                Id = productFromDb.Id,
-                Name = productFromDb.Name,
-                Description = productFromDb.Description,
-                Category = productFromDb.Category,
-                Images = productFromDb.Images,
-                Price = productFromDb.Price
-            };
-
-            return createdProduct;
+            return newProduct;
         }
 
-        protected ProductDto? ExecuteUpdateProductAction(int id, ProductDto product)
+        protected ProductData? ExecuteUpdateProductAction(int id, ProductData product)
         {
-            // DB connect - UPDATE WHERE Id = id
-
             var productFromDb = new ProductData()
             {
                 Id = 1,
@@ -242,8 +194,7 @@ namespace FloraBack.BusinessLogic.Core.Products
                 Category = new CategoryData()
                 {
                     Id = 1,
-                    Name = ProductCategory.Plants,
-                    SubCategories = new List<string>()
+                    Name = ProductCategory.Plants
                 },
                 Images = new List<ProductImgData>()
         {
@@ -253,7 +204,7 @@ namespace FloraBack.BusinessLogic.Core.Products
                 Url = "https://example.com/product1.jpg",
                 ProductId = 1
             }
-         },
+        },
                 Price = 100.20m,
                 Status = ProductStatus.Active,
                 CreatedAt = DateTime.Now,
@@ -272,58 +223,14 @@ namespace FloraBack.BusinessLogic.Core.Products
             productFromDb.Price = product.Price;
             productFromDb.UpdatedAt = DateTime.Now;
 
-            var updatedProduct = new ProductDto()
-            {
-                Id = productFromDb.Id,
-                Name = productFromDb.Name,
-                Description = productFromDb.Description,
-                Category = productFromDb.Category,
-                Images = productFromDb.Images,
-                Price = productFromDb.Price
-            };
-
-            return updatedProduct;
+            return productFromDb;
         }
 
         protected bool ExecuteDeleteProductAction(int id)
         {
-            // DB connect - DELETE WHERE Id = id
-
             var productFromDb = new ProductData()
             {
-                Id = 1,
-                Name = "Product 1",
-                Description = new ProductDescriptionData()
-                {
-                    Id = 1,
-                    Description = "Description 1",
-                    DescriptionAdvanced = new DescriptionAdvanced()
-                    {
-                        Id = 1,
-                        H = 20,
-                        W = 10,
-                        L = 5
-                    }
-                },
-                Category = new CategoryData()
-                {
-                    Id = 1,
-                    Name = ProductCategory.Plants,
-                    SubCategories = new List<string>()
-                },
-                Images = new List<ProductImgData>()
-        {
-            new ProductImgData()
-            {
-                Id = 1,
-                Url = "https://example.com/product1.jpg",
-                ProductId = 1
-            }
-        },
-                Price = 100.20m,
-                Status = ProductStatus.Active,
-                CreatedAt = DateTime.Now,
-                UpdatedAt = DateTime.Now
+                Id = 1
             };
 
             if (productFromDb.Id != id)
