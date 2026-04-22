@@ -1,6 +1,7 @@
 ﻿using FloraBack.BusinessLogic.Functions.Auth;
 using FloraBack.BusinessLogic.Functions.Products;
 using FloraBack.BusinessLogic.Functions.User;
+using FloraBack.BusinessLogic.Functions.Order;
 using FloraBack.BusinessLogic.Interface;
 
 namespace FloraBack.BusinessLogic
@@ -21,6 +22,11 @@ namespace FloraBack.BusinessLogic
         public IUserActions GetUserActions()
         {
             return new UserFlow();
+        }
+
+        public IOrderActions GetOrderActions()
+        {
+            return new OrderFlow();
         }
     }
 }

@@ -9,5 +9,31 @@ namespace FloraBack.Api.Controller
     public class OrderController : ControllerBase
     {
         private IOrderActions _orderActions;
+
+        public OrderController()
+        {
+            var bl = new BusinessLogic.BusinessLogic();
+            _orderActions = bl.GetOrderActions();
+        }
+
+        [HttpGet("{userId}/all")]
+        public IActionResult GetUserOrdersById(int userId)
+        {
+            var _orders = _orderActions.GetUserOrdersByIdAction(userId);
+            return Ok(_orders);
+        }
+
+        [HttpGet("{id}")]
+        public IActionResult GetOrderById(int id)
+        {
+            var _order = _orderActions.GetOrderByIdAction(id);
+
+            if (_order != null)
+            {
+                return Ok(_order);
+            }
+
+            return NotFound(new { Message = $"Order with ID {id} not found" });
+        }
     }
 }
