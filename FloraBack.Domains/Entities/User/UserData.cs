@@ -20,5 +20,6 @@ namespace FloraBack.Domains.Entities.User
         public PaymentMethods DefaultPM { get; set; }
         public DateTime DOB { get; set; }
         public GenderTypes Gender { get; set; }
+        public bool IsActive { get; set; } //unhandled yet
     }
 }

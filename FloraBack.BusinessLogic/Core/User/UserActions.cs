@@ -22,25 +22,18 @@ namespace FloraBack.BusinessLogic.Core.User
 
         public UserData? ExecuteGetUserByIdAction(int id)
         {
-            foreach (var _user in _DataRepo)
-            {
-                if(_user.Id == id)
-                {
-                    return _user;
-                }
-            }
+            var _user = _DataRepo.FirstOrDefault(x => x.Id == id);
 
-            return null;
+            return _user;
         }
 
         public UserData? ExecuteCreateUserAction(UserData user)
         {
-            foreach (var _user in _DataRepo)
+            var _user = _DataRepo.FirstOrDefault(x => user.Email.Equals(x.Email));
+            
+            if (_user != null)
             {
-                if (user.Email.Equals(_user.Email))
-                {
-                    return null;
-                }
+                return null;
             }
 
             var _newUser = new UserData()
@@ -55,6 +48,7 @@ namespace FloraBack.BusinessLogic.Core.User
                 Gender = user.Gender,
                 CreatedAt = DateTime.Now,
                 UpdatedAt = DateTime.Now,
+                IsActive = user.IsActive,
             };
 
             _DataRepo.Add(_newUser);
@@ -64,13 +58,12 @@ namespace FloraBack.BusinessLogic.Core.User
 
         public bool ExecuteDeleteUserAction(int id)
         {
-            foreach (var _user in _DataRepo)
+            var _user = _DataRepo.FirstOrDefault(x => x.Id == id);
+
+            if (_user != null)
             {
-                if (_user.Id == id)
-                {
-                    _DataRepo.Remove(_user);
-                    return true;
-                }
+                _DataRepo.Remove(_user);
+                return true;
             }
 
             return false;
@@ -78,17 +71,16 @@ namespace FloraBack.BusinessLogic.Core.User
 
         public UserData? ExecuteUpdateUserAction(int id, UserData user)
         {
-            foreach (var _user in _DataRepo)
+            var _user = _DataRepo.FirstOrDefault(x => x.Id == id);
+
+            if (_user != null) // || _user.IsActive == false
             {
-                if (_user.Id == id)
-                {
-                    _user.UserName = user.UserName;
-                    _user.Email = user.Email;
-                    _user.DefaultAddress = user.DefaultAddress;
-                    _user.DefaultPM = user.DefaultPM;
-                    _user.UpdatedAt = DateTime.Now;
-                    return _user;
-                }
+                _user.UserName = user.UserName;
+                _user.Email = user.Email;
+                _user.DefaultAddress = user.DefaultAddress;
+                _user.DefaultPM = user.DefaultPM;
+                _user.UpdatedAt = DateTime.Now;
+                return _user;
             }
 
             return null;
