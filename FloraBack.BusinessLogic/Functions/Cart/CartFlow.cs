@@ -69,5 +69,11 @@ namespace FloraBack.BusinessLogic.Functions.Cart
 
             return _cartDto;
         }
+
+        public bool DeleteCartItemAction(int itemId)
+        {
+            var wasDeleted = ExecuteDeleteCartItemAction(itemId);
+            return wasDeleted;
+        }
     }
 }

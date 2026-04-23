@@ -121,5 +121,28 @@ namespace FloraBack.BusinessLogic.Core.Cart
 
             return _cart;
         }
+
+        public bool ExecuteDeleteCartItemAction(int itemId)
+        {
+            var _cart = _CartRepo.FirstOrDefault(x => x.UserId == 1 && x.Status == CartStatus.Active);
+
+            if (_cart == null)
+            {
+                return false;
+            }
+
+            var _cartItem = _cart.Items.FirstOrDefault(x => x.Id == itemId);
+
+            if (_cartItem == null)
+            {
+                return false;
+            }
+
+            _cart.Items.Remove(_cartItem);
+            _cart.TotalPrice = _cart.Items.Sum(x => x.TotalPrice);
+            _cart.UpdatedAt = DateTime.Now;
+
+            return true;
+        }
     }
 }

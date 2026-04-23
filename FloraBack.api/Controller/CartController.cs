@@ -89,5 +89,18 @@ namespace FloraBack.Api.Controller
 
             return Ok(updatedCart);
         }
+
+        [HttpDelete("items/{itemId}")]
+        public IActionResult DeleteCartItem(int itemId)
+        {
+            var wasDeleted = _cart.DeleteCartItemAction(itemId);
+
+            if (!wasDeleted)
+            {
+                return NotFound(new { Message = $"Cart item with ID {itemId} not found" });
+            }
+
+            return NoContent();
+        }
     }
 }
