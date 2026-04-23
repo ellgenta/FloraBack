@@ -1,6 +1,7 @@
 ﻿using FloraBack.BusinessLogic.Core.Order;
 using FloraBack.BusinessLogic.Interface;
 using FloraBack.Domains.Entities.Order;
+using FloraBack.Domains.Enums;
 using FloraBack.Domains.Models.Order;
 using System;
 using System.Collections.Generic;
@@ -39,6 +40,28 @@ namespace FloraBack.BusinessLogic.Functions.Order
         public OrderDto? GetOrderByIdAction(int id)
         {
             var _order = ExecuteGetOrderByIdAction(id);
+
+            if (_order == null)
+            {
+                return null;
+            }
+
+            var _orderDto = new OrderDto()
+            {
+                Id = _order.Id,
+                UserId = _order.UserId,
+                Items = _order.Items,
+                TotalPrice = _order.TotalPrice,
+                DeliveryAddress = _order.DeliveryAddress,
+                Status = _order.Status,
+            };
+
+            return _orderDto;
+        }
+
+        public OrderDto? UpdateOrderStatusAction(int id, OrderStatus newStatus)
+        {
+            var _order = ExecuteUpdateOrderStatusAction(id, newStatus);
 
             if (_order == null)
             {

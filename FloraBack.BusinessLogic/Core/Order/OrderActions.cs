@@ -1,4 +1,5 @@
 ﻿using FloraBack.Domains.Entities.Order;
+using FloraBack.Domains.Enums;
 using FloraBack.Domains.Models.Order;
 using System;
 using System.Collections.Generic;
@@ -34,6 +35,20 @@ namespace FloraBack.BusinessLogic.Core.Order
             var _order = _OrderRepo.FirstOrDefault(x => x.Id == id);
 
             return _order;
+        }
+
+        public OrderData? ExecuteUpdateOrderStatusAction(int id, OrderStatus newStatus)
+        {
+            var _order = _OrderRepo.FirstOrDefault(x => x.Id == id);
+
+            if (_order != null)
+            {
+                _order.Status = newStatus;
+                _order.UpdatedAt = DateTime.Now;
+                return _order;
+            }
+
+            return null;
         }
     }
 }
