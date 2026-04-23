@@ -62,7 +62,7 @@ namespace FloraBack.BusinessLogic.Core.User
 
             if (_user != null)
             {
-                _DataRepo.Remove(_user);
+                _DataRepo.Remove(_user); //or _user.IsActive = false ??
                 return true;
             }
 

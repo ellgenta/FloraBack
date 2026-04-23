@@ -25,5 +25,26 @@ namespace FloraBack.Api.Controller
 
             return Created($"api/review/site{_newReview.Id}", _newReview);
         }
+
+        [HttpGet("all")]
+        public IActionResult GetAllSiteReviews()
+        {
+            var _reviews = _siteReviewActions.GetAllSiteReviewsAction();
+
+            return Ok(_reviews);
+        }
+
+        [HttpDelete]
+        public IActionResult DeleteSiteReview(int id)
+        {
+            var wasDeleted = _siteReviewActions.DeleteSiteReviewAction(id);
+
+            if (wasDeleted == true)
+            {
+                return NoContent();
+            }
+
+            return NotFound(new { Message = $"Site Review with ID {id} not found" });
+        }
     }
 }

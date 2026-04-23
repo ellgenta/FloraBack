@@ -11,5 +11,9 @@ namespace FloraBack.BusinessLogic.Interface
     public interface ISiteReviewActions
     {
         public SiteReviewDto CreateSiteReviewAction(SiteReviewData review);
+
+        public List<SiteReviewDto> GetAllSiteReviewsAction();
+
+        public bool DeleteSiteReviewAction(int id);
     }
 }

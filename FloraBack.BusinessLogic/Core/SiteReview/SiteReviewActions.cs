@@ -9,9 +9,9 @@ namespace FloraBack.BusinessLogic.Core.SiteReview
 {
     public class SiteReviewActions 
     {
-        List<SiteReviewData> _SiteReviewRepo = new List<SiteReviewData>();
+        static List<SiteReviewData> _SiteReviewRepo = new List<SiteReviewData>();
 
-        int nextId = 1;
+        static int nextId = 1;
 
         public SiteReviewData ExecuteCreateSiteReviewAction(SiteReviewData review)
         {
@@ -25,7 +25,27 @@ namespace FloraBack.BusinessLogic.Core.SiteReview
                 UpdatedAt = DateTime.Now,
             };
 
+            _SiteReviewRepo.Add(_newReview);
+
             return _newReview;
+        }
+
+        public List<SiteReviewData> ExecuteGetAllSiteReviewsAction()
+        {
+            return _SiteReviewRepo;
+        }
+
+        public bool ExecuteDeleteSiteReviewAction(int id)
+        {
+            var _review = _SiteReviewRepo.FirstOrDefault(x => x.Id == id);
+
+            if (_review != null)
+            {
+                _SiteReviewRepo.Remove(_review);
+                return true;
+            }
+
+            return false;
         }
     }
 }
