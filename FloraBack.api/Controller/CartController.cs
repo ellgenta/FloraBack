@@ -1,4 +1,5 @@
 ﻿using FloraBack.BusinessLogic.Interface;
+using FloraBack.Domains.Entities.Cart;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,8 +18,6 @@ namespace FloraBack.Api.Controller
         }
 
         [HttpGet]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public IActionResult GetCart()
         {
             var cart = _cart.GetCartAction();
@@ -29,6 +28,39 @@ namespace FloraBack.Api.Controller
             }
 
             return Ok(cart);
+        }
+
+        [HttpPost("items")]
+        public IActionResult AddItemToCart([FromBody] CartItem item)
+        {
+            if (item == null)
+            {
+                return BadRequest("Invalid cart item data");
+            }
+
+            if (item.ProductId <= 0)
+            {
+                return BadRequest("Invalid product id");
+            }
+
+            if (item.Quantity <= 0)
+            {
+                return BadRequest("Quantity must be greater than 0");
+            }
+
+            if (item.UnitPrice <= 0)
+            {
+                return BadRequest("Unit price must be greater than 0");
+            }
+
+            var updatedCart = _cart.AddItemToCartAction(item);
+
+            if (updatedCart == null)
+            {
+                return BadRequest("Item was not added to cart");
+            }
+
+            return Created("/api/cart", updatedCart);
         }
     }
 }
