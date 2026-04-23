@@ -5,6 +5,8 @@ using FloraBack.BusinessLogic.Functions.Order;
 using FloraBack.BusinessLogic.Interface;
 using FloraBack.BusinessLogic.Functions.SiteReview;
 using System.ComponentModel;
+using FloraBack.BusinessLogic.Functions.Cart;
+
 
 namespace FloraBack.BusinessLogic
 {
@@ -34,6 +36,11 @@ namespace FloraBack.BusinessLogic
         public ISiteReviewActions GetSiteReviewActions()
         {
             return new SiteReviewFlow();
+        }
+
+        public ICart GetCartActions()
+        {
+            return new CartFlow();
         }
     }
 }
