@@ -102,5 +102,18 @@ namespace FloraBack.Api.Controller
 
             return NoContent();
         }
+
+        [HttpDelete]
+        public IActionResult ClearCart()
+        {
+            var wasCleared = _cart.ClearCartAction();
+
+            if (!wasCleared)
+            {
+                return NotFound(new { Message = "Cart not found" });
+            }
+
+            return NoContent();
+        }
     }
 }

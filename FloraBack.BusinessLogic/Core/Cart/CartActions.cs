@@ -144,5 +144,21 @@ namespace FloraBack.BusinessLogic.Core.Cart
 
             return true;
         }
+
+        public bool ExecuteClearCartAction()
+        {
+            var _cart = _CartRepo.FirstOrDefault(x => x.UserId == 1 && x.Status == CartStatus.Active);
+
+            if (_cart == null)
+            {
+                return false;
+            }
+
+            _cart.Items.Clear();
+            _cart.TotalPrice = 0;
+            _cart.UpdatedAt = DateTime.Now;
+
+            return true;
+        }
     }
 }

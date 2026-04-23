@@ -9,6 +9,7 @@ namespace FloraBack.BusinessLogic.Interface
         CartDto? AddItemToCartAction(CartItem item);
         CartDto? UpdateCartItemAction(int itemId, CartItem item);
         bool DeleteCartItemAction(int itemId);
+        bool ClearCartAction();
 
     }
 }
