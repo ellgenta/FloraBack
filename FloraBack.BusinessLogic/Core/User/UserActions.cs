@@ -43,7 +43,7 @@ namespace FloraBack.BusinessLogic.Core.User
                 Password = user.Password,
                 Email = user.Email,
                 DefaultAddress = user.DefaultAddress,
-                DefaultPM = user.DefaultPM,
+                DefaultPaymentMethod = user.DefaultPaymentMethod,
                 DOB = user.DOB,
                 Gender = user.Gender,
                 CreatedAt = DateTime.Now,
@@ -78,7 +78,7 @@ namespace FloraBack.BusinessLogic.Core.User
                 _user.UserName = user.UserName;
                 _user.Email = user.Email;
                 _user.DefaultAddress = user.DefaultAddress;
-                _user.DefaultPM = user.DefaultPM;
+                _user.DefaultPaymentMethod = user.DefaultPaymentMethod;
                 _user.UpdatedAt = DateTime.Now;
                 return _user;
             }

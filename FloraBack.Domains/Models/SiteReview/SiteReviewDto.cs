@@ -12,6 +12,6 @@ namespace FloraBack.Domains.Models.SiteReview
         public int Id { get; set; }
         public int UserId { get; set; }
         public string Content { get; set; }
-        public ReviewNote Note { get; set; }
+        public ReviewMark Mark { get; set; }
     }
 }

@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace FloraBack.Domains.Entities.SiteReview
 {
-    public class SiteReview : SharedFields
+    public class SiteReviewData : SharedFields
     {
         public int Id { get; set; }
         public int UserId { get; set; }
         public string Content { get; set; }
-        public ReviewNote Note { get; set; }
+        public ReviewMark Mark { get; set; }
     }
 }

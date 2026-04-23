@@ -17,7 +17,7 @@ namespace FloraBack.Domains.Entities.User
         public string Password { get; set; }
         public string Email { get; set; }
         public AddressData DefaultAddress { get; set; }
-        public PaymentMethods DefaultPM { get; set; }
+        public PaymentMethods DefaultPaymentMethod { get; set; }
         public DateTime DOB { get; set; }
         public GenderTypes Gender { get; set; }
         public bool IsActive { get; set; } //unhandled yet

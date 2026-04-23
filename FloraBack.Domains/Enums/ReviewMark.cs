@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FloraBack.Domains.Enums
 {
-    public enum ReviewNote
+    public enum ReviewMark
     {
         Poor = 1,
         Bad = 2,

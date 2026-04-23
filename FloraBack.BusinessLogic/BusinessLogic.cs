@@ -3,6 +3,8 @@ using FloraBack.BusinessLogic.Functions.Products;
 using FloraBack.BusinessLogic.Functions.User;
 using FloraBack.BusinessLogic.Functions.Order;
 using FloraBack.BusinessLogic.Interface;
+using FloraBack.BusinessLogic.Functions.SiteReview;
+using System.ComponentModel;
 
 namespace FloraBack.BusinessLogic
 {
@@ -27,6 +29,11 @@ namespace FloraBack.BusinessLogic
         public IOrderActions GetOrderActions()
         {
             return new OrderFlow();
+        }
+
+        public ISiteReviewActions GetSiteReviewActions()
+        {
+            return new SiteReviewFlow();
         }
     }
 }
