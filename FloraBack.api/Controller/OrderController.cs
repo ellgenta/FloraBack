@@ -1,4 +1,5 @@
 ﻿using FloraBack.BusinessLogic.Interface;
+using FloraBack.Domains.Entities.Order;
 using FloraBack.Domains.Enums;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -48,6 +49,14 @@ namespace FloraBack.Api.Controller
             }
 
             return NotFound(new { Message = $"User with ID {id} not found" });
+        }
+
+        [HttpPost]
+        public IActionResult CreateOrder([FromBody] OrderData order)
+        {
+            var _order = _orderActions.CreateOrderAction(order);
+
+            return Created($"api/order/{_order.Id}", _order);
         }
     }
 }

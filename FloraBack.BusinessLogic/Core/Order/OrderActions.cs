@@ -50,5 +50,24 @@ namespace FloraBack.BusinessLogic.Core.Order
 
             return null;
         }
+
+        public OrderData ExecuteCreateOrderAction(OrderData order)
+        {
+            var _newOrder = new OrderData()
+            {
+                Id = nextId++,
+                UserId = order.UserId,
+                Items = order.Items, //to fix
+                TotalPrice = order.TotalPrice,
+                DeliveryAddress = order.DeliveryAddress,
+                Status = OrderStatus.Pending,
+                CreatedAt = DateTime.Now,
+                UpdatedAt = DateTime.Now,
+            };
+
+            _OrderRepo.Add(_newOrder);
+
+            return _newOrder;
+        }
     }
 }

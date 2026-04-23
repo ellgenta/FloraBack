@@ -1,6 +1,7 @@
 ﻿using FloraBack.BusinessLogic.Core.Order;
 using FloraBack.BusinessLogic.Interface;
 using FloraBack.Domains.Entities.Order;
+using FloraBack.Domains.Entities.User;
 using FloraBack.Domains.Enums;
 using FloraBack.Domains.Models.Order;
 using System;
@@ -76,6 +77,23 @@ namespace FloraBack.BusinessLogic.Functions.Order
                 TotalPrice = _order.TotalPrice,
                 DeliveryAddress = _order.DeliveryAddress,
                 Status = _order.Status,
+            };
+
+            return _orderDto;
+        }
+
+        public OrderDto CreateOrderAction(OrderData order)
+        {
+            var _newOrder = ExecuteCreateOrderAction(order);
+
+            var _orderDto = new OrderDto()
+            {
+                Id = _newOrder.Id,
+                UserId = _newOrder.UserId,
+                Items = _newOrder.Items,
+                TotalPrice = _newOrder.TotalPrice,
+                DeliveryAddress = _newOrder.DeliveryAddress,
+                Status = _newOrder.Status,
             };
 
             return _orderDto;

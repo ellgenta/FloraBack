@@ -1,4 +1,5 @@
-﻿using FloraBack.Domains.Enums;
+﻿using FloraBack.Domains.Entities.Order;
+using FloraBack.Domains.Enums;
 using FloraBack.Domains.Models.Order;
 using System;
 using System.Collections.Generic;
@@ -15,5 +16,7 @@ namespace FloraBack.BusinessLogic.Interface
         public OrderDto? GetOrderByIdAction(int id);
 
         public OrderDto? UpdateOrderStatusAction(int id, OrderStatus newStatus);
+
+        public OrderDto CreateOrderAction(OrderData order);
     }
 }
