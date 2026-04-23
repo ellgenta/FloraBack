@@ -3,9 +3,9 @@ using FloraBack.Domains.Enums;
 
 namespace FloraBack.BusinessLogic.Core.Cart
 {
-    public class CartAction
+    public class CartActions
     {
-        static List<CartData> _DataRepo = new List<CartData>()
+        static List<CartData> _CartRepo = new List<CartData>()
         {
             new CartData()
             {
@@ -39,79 +39,87 @@ namespace FloraBack.BusinessLogic.Core.Cart
             }
         };
 
-        static int _nextCartId = 2;
-        static int _nextCartItemId = 3;
+        static int nextId = 2;
+        static int nextCartItemId = 3;
 
         public CartData? ExecuteGetCartAction()
         {
-            foreach (var _cart in _DataRepo)
-            {
-                if (_cart.UserId == 1 && _cart.Status == CartStatus.Active)
-                {
-                    return _cart;
-                }
-            }
-
-            return null;
+            var _cart = _CartRepo.FirstOrDefault(x => x.UserId == 1 && x.Status == CartStatus.Active);
+            return _cart;
         }
 
         public CartData? ExecuteAddItemToCartAction(CartItem item)
         {
-            CartData? _currentCart = null;
+            var _cart = _CartRepo.FirstOrDefault(x => x.UserId == 1 && x.Status == CartStatus.Active);
 
-            foreach (var _cart in _DataRepo)
+            if (_cart == null)
             {
-                if (_cart.UserId == 1 && _cart.Status == CartStatus.Active)
+                _cart = new CartData()
                 {
-                    _currentCart = _cart;
-                    break;
-                }
-            }
-
-            if (_currentCart == null)
-            {
-                _currentCart = new CartData()
-                {
-                    Id = _nextCartId++,
+                    Id = nextId++,
                     UserId = 1,
                     Items = new List<CartItem>(),
                     TotalPrice = 0,
                     Status = CartStatus.Active,
                     CreatedAt = DateTime.Now,
-                    UpdatedAt = DateTime.Now
+                    UpdatedAt = DateTime.Now,
                 };
 
-                _DataRepo.Add(_currentCart);
+                _CartRepo.Add(_cart);
             }
 
-            foreach (var _cartItem in _currentCart.Items)
+            var _existingItem = _cart.Items.FirstOrDefault(x => x.ProductId == item.ProductId);
+
+            if (_existingItem != null)
             {
-                if (_cartItem.ProductId == item.ProductId)
+                _existingItem.Quantity += item.Quantity;
+                _existingItem.TotalPrice = _existingItem.Quantity * _existingItem.UnitPrice;
+            }
+            else
+            {
+                var _newCartItem = new CartItem()
                 {
-                    _cartItem.Quantity += item.Quantity;
-                    _cartItem.TotalPrice = _cartItem.Quantity * _cartItem.UnitPrice;
-                    _currentCart.TotalPrice = _currentCart.Items.Sum(x => x.TotalPrice);
-                    _currentCart.UpdatedAt = DateTime.Now;
+                    Id = nextCartItemId++,
+                    CartId = _cart.Id,
+                    ProductId = item.ProductId,
+                    Quantity = item.Quantity,
+                    UnitPrice = item.UnitPrice,
+                    TotalPrice = item.Quantity * item.UnitPrice
+                };
 
-                    return _currentCart;
-                }
+                _cart.Items.Add(_newCartItem);
             }
 
-            var _newCartItem = new CartItem()
+            _cart.TotalPrice = _cart.Items.Sum(x => x.TotalPrice);
+            _cart.UpdatedAt = DateTime.Now;
+
+            return _cart;
+        }
+
+        public CartData? ExecuteUpdateCartItemAction(int itemId, CartItem item)
+        {
+            var _cart = _CartRepo.FirstOrDefault(x => x.UserId == 1 && x.Status == CartStatus.Active);
+
+            if (_cart == null)
             {
-                Id = _nextCartItemId++,
-                CartId = _currentCart.Id,
-                ProductId = item.ProductId,
-                Quantity = item.Quantity,
-                UnitPrice = item.UnitPrice,
-                TotalPrice = item.Quantity * item.UnitPrice
-            };
+                return null;
+            }
 
-            _currentCart.Items.Add(_newCartItem);
-            _currentCart.TotalPrice = _currentCart.Items.Sum(x => x.TotalPrice);
-            _currentCart.UpdatedAt = DateTime.Now;
+            var _cartItem = _cart.Items.FirstOrDefault(x => x.Id == itemId);
 
-            return _currentCart;
+            if (_cartItem == null)
+            {
+                return null;
+            }
+
+            _cartItem.Quantity = item.Quantity;
+            _cartItem.UnitPrice = item.UnitPrice;
+            _cartItem.TotalPrice = _cartItem.Quantity * _cartItem.UnitPrice;
+
+            _cart.TotalPrice = _cart.Items.Sum(x => x.TotalPrice);
+            _cart.UpdatedAt = DateTime.Now;
+
+            return _cart;
         }
     }
 }

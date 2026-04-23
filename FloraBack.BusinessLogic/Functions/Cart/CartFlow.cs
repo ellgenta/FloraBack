@@ -5,7 +5,7 @@ using FloraBack.Domains.Models.Cart;
 
 namespace FloraBack.BusinessLogic.Functions.Cart
 {
-    public class CartFlow : CartAction, ICart
+    public class CartFlow : CartActions, ICart
     {
         public CartDto? GetCartAction()
         {
@@ -22,7 +22,7 @@ namespace FloraBack.BusinessLogic.Functions.Cart
                 UserId = _cart.UserId,
                 Items = _cart.Items,
                 TotalPrice = _cart.TotalPrice,
-                Status = _cart.Status
+                Status = _cart.Status,
             };
 
             return _cartDto;
@@ -43,7 +43,28 @@ namespace FloraBack.BusinessLogic.Functions.Cart
                 UserId = _cart.UserId,
                 Items = _cart.Items,
                 TotalPrice = _cart.TotalPrice,
-                Status = _cart.Status
+                Status = _cart.Status,
+            };
+
+            return _cartDto;
+        }
+
+        public CartDto? UpdateCartItemAction(int itemId, CartItem item)
+        {
+            var _cart = ExecuteUpdateCartItemAction(itemId, item);
+
+            if (_cart == null)
+            {
+                return null;
+            }
+
+            var _cartDto = new CartDto()
+            {
+                Id = _cart.Id,
+                UserId = _cart.UserId,
+                Items = _cart.Items,
+                TotalPrice = _cart.TotalPrice,
+                Status = _cart.Status,
             };
 
             return _cartDto;

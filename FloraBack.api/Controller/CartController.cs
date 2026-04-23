@@ -1,6 +1,5 @@
 ﻿using FloraBack.BusinessLogic.Interface;
 using FloraBack.Domains.Entities.Cart;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FloraBack.Api.Controller
@@ -61,6 +60,34 @@ namespace FloraBack.Api.Controller
             }
 
             return Created("/api/cart", updatedCart);
+        }
+
+        [HttpPut("items/{itemId}")]
+        public IActionResult UpdateCartItem(int itemId, [FromBody] CartItem item)
+        {
+            if (item == null)
+            {
+                return BadRequest("Invalid cart item data");
+            }
+
+            if (item.Quantity <= 0)
+            {
+                return BadRequest("Quantity must be greater than 0");
+            }
+
+            if (item.UnitPrice <= 0)
+            {
+                return BadRequest("Unit price must be greater than 0");
+            }
+
+            var updatedCart = _cart.UpdateCartItemAction(itemId, item);
+
+            if (updatedCart == null)
+            {
+                return NotFound(new { Message = $"Cart item with ID {itemId} not found" });
+            }
+
+            return Ok(updatedCart);
         }
     }
 }
