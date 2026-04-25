@@ -7,6 +7,6 @@ namespace FloraBack.BusinessLogic.Interface
     {
         public ProductReviewDto CreateProductReviewAction(ProductReviewData review);
         public List<ProductReviewDto> GetProductReviewsByProductIdAction(int productId);
-
+        public bool DeleteProductReviewAction(int id);
     }
 }

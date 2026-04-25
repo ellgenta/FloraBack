@@ -42,5 +42,18 @@ namespace FloraBack.BusinessLogic.Core.ProductReview
 
             return _productReviews;
         }
+
+        public bool ExecuteDeleteProductReviewAction(int id)
+        {
+            var _reviewToDelete = _ProductReviewRepo.FirstOrDefault(r => r.Id == id);
+
+            if (_reviewToDelete != null)
+            {
+                _ProductReviewRepo.Remove(_reviewToDelete);
+                return true;
+            }
+
+            return false;
+        }
     }
 }

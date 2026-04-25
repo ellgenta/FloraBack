@@ -31,5 +31,20 @@ namespace FloraBack.Api.Controller
 
             return Ok(_reviews);
         }
+
+        [HttpDelete("{id}")]
+        public IActionResult DeleteProductReview(int id)
+        {
+            var wasDeleted = _productReviewActions.DeleteProductReviewAction(id);
+
+            if (wasDeleted == true)
+            {
+                return NoContent();
+            }
+            else
+            {
+                return NotFound(new { Message = $"Product Review with ID {id} not found" });
+            }
+        }
     }
 }

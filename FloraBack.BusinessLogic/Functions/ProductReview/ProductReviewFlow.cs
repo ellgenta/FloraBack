@@ -45,5 +45,12 @@ namespace FloraBack.BusinessLogic.Functions.ProductReview
 
             return _DtoList;
         }
+
+        public bool DeleteProductReviewAction(int id)
+        {
+            var wasDeleted = ExecuteDeleteProductReviewAction(id);
+
+            return wasDeleted;
+        }
     }
 }
