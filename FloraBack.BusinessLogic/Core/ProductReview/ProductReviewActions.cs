@@ -1,4 +1,5 @@
 ﻿using FloraBack.Domains.Entities.ProductReview;
+using FloraBack.Domains.Models.ProductReview;
 
 namespace FloraBack.BusinessLogic.Core.ProductReview
 {
@@ -26,5 +27,20 @@ namespace FloraBack.BusinessLogic.Core.ProductReview
             return _newReview;
         }
 
+
+        public List<ProductReviewData> ExecuteGetProductReviewsByProductIdAction(int productId)
+        {
+            List<ProductReviewData> _productReviews = new List<ProductReviewData>();
+
+            foreach (var _review in _ProductReviewRepo)
+            {
+                if (_review.ProductId == productId)
+                {
+                    _productReviews.Add(_review);
+                }
+            }
+
+            return _productReviews;
+        }
     }
 }

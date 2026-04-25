@@ -23,5 +23,13 @@ namespace FloraBack.Api.Controller
 
             return Created($"api/review/product/{_newReview.Id}", _newReview);
         }
+
+        [HttpGet("{productId}")]
+        public IActionResult GetProductReviewsByProductId(int productId)
+        {
+            var _reviews = _productReviewActions.GetProductReviewsByProductIdAction(productId);
+
+            return Ok(_reviews);
+        }
     }
 }
