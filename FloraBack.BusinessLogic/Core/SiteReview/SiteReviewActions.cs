@@ -4,20 +4,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using FloraBack.DataAccess.Context;
 
 namespace FloraBack.BusinessLogic.Core.SiteReview
 {
     public class SiteReviewActions 
     {
-        static List<SiteReviewData> _SiteReviewRepo = new List<SiteReviewData>();
-
-        static int nextId = 1;
-
         public SiteReviewData ExecuteCreateSiteReviewAction(SiteReviewData review)
         {
             var _newReview = new SiteReviewData()
             {
-                Id = nextId++,
+                //Id = nextId++,
                 UserId = review.UserId,
                 Content = review.Content,
                 Mark = review.Mark,
@@ -25,27 +22,46 @@ namespace FloraBack.BusinessLogic.Core.SiteReview
                 UpdatedAt = DateTime.Now,
             };
 
-            _SiteReviewRepo.Add(_newReview);
+            using (var db = new SiteReviewContext())
+            {
+                db.SiteReviews.Add(_newReview);
+                db.SaveChanges();
+            }
 
             return _newReview;
         }
 
         public List<SiteReviewData> ExecuteGetAllSiteReviewsAction()
         {
+            var _SiteReviewRepo = new List<SiteReviewData>();
+            
+            using (var db = new SiteReviewContext())
+            {
+                _SiteReviewRepo =  db.SiteReviews.ToList();
+            }
+
             return _SiteReviewRepo;
         }
 
+        
         public bool ExecuteDeleteSiteReviewAction(int id)
         {
-            var _review = _SiteReviewRepo.FirstOrDefault(x => x.Id == id);
+            SiteReviewData _review;
 
-            if (_review != null)
+            using (var db = new SiteReviewContext())
             {
-                _SiteReviewRepo.Remove(_review);
-                return true;
+                _review = db.SiteReviews.FirstOrDefault(x => x.Id == id);
+
+                if (_review != null)
+                {
+                    db.SiteReviews.Remove(_review);
+                    db.SaveChanges();
+                    return true;
+                }
             }
 
             return false;
         }
+        
     }
 }
