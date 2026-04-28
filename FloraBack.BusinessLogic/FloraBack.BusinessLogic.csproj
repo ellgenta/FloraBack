@@ -11,6 +11,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.24" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\FloraBack.DataAccess\FloraBack.DataAccess.csproj" />
     <ProjectReference Include="..\FloraBack.Domains\FloraBack.Domains.csproj" />
   </ItemGroup>
 

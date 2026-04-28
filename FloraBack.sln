@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FloraBack.BusinessLogic", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FloraBack.Domains", "FloraBack.Domains\FloraBack.Domains.csproj", "{88DA1F8A-41B7-4D00-AEB3-F46D8C671E48}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FloraBack.DataAccess", "FloraBack.DataAccess\FloraBack.DataAccess.csproj", "{91DD4F8F-3D47-4CC7-A579-D5D5C93BE69D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{88DA1F8A-41B7-4D00-AEB3-F46D8C671E48}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{88DA1F8A-41B7-4D00-AEB3-F46D8C671E48}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{88DA1F8A-41B7-4D00-AEB3-F46D8C671E48}.Release|Any CPU.Build.0 = Release|Any CPU
+		{91DD4F8F-3D47-4CC7-A579-D5D5C93BE69D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{91DD4F8F-3D47-4CC7-A579-D5D5C93BE69D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{91DD4F8F-3D47-4CC7-A579-D5D5C93BE69D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{91DD4F8F-3D47-4CC7-A579-D5D5C93BE69D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
