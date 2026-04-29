@@ -16,14 +16,11 @@ namespace FloraBack.Domains.Entities.SiteReview
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
-        [Required]
         public int UserId { get; set; }
 
-        [Required]
         [StringLength(300)]
         public string Content { get; set; }
 
-        [Required]
         public ReviewMark Mark { get; set; }
     }
 }
