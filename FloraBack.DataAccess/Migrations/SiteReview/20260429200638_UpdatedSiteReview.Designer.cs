@@ -9,11 +9,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace FloraBack.DataAccess.Migrations
+namespace FloraBack.DataAccess.Migrations.SiteReview
 {
     [DbContext(typeof(SiteReviewContext))]
-    [Migration("20260428183938_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20260429200638_UpdatedSiteReview")]
+    partial class UpdatedSiteReview
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

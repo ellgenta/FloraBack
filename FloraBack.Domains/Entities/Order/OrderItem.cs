@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace FloraBack.Domains.Entities.Order
@@ -17,7 +18,8 @@ namespace FloraBack.Domains.Entities.Order
         public int OrderId { get; set; }
 
         [ForeignKey("OrderId")]
-        public OrderData Order { get; set; }
+        [JsonIgnore]
+        public OrderData? Order { get; set; }
 
         public int ProductId { get; set; }
 

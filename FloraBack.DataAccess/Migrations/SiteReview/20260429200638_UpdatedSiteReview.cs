@@ -3,10 +3,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace FloraBack.DataAccess.Migrations
+namespace FloraBack.DataAccess.Migrations.SiteReview
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class UpdatedSiteReview : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

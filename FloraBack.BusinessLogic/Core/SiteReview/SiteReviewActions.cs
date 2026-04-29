@@ -14,7 +14,6 @@ namespace FloraBack.BusinessLogic.Core.SiteReview
         {
             var _newReview = new SiteReviewData()
             {
-                //Id = nextId++,
                 UserId = review.UserId,
                 Content = review.Content,
                 Mark = review.Mark,

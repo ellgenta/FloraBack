@@ -1,6 +1,8 @@
-﻿using FloraBack.Domains.Entities.Order;
+﻿using FloraBack.DataAccess.Context;
+using FloraBack.Domains.Entities.Order;
 using FloraBack.Domains.Enums;
 using FloraBack.Domains.Models.Order;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,53 +13,51 @@ namespace FloraBack.BusinessLogic.Core.Order
 {
     public class OrderActions
     {
-        static List<OrderData> _OrderRepo = new List<OrderData>();
-
-        static int nextId = 1;
-
         public List<OrderData> ExecuteGetUserOrdersByIdAction(int userId)
         {
-            List<OrderData> _userOrders = new List<OrderData>();
-
-            foreach (var _order in _OrderRepo)
+            using (var db = new OrderContext())
             {
-                if (_order.UserId == userId)
-                {
-                    _userOrders.Add(_order);
-                }
+                var _UserOrders = db.Orders.Include(o => o.Items).Where(x => x.UserId == userId).ToList();
+
+                return _UserOrders; 
             }
 
-            return _userOrders; 
         }
 
         public OrderData? ExecuteGetOrderByIdAction(int id)
         {
-            var _order = _OrderRepo.FirstOrDefault(x => x.Id == id);
+            using (var db = new OrderContext())
+            {
+                var _order = db.Orders.Include(o => o.Items).FirstOrDefault(x => x.Id == id);
 
-            return _order;
+                return _order;
+            }
         }
 
         public OrderData? ExecuteUpdateOrderStatusAction(int id, OrderStatus newStatus)
         {
-            var _order = _OrderRepo.FirstOrDefault(x => x.Id == id);
-
-            if (_order != null)
+            using (var db = new OrderContext())
             {
-                _order.Status = newStatus;
-                _order.UpdatedAt = DateTime.Now;
-                return _order;
-            }
+                var _order = db.Orders.FirstOrDefault(x => x.Id == id);
 
-            return null;
+                if (_order != null)
+                {
+                    _order.Status = newStatus;
+                    _order.UpdatedAt = DateTime.Now;
+                    db.SaveChanges();
+                    return _order;
+                }
+
+                return null;
+            }
         }
 
         public OrderData ExecuteCreateOrderAction(OrderData order)
         {
             var _newOrder = new OrderData()
             {
-                Id = nextId++,
                 UserId = order.UserId,
-                Items = order.Items, //to fix
+                Items = order.Items, 
                 TotalPrice = order.TotalPrice,
                 DeliveryAddress = order.DeliveryAddress,
                 Status = OrderStatus.Pending,
@@ -65,7 +65,11 @@ namespace FloraBack.BusinessLogic.Core.Order
                 UpdatedAt = DateTime.Now,
             };
 
-            _OrderRepo.Add(_newOrder);
+            using (var db = new OrderContext())
+            {
+                db.Orders.Add(_newOrder);
+                db.SaveChanges();
+            }
 
             return _newOrder;
         }

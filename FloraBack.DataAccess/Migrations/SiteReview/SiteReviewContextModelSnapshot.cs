@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace FloraBack.DataAccess.Migrations
+namespace FloraBack.DataAccess.Migrations.SiteReview
 {
     [DbContext(typeof(SiteReviewContext))]
     partial class SiteReviewContextModelSnapshot : ModelSnapshot

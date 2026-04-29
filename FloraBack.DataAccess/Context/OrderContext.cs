@@ -12,6 +12,8 @@ namespace FloraBack.DataAccess.Context
     {
         public DbSet<OrderData> Orders { get; set; }
 
+        public DbSet<OrderItem> OrderItems { get; set; }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer(DbSession.ConnectionStrings);
