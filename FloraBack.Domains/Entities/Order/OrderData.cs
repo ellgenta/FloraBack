@@ -1,5 +1,6 @@
 ﻿using FloraBack.Domains.Entities.Address;
 using FloraBack.Domains.Entities.Refs;
+using FloraBack.Domains.Entities.User;
 using FloraBack.Domains.Enums;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -8,6 +9,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace FloraBack.Domains.Entities.Order
@@ -18,11 +20,15 @@ namespace FloraBack.Domains.Entities.Order
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
+        [ForeignKey("UserId")]
+        [JsonIgnore]
+        public UserData? User { get; set; }
+
         public int UserId { get; set; }
 
         public List<OrderItem> Items { get; set; }
 
-        [Range(typeof(decimal), "0", "79228162514264337593543950335")]
+        [Range(0, double.MaxValue)]
         public decimal TotalPrice { get; set; }
 
         public AddressData DeliveryAddress { get; set; }

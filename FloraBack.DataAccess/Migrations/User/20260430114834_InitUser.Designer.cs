@@ -9,11 +9,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace FloraBack.DataAccess.Migrations.Order
+namespace FloraBack.DataAccess.Migrations.User
 {
-    [DbContext(typeof(OrderContext))]
-    [Migration("20260429191211_AddOrderTables")]
-    partial class AddOrderTables
+    [DbContext(typeof(UserContext))]
+    [Migration("20260430114834_InitUser")]
+    partial class InitUser
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -50,7 +50,9 @@ namespace FloraBack.DataAccess.Migrations.Order
 
                     b.HasKey("Id");
 
-                    b.ToTable("Orders");
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Orders", (string)null);
                 });
 
             modelBuilder.Entity("FloraBack.Domains.Entities.Order.OrderItem", b =>
@@ -80,8 +82,60 @@ namespace FloraBack.DataAccess.Migrations.Order
                     b.ToTable("OrderItem");
                 });
 
+            modelBuilder.Entity("FloraBack.Domains.Entities.User.UserData", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DOB")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("DefaultPaymentMethod")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasMaxLength(40)
+                        .HasColumnType("nvarchar(40)");
+
+                    b.Property<int>("Gender")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UserName")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Users");
+                });
+
             modelBuilder.Entity("FloraBack.Domains.Entities.Order.OrderData", b =>
                 {
+                    b.HasOne("FloraBack.Domains.Entities.User.UserData", "User")
+                        .WithMany("Orders")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
                     b.OwnsOne("FloraBack.Domains.Entities.Address.AddressData", "DeliveryAddress", b1 =>
                         {
                             b1.Property<int>("OrderDataId")
@@ -117,6 +171,8 @@ namespace FloraBack.DataAccess.Migrations.Order
 
                     b.Navigation("DeliveryAddress")
                         .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("FloraBack.Domains.Entities.Order.OrderItem", b =>
@@ -130,9 +186,53 @@ namespace FloraBack.DataAccess.Migrations.Order
                     b.Navigation("Order");
                 });
 
+            modelBuilder.Entity("FloraBack.Domains.Entities.User.UserData", b =>
+                {
+                    b.OwnsOne("FloraBack.Domains.Entities.Address.AddressData", "DefaultAddress", b1 =>
+                        {
+                            b1.Property<int>("UserDataId")
+                                .HasColumnType("int");
+
+                            b1.Property<string>("Apartment")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.Property<string>("City")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.Property<string>("House")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.Property<string>("State")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.Property<string>("Street")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.HasKey("UserDataId");
+
+                            b1.ToTable("Users");
+
+                            b1.WithOwner()
+                                .HasForeignKey("UserDataId");
+                        });
+
+                    b.Navigation("DefaultAddress")
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("FloraBack.Domains.Entities.Order.OrderData", b =>
                 {
                     b.Navigation("Items");
+                });
+
+            modelBuilder.Entity("FloraBack.Domains.Entities.User.UserData", b =>
+                {
+                    b.Navigation("Orders");
                 });
 #pragma warning restore 612, 618
         }

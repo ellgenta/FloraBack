@@ -9,11 +9,9 @@ using System.Threading.Tasks;
 
 namespace FloraBack.DataAccess.Context
 {
-    public class OrderContext : DbContext
+    public class UserContext : DbContext
     {
-        public DbSet<OrderData> Orders { get; set; }
-
-        public DbSet<OrderItem> OrderItems { get; set; }
+        public DbSet<UserData> Users { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -22,18 +20,12 @@ namespace FloraBack.DataAccess.Context
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<OrderData>()
+                .ToTable("Orders");
+
             modelBuilder.Entity<UserData>()
-                .ToTable("Users");
-
-            modelBuilder.Entity<OrderData>()
-                .HasMany(o => o.Items)
-                .WithOne(i => i.Order)
-                .HasForeignKey(i => i.OrderId)
-                .OnDelete(DeleteBehavior.Cascade);
-
-            modelBuilder.Entity<OrderData>()
-                .HasOne(o => o.User)
-                .WithMany(u => u.Orders)
+                .HasMany(u => u.Orders)
+                .WithOne(o => o.User)
                 .HasForeignKey(o => o.UserId)
                 .OnDelete(DeleteBehavior.NoAction);
         }

@@ -25,7 +25,7 @@ namespace FloraBack.Domains.Entities.Order
 
         public int Quantity { get; set; }
 
-        [Range(typeof(decimal), "0", "79228162514264337593543950335")]
+        [Range(0, double.MaxValue)]
         public decimal Price { get; set; }
 
     }
