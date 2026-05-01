@@ -20,7 +20,7 @@ namespace FloraBack.BusinessLogic.Core.User
 
             using (var db = new UserContext())
             {
-                _UserRepo = db.Users.Include(u => u.Orders).ToList();
+                _UserRepo = db.Users.Include(u => u.Orders).Include(u => u.SiteReviews).ToList();
             }
 
             return _UserRepo;
@@ -30,7 +30,7 @@ namespace FloraBack.BusinessLogic.Core.User
         {
             using (var db = new UserContext())
             {
-                var _user = db.Users.Include(u => u.Orders).FirstOrDefault(x => x.Id == id);
+                var _user = db.Users.Include(u => u.Orders).Include(u => u.SiteReviews).FirstOrDefault(x => x.Id == id);
                 //maybe Where(x => x.IsActive == true)
 
                 return _user;

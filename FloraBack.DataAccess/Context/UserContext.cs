@@ -1,4 +1,5 @@
 ﻿using FloraBack.Domains.Entities.Order;
+using FloraBack.Domains.Entities.SiteReview;
 using FloraBack.Domains.Entities.User;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -23,11 +24,20 @@ namespace FloraBack.DataAccess.Context
             modelBuilder.Entity<OrderData>()
                 .ToTable("Orders");
 
+            modelBuilder.Entity<SiteReviewData>()
+                .ToTable("SiteReviews");
+
             modelBuilder.Entity<UserData>()
                 .HasMany(u => u.Orders)
                 .WithOne(o => o.User)
                 .HasForeignKey(o => o.UserId)
                 .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<UserData>()
+                .HasMany(u => u.SiteReviews)
+                .WithOne(s => s.User)
+                .HasForeignKey(s => s.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

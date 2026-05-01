@@ -11,6 +11,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using FloraBack.Domains.Entities.Order;
 using System.Text.Json.Serialization;
+using FloraBack.Domains.Entities.SiteReview;
 
 namespace FloraBack.Domains.Entities.User
 {
@@ -43,6 +44,9 @@ namespace FloraBack.Domains.Entities.User
         [JsonIgnore]
         public List<OrderData>? Orders { get; set; }
 
-        public bool IsActive { get; set; } //unhandled yet
+        [JsonIgnore]
+        public List<SiteReviewData>? SiteReviews { get; set; }
+
+        public bool IsActive { get; set; } //unhandled yet for the GET operation
     }
 }

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using FloraBack.DataAccess.Context;
+using Microsoft.EntityFrameworkCore;
 
 namespace FloraBack.BusinessLogic.Core.SiteReview
 {
@@ -36,7 +37,7 @@ namespace FloraBack.BusinessLogic.Core.SiteReview
             
             using (var db = new SiteReviewContext())
             {
-                _SiteReviewRepo =  db.SiteReviews.ToList();
+                _SiteReviewRepo =  db.SiteReviews.Include(s => s.User).ToList();
             }
 
             return _SiteReviewRepo;

@@ -8,10 +8,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace FloraBack.DataAccess.Migrations.User
+namespace FloraBack.DataAccess.Migrations.SiteReview
 {
-    [DbContext(typeof(UserContext))]
-    partial class UserContextModelSnapshot : ModelSnapshot
+    [DbContext(typeof(SiteReviewContext))]
+    partial class SiteReviewContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
@@ -49,7 +49,7 @@ namespace FloraBack.DataAccess.Migrations.User
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Orders", (string)null);
+                    b.ToTable("OrderData");
                 });
 
             modelBuilder.Entity("FloraBack.Domains.Entities.Order.OrderItem", b =>
@@ -108,7 +108,7 @@ namespace FloraBack.DataAccess.Migrations.User
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("SiteReviews", (string)null);
+                    b.ToTable("SiteReviews");
                 });
 
             modelBuilder.Entity("FloraBack.Domains.Entities.User.UserData", b =>
@@ -154,7 +154,7 @@ namespace FloraBack.DataAccess.Migrations.User
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
                 });
 
             modelBuilder.Entity("FloraBack.Domains.Entities.Order.OrderData", b =>
@@ -162,7 +162,7 @@ namespace FloraBack.DataAccess.Migrations.User
                     b.HasOne("FloraBack.Domains.Entities.User.UserData", "User")
                         .WithMany("Orders")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.OwnsOne("FloraBack.Domains.Entities.Address.AddressData", "DeliveryAddress", b1 =>
@@ -192,7 +192,7 @@ namespace FloraBack.DataAccess.Migrations.User
 
                             b1.HasKey("OrderDataId");
 
-                            b1.ToTable("Orders");
+                            b1.ToTable("OrderData");
 
                             b1.WithOwner()
                                 .HasForeignKey("OrderDataId");
@@ -220,7 +220,7 @@ namespace FloraBack.DataAccess.Migrations.User
                     b.HasOne("FloraBack.Domains.Entities.User.UserData", "User")
                         .WithMany("SiteReviews")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("User");
