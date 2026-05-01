@@ -10,6 +10,7 @@ using FloraBack.Domains.Entities.Address;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using FloraBack.Domains.Entities.Order;
+using System.Text.Json.Serialization;
 
 namespace FloraBack.Domains.Entities.User
 {
@@ -39,7 +40,8 @@ namespace FloraBack.Domains.Entities.User
 
         public GenderTypes Gender { get; set; }
 
-        public List<OrderData> Orders { get; set; }
+        [JsonIgnore]
+        public List<OrderData>? Orders { get; set; }
 
         public bool IsActive { get; set; } //unhandled yet
     }
