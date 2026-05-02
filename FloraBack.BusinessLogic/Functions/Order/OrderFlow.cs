@@ -22,11 +22,25 @@ namespace FloraBack.BusinessLogic.Functions.Order
 
             foreach (var _order in _orders)
             {
+                List<OrderItemInfoDto> _itemsDto = new List<OrderItemInfoDto>();
+
+                foreach (var _item in _order.Items)
+                {
+                    var _itemDto = new OrderItemInfoDto()
+                    {
+                        ProductId = _item.ProductId,
+                        Quantity = _item.Quantity,
+                        Price = _item.Price,
+                    };
+
+                    _itemsDto.Add(_itemDto);
+                }
+
                 var _orderDto = new OrderInfoDto()
                 {
                     Id = _order.Id,
                     UserId = _order.UserId,
-                    Items = _order.Items,
+                    Items = _itemsDto,
                     TotalPrice = _order.TotalPrice,
                     DeliveryAddress = _order.DeliveryAddress,
                     Status = _order.Status,
@@ -47,11 +61,25 @@ namespace FloraBack.BusinessLogic.Functions.Order
                 return null;
             }
 
+            List<OrderItemInfoDto> _itemsDto = new List<OrderItemInfoDto>(); 
+            
+            foreach (var _item in _order.Items)
+            {
+                var _itemDto = new OrderItemInfoDto()
+                {
+                    ProductId = _item.ProductId,
+                    Quantity = _item.Quantity,
+                    Price = _item.Price,
+                };
+
+                _itemsDto.Add(_itemDto);
+            }
+
             var _orderDto = new OrderInfoDto()
             {
                 Id = _order.Id,
                 UserId = _order.UserId,
-                Items = _order.Items,
+                Items = _itemsDto,
                 TotalPrice = _order.TotalPrice,
                 DeliveryAddress = _order.DeliveryAddress,
                 Status = _order.Status,
@@ -69,11 +97,25 @@ namespace FloraBack.BusinessLogic.Functions.Order
                 return null;
             }
 
+            List<OrderItemInfoDto> _itemsDto = new List<OrderItemInfoDto>();
+
+            foreach (var _item in _order.Items)
+            {
+                var _itemDto = new OrderItemInfoDto()
+                {
+                    ProductId = _item.ProductId,
+                    Quantity = _item.Quantity,
+                    Price = _item.Price,
+                };
+
+                _itemsDto.Add(_itemDto);
+            }
+
             var _orderDto = new OrderInfoDto()
             {
                 Id = _order.Id,
                 UserId = _order.UserId,
-                Items = _order.Items,
+                Items = _itemsDto,
                 TotalPrice = _order.TotalPrice,
                 DeliveryAddress = _order.DeliveryAddress,
                 Status = _order.Status,
@@ -86,11 +128,26 @@ namespace FloraBack.BusinessLogic.Functions.Order
         {
             var _newOrder = ExecuteCreateOrderAction(order);
 
+            List<OrderItemInfoDto> _itemsDto = new List<OrderItemInfoDto>();
+
+            foreach (var _item in _newOrder.Items)
+            {
+                var _itemDto = new OrderItemInfoDto()
+                {
+                    ProductId = _item.ProductId,
+                    Quantity = _item.Quantity,
+                    Price = _item.Price,
+                };
+
+                _itemsDto.Add(_itemDto);
+            }
+
+
             var _orderDto = new OrderInfoDto()
             {
                 Id = _newOrder.Id,
                 UserId = _newOrder.UserId,
-                Items = _newOrder.Items,
+                Items = _itemsDto,
                 TotalPrice = _newOrder.TotalPrice,
                 DeliveryAddress = _newOrder.DeliveryAddress,
                 Status = _newOrder.Status,

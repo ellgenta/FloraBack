@@ -31,6 +31,7 @@ namespace FloraBack.Domains.Entities.User
 
         [Required]
         [StringLength(40)]
+        [EmailAddress]
         public string Email { get; set; }
 
         public AddressData DefaultAddress { get; set; }

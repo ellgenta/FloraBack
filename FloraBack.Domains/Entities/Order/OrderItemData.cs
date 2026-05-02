@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace FloraBack.Domains.Entities.Order
 {
-    public class OrderItem
+    public class OrderItemData
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -24,8 +24,6 @@ namespace FloraBack.Domains.Entities.Order
 
         public int Quantity { get; set; }
 
-        [Range(0, double.MaxValue)]
         public decimal Price { get; set; }
-
     }
 }

@@ -57,16 +57,26 @@ namespace FloraBack.BusinessLogic.Core.Order
             //should handle user's Id and IsActive 
 
             decimal _totalPrice = 0;
+            List<OrderItemData> _items = new List<OrderItemData>();
 
             foreach (var _item in order.Items)
             {
                 _totalPrice += (_item.Price * _item.Quantity);
+
+                var _newItem = new OrderItemData()
+                {
+                    ProductId = _item.ProductId,
+                    Quantity = _item.Quantity,
+                    Price = _item.Price,
+                };
+
+                _items.Add(_newItem);
             }
 
             var _newOrder = new OrderData()
             {
                 UserId = order.UserId,
-                Items = order.Items, 
+                Items = _items, 
                 TotalPrice = _totalPrice,
                 DeliveryAddress = order.DeliveryAddress,
                 Status = OrderStatus.Pending,

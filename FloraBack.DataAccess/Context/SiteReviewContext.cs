@@ -24,9 +24,15 @@ namespace FloraBack.DataAccess.Context
             modelBuilder.Entity<UserData>()
                 .ToTable("Users");
 
+            modelBuilder.Entity<UserData>()
+                .Ignore(u => u.Orders);
+
+            modelBuilder.Entity<UserData>()
+                .Ignore(u => u.SiteReview);
+
             modelBuilder.Entity<SiteReviewData>()
                 .HasOne(s => s.User)
-                .WithOne(u => u.SiteReview)
+                .WithOne()
                 .HasForeignKey<SiteReviewData>(s => s.UserId)
                 .OnDelete(DeleteBehavior.NoAction);
         }

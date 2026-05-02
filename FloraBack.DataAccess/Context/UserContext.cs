@@ -21,17 +21,17 @@ namespace FloraBack.DataAccess.Context
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<OrderData>()
-                .ToTable("Orders");
-
             modelBuilder.Entity<SiteReviewData>()
                 .ToTable("SiteReviews");
 
+            modelBuilder.Entity<OrderData>()
+                .ToTable("Orders");
+            
             modelBuilder.Entity<UserData>()
                 .HasMany(u => u.Orders)
                 .WithOne(o => o.User)
                 .HasForeignKey(o => o.UserId)
-                .OnDelete(DeleteBehavior.NoAction);
+                .OnDelete(DeleteBehavior.NoAction);    
 
             modelBuilder.Entity<UserData>()
                 .HasOne(u => u.SiteReview)

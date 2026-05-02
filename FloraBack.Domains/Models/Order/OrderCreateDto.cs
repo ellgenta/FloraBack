@@ -14,7 +14,7 @@ namespace FloraBack.Domains.Models.Order
     {
         public int UserId { get; set; }
 
-        public List<OrderItem> Items { get; set; }
+        public List<OrderItemInfoDto> Items { get; set; }
 
         public AddressData DeliveryAddress { get; set; }
     }

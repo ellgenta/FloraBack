@@ -25,7 +25,7 @@ namespace FloraBack.Domains.Entities.Order
 
         public int UserId { get; set; }
 
-        public List<OrderItem> Items { get; set; }
+        public List<OrderItemData> Items { get; set; }
 
         [Range(0, double.MaxValue)]
         public decimal TotalPrice { get; set; }
