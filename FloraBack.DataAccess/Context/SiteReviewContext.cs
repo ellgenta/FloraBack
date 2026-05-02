@@ -26,8 +26,8 @@ namespace FloraBack.DataAccess.Context
 
             modelBuilder.Entity<SiteReviewData>()
                 .HasOne(s => s.User)
-                .WithMany(u => u.SiteReviews)
-                .HasForeignKey(s => s.UserId)
+                .WithOne(u => u.SiteReview)
+                .HasForeignKey<SiteReviewData>(s => s.UserId)
                 .OnDelete(DeleteBehavior.NoAction);
         }
     }

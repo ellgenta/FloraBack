@@ -5,7 +5,7 @@ using FloraBack.Domains.Models.Cart;
 
 namespace FloraBack.BusinessLogic.Functions.Cart
 {
-    public class CartFlow : CartActions, ICart
+    public class CartFlow : CartActions, ICartActions
     {
         public CartDto? GetCartAction()
         {

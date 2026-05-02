@@ -3,7 +3,7 @@ using FloraBack.Domains.Models.Cart;
 
 namespace FloraBack.BusinessLogic.Interface
 {
-    public interface ICart
+    public interface ICartActions
     {
         CartDto? GetCartAction();
         CartDto? AddItemToCartAction(CartItem item);

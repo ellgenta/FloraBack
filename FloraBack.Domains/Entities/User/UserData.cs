@@ -45,7 +45,7 @@ namespace FloraBack.Domains.Entities.User
         public List<OrderData>? Orders { get; set; }
 
         [JsonIgnore]
-        public List<SiteReviewData>? SiteReviews { get; set; }
+        public SiteReviewData? SiteReview { get; set; }
 
         public bool IsActive { get; set; } //unhandled yet for the GET operation
     }

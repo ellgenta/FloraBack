@@ -1,4 +1,5 @@
 ﻿using FloraBack.Domains.Entities.Order;
+using FloraBack.Domains.Entities.SiteReview;
 using FloraBack.Domains.Entities.User;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -35,7 +36,7 @@ namespace FloraBack.DataAccess.Context
                 .HasOne(o => o.User)
                 .WithMany(u => u.Orders)
                 .HasForeignKey(o => o.UserId)
-                .OnDelete(DeleteBehavior.NoAction);
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

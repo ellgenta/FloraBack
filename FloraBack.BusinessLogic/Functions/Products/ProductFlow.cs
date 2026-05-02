@@ -6,7 +6,7 @@ using FloraBack.Domains.Models.Product;
 
 namespace FloraBack.BusinessLogic.Functions.Products
 {
-    public class ProductFlow : ProductAction, IProduct
+    public class ProductFlow : ProductAction, IProductActions
     {
         public List<ProductDto> GetAllProductsAction()
         {

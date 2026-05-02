@@ -20,7 +20,7 @@ namespace FloraBack.BusinessLogic.Core.User
 
             using (var db = new UserContext())
             {
-                _UserRepo = db.Users.Include(u => u.Orders).Include(u => u.SiteReviews).ToList();
+                _UserRepo = db.Users.ToList();
             }
 
             return _UserRepo;
@@ -30,7 +30,7 @@ namespace FloraBack.BusinessLogic.Core.User
         {
             using (var db = new UserContext())
             {
-                var _user = db.Users.Include(u => u.Orders).Include(u => u.SiteReviews).FirstOrDefault(x => x.Id == id);
+                var _user = db.Users.Include(u => u.Orders).Include(u => u.SiteReview).FirstOrDefault(x => x.Id == id);
                 //maybe Where(x => x.IsActive == true)
 
                 return _user;
@@ -41,7 +41,7 @@ namespace FloraBack.BusinessLogic.Core.User
         {
             using (var db = new UserContext())
             {
-                var _user = db.Users.FirstOrDefault(x => x.Id == user.Id || x.Email == user.Email);
+                var _user = db.Users.FirstOrDefault(x => x.Email == user.Email);
                 
                 if (_user != null)
                 {
@@ -93,7 +93,7 @@ namespace FloraBack.BusinessLogic.Core.User
             {
                 var _user = db.Users.FirstOrDefault(x => x.Id == user.Id && x.IsActive == true);
 
-                if (_user == null || db.Users.Any(u => u.Email.Equals(user.Email))) 
+                if (_user == null || db.Users.Any(u => u.Email.Equals(user.Email) && u.Id != user.Id)) 
                 {
                     return null;
                 }
@@ -104,6 +104,8 @@ namespace FloraBack.BusinessLogic.Core.User
                 _user.DefaultAddress = user.DefaultAddress;
                 _user.DefaultPaymentMethod = user.DefaultPaymentMethod;
                 _user.UpdatedAt = DateTime.Now;
+
+                db.SaveChanges();
 
                 return _user;
             }

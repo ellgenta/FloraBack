@@ -54,6 +54,8 @@ namespace FloraBack.BusinessLogic.Core.Order
 
         public OrderData ExecuteCreateOrderAction(OrderData order)
         {
+            //should handle user's Id and IsActive 
+
             var _newOrder = new OrderData()
             {
                 UserId = order.UserId,

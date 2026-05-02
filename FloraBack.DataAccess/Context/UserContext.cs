@@ -34,9 +34,9 @@ namespace FloraBack.DataAccess.Context
                 .OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Entity<UserData>()
-                .HasMany(u => u.SiteReviews)
+                .HasOne(u => u.SiteReview)
                 .WithOne(s => s.User)
-                .HasForeignKey(s => s.UserId)
+                .HasForeignKey<SiteReviewData>(s => s.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
         }
     }

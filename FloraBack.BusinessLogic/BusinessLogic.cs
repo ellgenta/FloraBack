@@ -18,7 +18,7 @@ namespace FloraBack.BusinessLogic
             return new AuthFlow();
         }
 
-        public IProduct GetProductActions()
+        public IProductActions GetProductActions()
         {
             return new ProductFlow();
         }
@@ -38,7 +38,7 @@ namespace FloraBack.BusinessLogic
             return new SiteReviewFlow();
         }
 
-        public ICart GetCartActions()
+        public ICartActions GetCartActions()
         {
             return new CartFlow();
         }

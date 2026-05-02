@@ -8,7 +8,7 @@ namespace FloraBack.Api.Controller
     [ApiController]
     public class CartController : ControllerBase
     {
-        private ICart _cart;
+        private ICartActions _cart;
 
         public CartController()
         {

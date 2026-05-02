@@ -11,7 +11,7 @@ namespace FloraBack.Api.Controller
     [ApiController]
     public class ProductController : ControllerBase
     {
-        private IProduct _product;
+        private IProductActions _product;
 
         public ProductController()
         {

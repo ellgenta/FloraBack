@@ -9,7 +9,7 @@ using FloraBack.Domains.Models.Product;
 
 namespace FloraBack.BusinessLogic.Interface
 {
-    public interface IProduct
+    public interface IProductActions
     {
         List<ProductDto> GetAllProductsAction();
         ProductDto? GetProductByIdAction(int id);
