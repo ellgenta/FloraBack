@@ -1,5 +1,6 @@
 ﻿using System;
 using FloraBack.Domains.Entities.SiteReview;
+using FloraBack.Domains.Models.SiteReview;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,7 +12,7 @@ namespace FloraBack.BusinessLogic.Core.SiteReview
 {
     public class SiteReviewActions 
     {
-        public SiteReviewData ExecuteCreateSiteReviewAction(SiteReviewData review)
+        public SiteReviewData ExecuteCreateSiteReviewAction(SiteReviewCreateDto review)
         {
             var _newReview = new SiteReviewData()
             {

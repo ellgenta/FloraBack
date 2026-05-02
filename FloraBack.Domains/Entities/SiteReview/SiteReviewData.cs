@@ -21,10 +21,8 @@ namespace FloraBack.Domains.Entities.SiteReview
         public int UserId { get; set; }
 
         [ForeignKey("UserId")]
-        [JsonIgnore]
-        public UserData? User { get; set; }
+        public UserData User { get; set; }
 
-        [StringLength(300)]
         public string Content { get; set; }
 
         public ReviewMark Mark { get; set; }

@@ -19,7 +19,7 @@ namespace FloraBack.Api.Controller
         }
 
         [HttpPost]
-        public IActionResult CreateSiteReview([FromBody] SiteReviewData review)
+        public IActionResult CreateSiteReview([FromBody] SiteReviewCreateDto review)
         {
             var _newReview = _siteReviewActions.CreateSiteReviewAction(review);
 

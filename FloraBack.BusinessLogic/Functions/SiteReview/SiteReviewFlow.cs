@@ -13,11 +13,11 @@ namespace FloraBack.BusinessLogic.Functions.SiteReview
 {
     public class SiteReviewFlow : SiteReviewActions, ISiteReviewActions
     {
-        public SiteReviewDto CreateSiteReviewAction(SiteReviewData review)
+        public SiteReviewInfoDto CreateSiteReviewAction(SiteReviewCreateDto review)
         {
             var _newReview = ExecuteCreateSiteReviewAction(review);
 
-            var _reviewDto = new SiteReviewDto()
+            var _reviewDto = new SiteReviewInfoDto()
             {
                 Id = _newReview.Id,
                 UserId = _newReview.UserId,
@@ -28,15 +28,15 @@ namespace FloraBack.BusinessLogic.Functions.SiteReview
             return _reviewDto;
         }
 
-        public List<SiteReviewDto> GetAllSiteReviewsAction()
+        public List<SiteReviewInfoDto> GetAllSiteReviewsAction()
         {
             var _reviews = ExecuteGetAllSiteReviewsAction();
 
-            var _DtoList = new List<SiteReviewDto>();
+            var _DtoList = new List<SiteReviewInfoDto>();
 
             foreach (var _review in _reviews)
             {
-                var _reviewDto = new SiteReviewDto()
+                var _reviewDto = new SiteReviewInfoDto()
                 {
                     Id = _review.Id,
                     UserId = _review.UserId,

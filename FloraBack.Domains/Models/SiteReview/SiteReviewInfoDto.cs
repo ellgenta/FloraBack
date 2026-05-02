@@ -7,11 +7,14 @@ using System.Threading.Tasks;
 
 namespace FloraBack.Domains.Models.SiteReview
 {
-    public class SiteReviewDto
+    public class SiteReviewInfoDto
     {
         public int Id { get; set; }
+
         public int UserId { get; set; }
+
         public string Content { get; set; }
+
         public ReviewMark Mark { get; set; }
     }
 }
