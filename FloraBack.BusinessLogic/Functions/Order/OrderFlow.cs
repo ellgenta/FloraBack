@@ -14,15 +14,15 @@ namespace FloraBack.BusinessLogic.Functions.Order
 {
     public class OrderFlow : OrderActions, IOrderActions
     {
-        public List<OrderDto> GetUserOrdersByIdAction(int userId)
+        public List<OrderInfoDto> GetUserOrdersByIdAction(int userId)
         {
             var _orders = ExecuteGetUserOrdersByIdAction(userId);
 
-            List<OrderDto> _DtoList = new List<OrderDto>();
+            List<OrderInfoDto> _DtoList = new List<OrderInfoDto>();
 
             foreach (var _order in _orders)
             {
-                var _orderDto = new OrderDto()
+                var _orderDto = new OrderInfoDto()
                 {
                     Id = _order.Id,
                     UserId = _order.UserId,
@@ -38,7 +38,7 @@ namespace FloraBack.BusinessLogic.Functions.Order
             return _DtoList;
         }
 
-        public OrderDto? GetOrderByIdAction(int id)
+        public OrderInfoDto? GetOrderByIdAction(int id)
         {
             var _order = ExecuteGetOrderByIdAction(id);
 
@@ -47,7 +47,7 @@ namespace FloraBack.BusinessLogic.Functions.Order
                 return null;
             }
 
-            var _orderDto = new OrderDto()
+            var _orderDto = new OrderInfoDto()
             {
                 Id = _order.Id,
                 UserId = _order.UserId,
@@ -60,7 +60,7 @@ namespace FloraBack.BusinessLogic.Functions.Order
             return _orderDto;
         }
 
-        public OrderDto? UpdateOrderStatusAction(int id, OrderStatus newStatus)
+        public OrderInfoDto? UpdateOrderStatusAction(int id, OrderStatus newStatus)
         {
             var _order = ExecuteUpdateOrderStatusAction(id, newStatus);
 
@@ -69,7 +69,7 @@ namespace FloraBack.BusinessLogic.Functions.Order
                 return null;
             }
 
-            var _orderDto = new OrderDto()
+            var _orderDto = new OrderInfoDto()
             {
                 Id = _order.Id,
                 UserId = _order.UserId,
@@ -82,11 +82,11 @@ namespace FloraBack.BusinessLogic.Functions.Order
             return _orderDto;
         }
 
-        public OrderDto CreateOrderAction(OrderData order)
+        public OrderInfoDto CreateOrderAction(OrderCreateDto order)
         {
             var _newOrder = ExecuteCreateOrderAction(order);
 
-            var _orderDto = new OrderDto()
+            var _orderDto = new OrderInfoDto()
             {
                 Id = _newOrder.Id,
                 UserId = _newOrder.UserId,

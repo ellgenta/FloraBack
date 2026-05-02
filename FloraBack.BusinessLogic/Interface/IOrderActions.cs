@@ -11,12 +11,12 @@ namespace FloraBack.BusinessLogic.Interface
 {
     public interface IOrderActions
     {
-        public List<OrderDto> GetUserOrdersByIdAction(int userId);
+        public List<OrderInfoDto> GetUserOrdersByIdAction(int userId);
 
-        public OrderDto? GetOrderByIdAction(int id);
+        public OrderInfoDto? GetOrderByIdAction(int id);
 
-        public OrderDto? UpdateOrderStatusAction(int id, OrderStatus newStatus);
+        public OrderInfoDto? UpdateOrderStatusAction(int id, OrderStatus newStatus);
 
-        public OrderDto CreateOrderAction(OrderData order);
+        public OrderInfoDto CreateOrderAction(OrderCreateDto order);
     }
 }

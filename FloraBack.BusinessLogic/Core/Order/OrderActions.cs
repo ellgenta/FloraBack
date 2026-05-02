@@ -52,15 +52,22 @@ namespace FloraBack.BusinessLogic.Core.Order
             }
         }
 
-        public OrderData ExecuteCreateOrderAction(OrderData order)
+        public OrderData ExecuteCreateOrderAction(OrderCreateDto order)
         {
             //should handle user's Id and IsActive 
+
+            decimal _totalPrice = 0;
+
+            foreach (var _item in order.Items)
+            {
+                _totalPrice += (_item.Price * _item.Quantity);
+            }
 
             var _newOrder = new OrderData()
             {
                 UserId = order.UserId,
                 Items = order.Items, 
-                TotalPrice = order.TotalPrice,
+                TotalPrice = _totalPrice,
                 DeliveryAddress = order.DeliveryAddress,
                 Status = OrderStatus.Pending,
                 CreatedAt = DateTime.Now,

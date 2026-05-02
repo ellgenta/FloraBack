@@ -18,8 +18,7 @@ namespace FloraBack.Domains.Entities.Order
         public int OrderId { get; set; }
 
         [ForeignKey("OrderId")]
-        [JsonIgnore]
-        public OrderData? Order { get; set; }
+        public OrderData Order { get; set; }
 
         public int ProductId { get; set; }
 

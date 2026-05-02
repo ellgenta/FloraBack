@@ -1,5 +1,6 @@
 ﻿using FloraBack.BusinessLogic.Interface;
 using FloraBack.Domains.Entities.Order;
+using FloraBack.Domains.Models.Order;
 using FloraBack.Domains.Enums;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -52,7 +53,7 @@ namespace FloraBack.Api.Controller
         }
 
         [HttpPost]
-        public IActionResult CreateOrder([FromBody] OrderData order)
+        public IActionResult CreateOrder([FromBody] OrderCreateDto order)
         {
             var _order = _orderActions.CreateOrderAction(order);
 
