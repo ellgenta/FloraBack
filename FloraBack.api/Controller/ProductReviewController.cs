@@ -1,5 +1,5 @@
 ﻿using FloraBack.BusinessLogic.Interface;
-using FloraBack.Domains.Entities.ProductReview;
+using FloraBack.Domains.Models.ProductReview;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FloraBack.Api.Controller
@@ -17,7 +17,7 @@ namespace FloraBack.Api.Controller
         }
 
         [HttpPost]
-        public IActionResult CreateProductReview([FromBody] ProductReviewData review)
+        public IActionResult CreateProductReview([FromBody] ProductReviewDto review)
         {
             var _newReview = _productReviewActions.CreateProductReviewAction(review);
 

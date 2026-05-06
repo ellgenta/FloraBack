@@ -7,9 +7,17 @@ namespace FloraBack.BusinessLogic.Functions.ProductReview
 {
     public class ProductReviewFlow : ProductReviewActions, IProductReviewActions
     {
-        public ProductReviewDto CreateProductReviewAction(ProductReviewData review)
+        public ProductReviewDto CreateProductReviewAction(ProductReviewDto review)
         {
-            var _newReview = ExecuteCreateProductReviewAction(review);
+            var reviewData = new ProductReviewData()
+            {
+                UserId = review.UserId,
+                ProductId = review.ProductId,
+                Content = review.Content,
+                Mark = review.Mark
+            };
+
+            var _newReview = ExecuteCreateProductReviewAction(reviewData);
 
             var _reviewDto = new ProductReviewDto()
             {

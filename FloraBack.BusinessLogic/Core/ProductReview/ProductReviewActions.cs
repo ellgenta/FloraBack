@@ -1,19 +1,16 @@
 ﻿using FloraBack.Domains.Entities.ProductReview;
 using FloraBack.Domains.Models.ProductReview;
+using FloraBack.DataAccess.Context;
+
 
 namespace FloraBack.BusinessLogic.Core.ProductReview
 {
     public class ProductReviewActions
     {
-        static List<ProductReviewData> _ProductReviewRepo = new List<ProductReviewData>();
-
-        static int nextId = 1;
-
         public ProductReviewData ExecuteCreateProductReviewAction(ProductReviewData review)
         {
             var _newReview = new ProductReviewData()
             {
-                Id = nextId++,
                 UserId = review.UserId,
                 ProductId = review.ProductId,
                 Content = review.Content,
@@ -22,22 +19,24 @@ namespace FloraBack.BusinessLogic.Core.ProductReview
                 UpdatedAt = DateTime.Now,
             };
 
-            _ProductReviewRepo.Add(_newReview);
+            using (var db = new ProductReviewContext())
+            {
+                db.ProductReviews.Add(_newReview);
+                db.SaveChanges();
+            }
 
             return _newReview;
         }
 
-
         public List<ProductReviewData> ExecuteGetProductReviewsByProductIdAction(int productId)
         {
-            List<ProductReviewData> _productReviews = new List<ProductReviewData>();
+            var _productReviews = new List<ProductReviewData>();
 
-            foreach (var _review in _ProductReviewRepo)
+            using (var db = new ProductReviewContext())
             {
-                if (_review.ProductId == productId)
-                {
-                    _productReviews.Add(_review);
-                }
+                _productReviews = db.ProductReviews
+                    .Where(r => r.ProductId == productId)
+                    .ToList();
             }
 
             return _productReviews;
@@ -45,12 +44,18 @@ namespace FloraBack.BusinessLogic.Core.ProductReview
 
         public bool ExecuteDeleteProductReviewAction(int id)
         {
-            var _reviewToDelete = _ProductReviewRepo.FirstOrDefault(r => r.Id == id);
+            ProductReviewData _reviewToDelete;
 
-            if (_reviewToDelete != null)
+            using (var db = new ProductReviewContext())
             {
-                _ProductReviewRepo.Remove(_reviewToDelete);
-                return true;
+                _reviewToDelete = db.ProductReviews.FirstOrDefault(r => r.Id == id);
+
+                if (_reviewToDelete != null)
+                {
+                    db.ProductReviews.Remove(_reviewToDelete);
+                    db.SaveChanges();
+                    return true;
+                }
             }
 
             return false;
