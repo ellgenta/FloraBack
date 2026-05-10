@@ -3,7 +3,8 @@ using FloraBack.Domains.Enums;
 using FloraBack.Domains.Models.Product;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using FloraBack.Domains.Entities.Product;
+
+
 
 namespace FloraBack.Api.Controller
 {
@@ -61,7 +62,7 @@ namespace FloraBack.Api.Controller
         }
 
         [HttpPost("create")]
-        public IActionResult CreateProduct([FromBody] ProductData product)
+        public IActionResult CreateProduct([FromBody] ProductDto product)
         {
             if (product == null)
             {
@@ -79,7 +80,7 @@ namespace FloraBack.Api.Controller
         }
 
         [HttpPut("update/{id}")]
-        public IActionResult UpdateProduct(int id, [FromBody] ProductData product)
+        public IActionResult UpdateProduct(int id, [FromBody] ProductDto product)
         {
             if (product == null)
             {

@@ -15,8 +15,8 @@ namespace FloraBack.BusinessLogic.Interface
         ProductDto? GetProductByIdAction(int id);
         List<ProductDto> GetProductsByCategoryAction(ProductCategory category);
         List<ProductDto> GetProductsBySubCategoryAction(string subCategory);
-        ProductDto CreateProductAction(ProductData product);
-        ProductDto? UpdateProductAction(int id, ProductData product);
+        ProductDto CreateProductAction(ProductDto product);
+        ProductDto? UpdateProductAction(int id, ProductDto product);
         bool DeleteProductAction(int id);
     }
 }
