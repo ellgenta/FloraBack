@@ -1,5 +1,6 @@
 ﻿using FloraBack.Domains.Entities.Product;
 using FloraBack.Domains.Entities.Refs;
+using FloraBack.Domains.Entities.User;
 using FloraBack.Domains.Enums;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -14,6 +15,9 @@ namespace FloraBack.Domains.Entities.ProductReview
         public int Id { get; set; }
 
         public int UserId { get; set; }
+
+        [JsonIgnore]
+        public UserData? User { get; set; }
 
         public int ProductId { get; set; }
 
