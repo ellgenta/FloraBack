@@ -1,5 +1,5 @@
 ﻿using FloraBack.BusinessLogic.Interface;
-using FloraBack.Domains.Entities.Cart;
+using FloraBack.Domains.Models.Cart;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FloraBack.Api.Controller
@@ -30,7 +30,7 @@ namespace FloraBack.Api.Controller
         }
 
         [HttpPost("items")]
-        public IActionResult AddItemToCart([FromBody] CartItem item)
+        public IActionResult AddItemToCart([FromBody] CartItemDto item)
         {
             if (item == null)
             {
@@ -63,7 +63,7 @@ namespace FloraBack.Api.Controller
         }
 
         [HttpPut("items/{itemId}")]
-        public IActionResult UpdateCartItem(int itemId, [FromBody] CartItem item)
+        public IActionResult UpdateCartItem(int itemId, [FromBody] CartItemDto item)
         {
             if (item == null)
             {

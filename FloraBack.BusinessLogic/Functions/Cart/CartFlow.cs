@@ -16,70 +16,67 @@ namespace FloraBack.BusinessLogic.Functions.Cart
                 return null;
             }
 
-            var _cartDto = new CartDto()
-            {
-                Id = _cart.Id,
-                UserId = _cart.UserId,
-                Items = _cart.Items,
-                TotalPrice = _cart.TotalPrice,
-                Status = _cart.Status,
-            };
-
-            return _cartDto;
+            return MapToDto(_cart);
         }
 
-        public CartDto? AddItemToCartAction(CartItem item)
+        public CartDto? AddItemToCartAction(CartItemDto item)
         {
-            var _cart = ExecuteAddItemToCartAction(item);
+            var cartItem = MapToData(item);
+
+            var _cart = ExecuteAddItemToCartAction(cartItem);
 
             if (_cart == null)
             {
                 return null;
             }
 
-            var _cartDto = new CartDto()
-            {
-                Id = _cart.Id,
-                UserId = _cart.UserId,
-                Items = _cart.Items,
-                TotalPrice = _cart.TotalPrice,
-                Status = _cart.Status,
-            };
-
-            return _cartDto;
+            return MapToDto(_cart);
         }
 
-        public CartDto? UpdateCartItemAction(int itemId, CartItem item)
+        public CartDto? UpdateCartItemAction(int itemId, CartItemDto item)
         {
-            var _cart = ExecuteUpdateCartItemAction(itemId, item);
+            var cartItem = MapToData(item);
+
+            var _cart = ExecuteUpdateCartItemAction(itemId, cartItem);
 
             if (_cart == null)
             {
                 return null;
             }
 
-            var _cartDto = new CartDto()
-            {
-                Id = _cart.Id,
-                UserId = _cart.UserId,
-                Items = _cart.Items,
-                TotalPrice = _cart.TotalPrice,
-                Status = _cart.Status,
-            };
-
-            return _cartDto;
+            return MapToDto(_cart);
         }
 
         public bool DeleteCartItemAction(int itemId)
         {
-            var wasDeleted = ExecuteDeleteCartItemAction(itemId);
-            return wasDeleted;
+            return ExecuteDeleteCartItemAction(itemId);
         }
 
         public bool ClearCartAction()
         {
-            var wasCleared = ExecuteClearCartAction();
-            return wasCleared;
+            return ExecuteClearCartAction();
+        }
+
+        private CartDto MapToDto(CartData cart)
+        {
+            return new CartDto()
+            {
+                Id = cart.Id,
+                UserId = cart.UserId,
+                Items = cart.Items,
+                TotalPrice = cart.TotalPrice,
+                Status = cart.Status,
+            };
+        }
+
+        private CartItem MapToData(CartItemDto item)
+        {
+            return new CartItem()
+            {
+                ProductId = item.ProductId,
+                Quantity = item.Quantity,
+                UnitPrice = item.UnitPrice
+            };
         }
     }
 }

@@ -6,8 +6,8 @@ namespace FloraBack.BusinessLogic.Interface
     public interface ICartActions
     {
         CartDto? GetCartAction();
-        CartDto? AddItemToCartAction(CartItem item);
-        CartDto? UpdateCartItemAction(int itemId, CartItem item);
+        CartDto? AddItemToCartAction(CartItemDto item);
+        CartDto? UpdateCartItemAction(int itemId, CartItemDto item);
         bool DeleteCartItemAction(int itemId);
         bool ClearCartAction();
 
