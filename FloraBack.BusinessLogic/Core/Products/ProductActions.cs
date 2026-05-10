@@ -1,118 +1,136 @@
-﻿using FloraBack.BusinessLogic.Interface;
+﻿using FloraBack.DataAccess.Context;
 using FloraBack.Domains.Entities.Product;
 using FloraBack.Domains.Enums;
-using FloraBack.Domains.Models.Product;
+using Microsoft.EntityFrameworkCore;
 
 namespace FloraBack.BusinessLogic.Core.Products
 {
     public class ProductAction
     {
-        static List<ProductData> _DataRepo = new List<ProductData>();
-        static int _nextId = 1;
         public List<ProductData> ExecuteGetAllProductsAction()
         {
-            return _DataRepo;
+            using (var db = new ProductContext())
+            {
+                return db.Products
+                    .Include(p => p.Images)
+                    .ToList();
+            }
         }
 
         public ProductData? ExecuteGetProductByIdAction(int id)
         {
-            foreach (var _product in _DataRepo)
+            using (var db = new ProductContext())
             {
-                if (_product.Id == id)
-                {
-                    return _product;
-                }
+                return db.Products
+                    .Include(p => p.Images)
+                    .FirstOrDefault(p => p.Id == id);
             }
-
-            return null;
         }
 
         public List<ProductData> ExecuteGetProductsByCategoryAction(ProductCategory category)
         {
-            var _products = new List<ProductData>();
-
-            foreach (var _product in _DataRepo)
+            using (var db = new ProductContext())
             {
-                if (_product.Category != null && _product.Category.Name == category)
-                {
-                    _products.Add(_product);
-                }
+                return db.Products
+                    .Include(p => p.Images)
+                    .Where(p => p.Category.Name == category)
+                    .ToList();
             }
-
-            return _products;
         }
 
         public List<ProductData> ExecuteGetProductsBySubCategoryAction(string subCategory)
         {
-            var _products = new List<ProductData>();
-
-            foreach (var _product in _DataRepo) {
-                if (_product.Category != null &&
-                    _product.Category.SubCategories != null)
-                {
-                    foreach (var _subCategory in _product.Category.SubCategories)
-                    {
-                        if (_subCategory.Equals(subCategory, StringComparison.OrdinalIgnoreCase))
-                        {
-                            _products.Add(_product);
-                            break;
-                        }
-                    }
-                }
+            using (var db = new ProductContext())
+            {
+                return db.Products
+                    .Include(p => p.Images)
+                    .Where(p => p.SubCategory.ToLower() == subCategory.ToLower())
+                    .ToList();
             }
-            return _products;
         }
-
 
         public ProductData? ExecuteCreateProductAction(ProductData product)
         {
-            var _newProduct = new ProductData()
+            var newProduct = new ProductData()
             {
-                Id = _nextId++,
                 Name = product.Name,
                 Description = product.Description,
                 Category = product.Category,
-                Images = product.Images,
+                SubCategory = product.SubCategory,
+                Images = product.Images ?? new List<ProductImgData>(),
                 Price = product.Price,
                 Status = ProductStatus.Active,
                 CreatedAt = DateTime.Now,
                 UpdatedAt = DateTime.Now
             };
-            _DataRepo.Add(_newProduct);
-            return _newProduct;
+
+            using (var db = new ProductContext())
+            {
+                db.Products.Add(newProduct);
+                db.SaveChanges();
+            }
+
+            return newProduct;
         }
 
         public ProductData? ExecuteUpdateProductAction(int id, ProductData product)
         {
-            foreach (var _product in _DataRepo)
+            using (var db = new ProductContext())
             {
-                if (_product.Id == id)
-                {
-                    _product.Name = product.Name;
-                    _product.Description = product.Description;
-                    _product.Category = product.Category;
-                    _product.Images = product.Images;
-                    _product.Price = product.Price;
-                    _product.Status = product.Status;
-                    _product.UpdatedAt = DateTime.Now;
+                var existingProduct = db.Products
+                    .Include(p => p.Images)
+                    .FirstOrDefault(p => p.Id == id);
 
-                    return _product;
+                if (existingProduct == null)
+                {
+                    return null;
                 }
+
+                existingProduct.Name = product.Name;
+                existingProduct.Description = product.Description;
+                existingProduct.Category = product.Category;
+                existingProduct.SubCategory = product.SubCategory;
+                existingProduct.Price = product.Price;
+                existingProduct.UpdatedAt = DateTime.Now;
+
+                existingProduct.Images.Clear();
+
+                if (product.Images != null)
+                {
+                    foreach (var image in product.Images)
+                    {
+                        existingProduct.Images.Add(new ProductImgData()
+                        {
+                            Url = image.Url,
+                            ProductId = existingProduct.Id
+                        });
+                    }
+                }
+
+                db.SaveChanges();
+
+                return existingProduct;
             }
-            return null;
         }
 
         public bool ExecuteDeleteProductAction(int id)
         {
-            foreach (var _product in _DataRepo)
+            using (var db = new ProductContext())
             {
-                if (_product.Id == id)
+                var product = db.Products
+                    .Include(p => p.Images)
+                    .FirstOrDefault(p => p.Id == id);
+
+                if (product == null)
                 {
-                    _DataRepo.Remove(_product);
-                    return true;
+                    return false;
                 }
+
+                db.Products.Remove(product);
+                db.SaveChanges();
+
+                return true;
             }
-            return false;
         }
     }
 }

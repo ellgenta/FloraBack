@@ -100,6 +100,7 @@ namespace FloraBack.BusinessLogic.Functions.Products
                 Name = product.Name,
                 Description = product.Description,
                 Category = product.Category,
+                SubCategory = product.SubCategory,
                 Images = product.Images,
                 Price = product.Price
             };
@@ -113,6 +114,7 @@ namespace FloraBack.BusinessLogic.Functions.Products
                 Name = product.Name,
                 Description = product.Description,
                 Category = product.Category,
+                SubCategory = product.SubCategory,
                 Images = product.Images,
                 Price = product.Price,
                 Status = ProductStatus.Active,
