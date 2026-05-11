@@ -69,9 +69,9 @@ namespace FloraBack.BusinessLogic.Functions.Cart
             };
         }
 
-        private CartItem MapToData(CartItemDto item)
+        private CartItemData MapToData(CartItemDto item)
         {
-            return new CartItem()
+            return new CartItemData()
             {
                 ProductId = item.ProductId,
                 Quantity = item.Quantity,

@@ -12,6 +12,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 using FloraBack.Domains.Entities.Order;
 using System.Text.Json.Serialization;
 using FloraBack.Domains.Entities.SiteReview;
+using FloraBack.Domains.Entities.ProductReview;
+using FloraBack.Domains.Entities.Cart;
 
 namespace FloraBack.Domains.Entities.User
 {
@@ -42,11 +44,17 @@ namespace FloraBack.Domains.Entities.User
 
         public GenderTypes Gender { get; set; }
 
-        [JsonIgnore]
-        public List<OrderData>? Orders { get; set; }
+        //[JsonIgnore]
+        //public List<OrderData>? Orders { get; set; }
 
         [JsonIgnore]
         public SiteReviewData? SiteReview { get; set; }
+
+        //[JsonIgnore]
+        //public List<ProductReviewData>? ProductReviews { get; set; }
+
+        //[JsonIgnore]
+        //public CartData? Cart { get; set; }
 
         public bool IsActive { get; set; } //unhandled yet for the GET operation
     }

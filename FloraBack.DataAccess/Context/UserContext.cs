@@ -1,4 +1,6 @@
-﻿using FloraBack.Domains.Entities.Order;
+﻿using FloraBack.Domains.Entities.Cart;
+using FloraBack.Domains.Entities.Order;
+using FloraBack.Domains.Entities.ProductReview;
 using FloraBack.Domains.Entities.SiteReview;
 using FloraBack.Domains.Entities.User;
 using Microsoft.EntityFrameworkCore;
@@ -21,12 +23,28 @@ namespace FloraBack.DataAccess.Context
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<SiteReviewData>()
-                .ToTable("SiteReviews");
+            /*
+            modelBuilder.Ignore<OrderItemData>();
+
+            modelBuilder.Ignore<CartItemData>();
 
             modelBuilder.Entity<OrderData>()
                 .ToTable("Orders");
-            
+
+            modelBuilder.Entity<CartData>()
+                .ToTable("Carts");
+            */
+
+            modelBuilder.Entity<SiteReviewData>()
+                .ToTable("SiteReviews");
+
+            modelBuilder.Entity<UserData>()
+                .HasOne(u => u.SiteReview)
+                .WithOne(s => s.User)
+                .HasForeignKey<SiteReviewData>(s => s.UserId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            /*
             modelBuilder.Entity<UserData>()
                 .HasMany(u => u.Orders)
                 .WithOne(o => o.User)
@@ -34,10 +52,11 @@ namespace FloraBack.DataAccess.Context
                 .OnDelete(DeleteBehavior.NoAction);    
 
             modelBuilder.Entity<UserData>()
-                .HasOne(u => u.SiteReview)
-                .WithOne(s => s.User)
-                .HasForeignKey<SiteReviewData>(s => s.UserId)
+                .HasOne(u => u.Cart)
+                .WithOne(c => c.User)
+                .HasForeignKey<CartData>(c => c.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
+            */
         }
     }
 }

@@ -19,7 +19,7 @@ namespace FloraBack.BusinessLogic.Core.Cart
             }
         }
 
-        public CartData? ExecuteAddItemToCartAction(CartItem item)
+        public CartData? ExecuteAddItemToCartAction(CartItemData item)
         {
             using (var db = new CartContext())
             {
@@ -32,7 +32,7 @@ namespace FloraBack.BusinessLogic.Core.Cart
                     cart = new CartData()
                     {
                         UserId = 1,
-                        Items = new List<CartItem>(),
+                        Items = new List<CartItemData>(),
                         TotalPrice = 0,
                         Status = CartStatus.Active,
                         CreatedAt = DateTime.Now,
@@ -52,7 +52,7 @@ namespace FloraBack.BusinessLogic.Core.Cart
                 }
                 else
                 {
-                    var newCartItem = new CartItem()
+                    var newCartItem = new CartItemData()
                     {
                         CartId = cart.Id,
                         ProductId = item.ProductId,
@@ -73,7 +73,7 @@ namespace FloraBack.BusinessLogic.Core.Cart
             }
         }
 
-        public CartData? ExecuteUpdateCartItemAction(int itemId, CartItem item)
+        public CartData? ExecuteUpdateCartItemAction(int itemId, CartItemData item)
         {
             using (var db = new CartContext())
             {

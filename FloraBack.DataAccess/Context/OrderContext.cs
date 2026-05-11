@@ -1,4 +1,5 @@
-﻿using FloraBack.Domains.Entities.Order;
+﻿using FloraBack.Domains.Entities.Cart;
+using FloraBack.Domains.Entities.Order;
 using FloraBack.Domains.Entities.SiteReview;
 using FloraBack.Domains.Entities.User;
 using Microsoft.EntityFrameworkCore;
@@ -23,6 +24,10 @@ namespace FloraBack.DataAccess.Context
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Ignore<CartData>();
+
+            modelBuilder.Ignore<SiteReviewData>();
+
             modelBuilder.Entity<UserData>()
                 .ToTable("Users");
 
@@ -32,11 +37,11 @@ namespace FloraBack.DataAccess.Context
                 .HasForeignKey(i => i.OrderId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            modelBuilder.Entity<OrderData>()
-                .HasOne(o => o.User)
-                .WithMany(u => u.Orders)
+            modelBuilder.Entity<UserData>()
+                .HasMany(u => u.Orders)
+                .WithOne(o => o.User)    
                 .HasForeignKey(o => o.UserId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }

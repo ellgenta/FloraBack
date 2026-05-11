@@ -6,7 +6,7 @@ namespace FloraBack.DataAccess.Context
     public class CartContext : DbContext
     {
         public DbSet<CartData> Carts { get; set; }
-        public DbSet<CartItem> CartItems { get; set; }
+        public DbSet<CartItemData> CartItems { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

@@ -1,12 +1,13 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using FloraBack.Domains.Entities.Cart;
+using FloraBack.Domains.Entities.Order;
 using FloraBack.Domains.Entities.SiteReview;
+using FloraBack.Domains.Entities.User;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using FloraBack.Domains.Entities.Order;
-using FloraBack.Domains.Entities.User;
 
 namespace FloraBack.DataAccess.Context
 {
@@ -21,18 +22,16 @@ namespace FloraBack.DataAccess.Context
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Ignore<OrderData>();
+
+            modelBuilder.Ignore<CartData>();
+
             modelBuilder.Entity<UserData>()
                 .ToTable("Users");
 
             modelBuilder.Entity<UserData>()
-                .Ignore(u => u.Orders);
-
-            modelBuilder.Entity<UserData>()
-                .Ignore(u => u.SiteReview);
-
-            modelBuilder.Entity<SiteReviewData>()
-                .HasOne(s => s.User)
-                .WithOne()
+                .HasOne(u => u.SiteReview)
+                .WithOne(s => s.User)
                 .HasForeignKey<SiteReviewData>(s => s.UserId)
                 .OnDelete(DeleteBehavior.NoAction);
         }

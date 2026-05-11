@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using FloraBack.Domains.Entities.Product;
 
 namespace FloraBack.Domains.Entities.Order
 {
@@ -21,6 +22,9 @@ namespace FloraBack.Domains.Entities.Order
         public OrderData Order { get; set; }
 
         public int ProductId { get; set; }
+
+        [ForeignKey("ProductId")]
+        public ProductData Product { get; set; }
 
         public int Quantity { get; set; }
 

@@ -16,13 +16,13 @@ namespace FloraBack.Domains.Entities.ProductReview
 
         public int UserId { get; set; }
 
-        [JsonIgnore]
-        public UserData? User { get; set; }
+        [ForeignKey("UserId")]
+        public UserData User { get; set; }
 
         public int ProductId { get; set; }
 
-        [JsonIgnore]
-        public ProductData? Product { get; set; }
+        [ForeignKey("ProductId")]
+        public ProductData Product { get; set; }
 
         [Required]
         [StringLength(300)]

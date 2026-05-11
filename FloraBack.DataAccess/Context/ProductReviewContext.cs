@@ -17,28 +17,10 @@ namespace FloraBack.DataAccess.Context
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<UserData>()
-                .ToTable("Users", t => t.ExcludeFromMigrations());
-
-            modelBuilder.Entity<UserData>()
+                .ToTable("Users")
+                .Ignore(u => u.SiteReview)
+                .Ignore(u => u.Cart)
                 .Ignore(u => u.Orders);
-
-            modelBuilder.Entity<UserData>()
-                .Ignore(u => u.SiteReview);
-
-            modelBuilder.Entity<UserData>()
-                .Ignore(u => u.DefaultAddress);
-
-            modelBuilder.Entity<ProductData>()
-                .ToTable("Products", t => t.ExcludeFromMigrations());
-
-            modelBuilder.Entity<ProductData>()
-                .Ignore(p => p.Images);
-
-            modelBuilder.Entity<ProductData>()
-                .Ignore(p => p.Description);
-
-            modelBuilder.Entity<ProductData>()
-                .Ignore(p => p.Category);
 
             modelBuilder.Entity<ProductReviewData>()
                 .HasOne(r => r.User)
