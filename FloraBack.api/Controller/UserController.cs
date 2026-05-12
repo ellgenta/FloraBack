@@ -39,7 +39,7 @@ namespace FloraBack.api.Controller
         }
 
         [HttpPost]
-        public IActionResult CreateUser([FromBody] UserData user)
+        public IActionResult CreateUser([FromBody] UserCreateDto user)
         {
             var _user = _userActions.CreateUserAction(user);
 
@@ -65,7 +65,7 @@ namespace FloraBack.api.Controller
         }
 
         [HttpPut("{id}")]
-        public IActionResult UpdateUser(int id, [FromBody] UserData user)
+        public IActionResult UpdateUser(int id, [FromBody] UserCreateDto user)
         {
             var _user = _userActions.UpdateUserAction(id, user);
 

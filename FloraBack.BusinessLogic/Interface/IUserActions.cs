@@ -10,14 +10,14 @@ namespace FloraBack.BusinessLogic.Interface
 {
     public interface IUserActions
     {
-        List<UserDto> GetAllUsersAction();
+        List<UserInfoDto> GetAllUsersAction();
 
-        UserDto? GetUserByIdAction(int id);
+        UserInfoDto? GetUserByIdAction(int id);
 
-        UserDto? CreateUserAction(UserData user);
+        UserInfoDto? CreateUserAction(UserCreateDto user);
 
         bool DeleteUserAction(int id);
 
-        UserDto? UpdateUserAction(int id, UserData user);
+        UserInfoDto? UpdateUserAction(int id, UserCreateDto user);
     }
 }

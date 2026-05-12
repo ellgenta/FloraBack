@@ -12,15 +12,15 @@ namespace FloraBack.BusinessLogic.Functions.User
 {
     public class UserFlow : UserActions, IUserActions
     {
-        public List<UserDto> GetAllUsersAction()
+        public List<UserInfoDto> GetAllUsersAction()
         {
             var _users = ExecuteGetAllUsersAction();
 
-            List<UserDto> _DtoList = new List<UserDto>();
+            List<UserInfoDto> _DtoList = new List<UserInfoDto>();
 
             foreach (var _user in _users)
             {
-                var _userDto = new UserDto()
+                var _userDto = new UserInfoDto()
                 {
                     Id = _user.Id,
                     UserName = _user.UserName,
@@ -34,7 +34,7 @@ namespace FloraBack.BusinessLogic.Functions.User
             return _DtoList;
         }
 
-        public UserDto? GetUserByIdAction(int id)
+        public UserInfoDto? GetUserByIdAction(int id)
         {
             var _user = ExecuteGetUserByIdAction(id);
 
@@ -43,7 +43,7 @@ namespace FloraBack.BusinessLogic.Functions.User
                 return null;
             }
 
-            var _userDto = new UserDto()
+            var _userDto = new UserInfoDto()
             {
                 Id = _user.Id,
                 UserName = _user.UserName,
@@ -54,7 +54,7 @@ namespace FloraBack.BusinessLogic.Functions.User
             return _userDto;
         }
 
-        public UserDto? CreateUserAction(UserData User)
+        public UserInfoDto? CreateUserAction(UserCreateDto User)
         {
             var _user = ExecuteCreateUserAction(User);
 
@@ -63,7 +63,7 @@ namespace FloraBack.BusinessLogic.Functions.User
                 return null;
             }
 
-            var _userDto = new UserDto()
+            var _userDto = new UserInfoDto()
             {
                 Id = _user.Id,
                 UserName = _user.UserName,
@@ -80,7 +80,7 @@ namespace FloraBack.BusinessLogic.Functions.User
             return wasDeleted;
         }
 
-        public UserDto? UpdateUserAction(int id, UserData user)
+        public UserInfoDto? UpdateUserAction(int id, UserCreateDto user)
         {
             var _user = ExecuteUpdateUserAction(id, user);
 
@@ -89,7 +89,7 @@ namespace FloraBack.BusinessLogic.Functions.User
                 return null;
             }
 
-            var _userDto = new UserDto()
+            var _userDto = new UserInfoDto()
             {
                 Id = _user.Id,
                 UserName = _user.UserName,

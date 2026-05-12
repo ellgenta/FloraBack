@@ -36,25 +36,22 @@ namespace FloraBack.Domains.Entities.User
         [EmailAddress]
         public string Email { get; set; }
 
-        public AddressData DefaultAddress { get; set; }
+        public AddressData? DefaultAddress { get; set; }
 
-        public PaymentMethods DefaultPaymentMethod { get; set; }
+        public PaymentMethods? DefaultPaymentMethod { get; set; }
 
         public DateTime DOB { get; set; }
 
         public GenderTypes Gender { get; set; }
 
-        //[JsonIgnore]
-        //public List<OrderData>? Orders { get; set; }
+        //public List<OrderData> Orders { get; set; }
 
         [JsonIgnore]
         public SiteReviewData? SiteReview { get; set; }
 
-        //[JsonIgnore]
-        //public List<ProductReviewData>? ProductReviews { get; set; }
+        //public List<ProductReviewData> ProductReviews { get; set; }
 
-        //[JsonIgnore]
-        //public CartData? Cart { get; set; }
+        //public CartData Cart { get; set; }
 
         public bool IsActive { get; set; } //unhandled yet for the GET operation
     }

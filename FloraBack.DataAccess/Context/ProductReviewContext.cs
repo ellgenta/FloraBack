@@ -16,11 +16,13 @@ namespace FloraBack.DataAccess.Context
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            /*
             modelBuilder.Entity<UserData>()
                 .ToTable("Users")
                 .Ignore(u => u.SiteReview)
                 .Ignore(u => u.Cart)
                 .Ignore(u => u.Orders);
+            */
 
             modelBuilder.Entity<ProductReviewData>()
                 .HasOne(r => r.User)

@@ -37,11 +37,13 @@ namespace FloraBack.DataAccess.Context
                 .HasForeignKey(i => i.OrderId)
                 .OnDelete(DeleteBehavior.Cascade);
 
+            /*
             modelBuilder.Entity<UserData>()
                 .HasMany(u => u.Orders)
                 .WithOne(o => o.User)    
                 .HasForeignKey(o => o.UserId)
                 .OnDelete(DeleteBehavior.NoAction);
+            */
         }
     }
 }

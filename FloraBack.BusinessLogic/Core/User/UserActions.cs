@@ -38,7 +38,7 @@ namespace FloraBack.BusinessLogic.Core.User
             }
         }
 
-        public UserData? ExecuteCreateUserAction(UserData user)
+        public UserData? ExecuteCreateUserAction(UserCreateDto user)
         {
             using (var db = new UserContext())
             {
@@ -88,13 +88,13 @@ namespace FloraBack.BusinessLogic.Core.User
             }
         }
 
-        public UserData? ExecuteUpdateUserAction(int id, UserData user)
+        public UserData? ExecuteUpdateUserAction(int id, UserCreateDto user)
         {
             using (var db = new UserContext())
             {
-                var _user = db.Users.FirstOrDefault(x => x.Id == user.Id && x.IsActive == true);
+                var _user = db.Users.FirstOrDefault(x => x.Id == id && x.IsActive == true);
 
-                if (_user == null || db.Users.Any(u => u.Email.Equals(user.Email) && u.Id != user.Id)) 
+                if (_user == null || db.Users.Any(u => u.Email.Equals(user.Email) && u.Id != id)) 
                 {
                     return null;
                 }
