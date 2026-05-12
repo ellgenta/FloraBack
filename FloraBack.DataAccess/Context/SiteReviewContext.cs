@@ -22,10 +22,6 @@ namespace FloraBack.DataAccess.Context
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Ignore<OrderData>();
-
-            modelBuilder.Ignore<CartData>();
-
             modelBuilder.Entity<UserData>()
                 .ToTable("Users");
 
@@ -34,6 +30,6 @@ namespace FloraBack.DataAccess.Context
                 .WithOne(s => s.User)
                 .HasForeignKey<SiteReviewData>(s => s.UserId)
                 .OnDelete(DeleteBehavior.NoAction);
-        }
+            }
     }
 }

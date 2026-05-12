@@ -23,18 +23,7 @@ namespace FloraBack.DataAccess.Context
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            /*
-            modelBuilder.Ignore<OrderItemData>();
-
-            modelBuilder.Ignore<CartItemData>();
-
-            modelBuilder.Entity<OrderData>()
-                .ToTable("Orders");
-
-            modelBuilder.Entity<CartData>()
-                .ToTable("Carts");
-            */
-
+            
             modelBuilder.Entity<SiteReviewData>()
                 .ToTable("SiteReviews");
 
@@ -44,19 +33,11 @@ namespace FloraBack.DataAccess.Context
                 .HasForeignKey<SiteReviewData>(s => s.UserId)
                 .OnDelete(DeleteBehavior.NoAction);
 
-            /*
             modelBuilder.Entity<UserData>()
                 .HasMany(u => u.Orders)
                 .WithOne(o => o.User)
                 .HasForeignKey(o => o.UserId)
-                .OnDelete(DeleteBehavior.NoAction);    
-
-            modelBuilder.Entity<UserData>()
-                .HasOne(u => u.Cart)
-                .WithOne(c => c.User)
-                .HasForeignKey<CartData>(c => c.UserId)
-                .OnDelete(DeleteBehavior.Cascade);
-            */
+                .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }

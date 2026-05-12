@@ -44,10 +44,9 @@ namespace FloraBack.Domains.Entities.User
 
         public GenderTypes Gender { get; set; }
 
-        //public List<OrderData> Orders { get; set; }
+        public List<OrderData> Orders { get; set; }
 
-        [JsonIgnore]
-        public SiteReviewData? SiteReview { get; set; }
+        public SiteReviewData SiteReview { get; set; }
 
         //public List<ProductReviewData> ProductReviews { get; set; }
 

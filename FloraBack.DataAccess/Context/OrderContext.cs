@@ -24,12 +24,11 @@ namespace FloraBack.DataAccess.Context
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Ignore<CartData>();
-
-            modelBuilder.Ignore<SiteReviewData>();
-
             modelBuilder.Entity<UserData>()
                 .ToTable("Users");
+
+            modelBuilder.Entity<UserData>()
+                .Ignore(u => u.SiteReview);
 
             modelBuilder.Entity<OrderData>()
                 .HasMany(o => o.Items)
@@ -37,13 +36,11 @@ namespace FloraBack.DataAccess.Context
                 .HasForeignKey(i => i.OrderId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            /*
             modelBuilder.Entity<UserData>()
                 .HasMany(u => u.Orders)
                 .WithOne(o => o.User)    
                 .HasForeignKey(o => o.UserId)
                 .OnDelete(DeleteBehavior.NoAction);
-            */
         }
     }
 }
