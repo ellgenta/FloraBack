@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FloraBack.Domains.Entities.Product
 {
@@ -10,6 +11,9 @@ namespace FloraBack.Domains.Entities.Product
         [StringLength(300)]
         public string Description { get; set; }
 
-        public DescriptionAdvanced DescriptionAdvanced { get; set; }
+        public int ProductId { get; set; }
+
+        [ForeignKey("ProductId")]
+        public ProductData Product { get; set; }
     }
 }

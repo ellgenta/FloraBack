@@ -19,15 +19,23 @@ namespace FloraBack.DataAccess.Context
 
         public DbSet<SiteReviewData> SiteReviews { get; set; }
 
+        public DbSet<ProductReviewData> ProductReviews { get; set; }
+
         public DbSet<OrderData> Orders { get; set; }
 
         public DbSet<OrderItemData> OrderItems { get; set; }
 
         public DbSet<ProductData> Products { get; set; }
 
+        public DbSet<ProductDescriptionData> Descriptions { get; set; }
+
+        public DbSet<CategoryData> Categories { get; set; }
+
+        public DbSet<ProductImgData> Images { get; set; }
+
         public DbSet<CartData> Carts { get; set; }
 
-        public DbSet<ProductReviewData> ProductReviews { get; set; }
+        public DbSet<CartItemData> CartItems { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

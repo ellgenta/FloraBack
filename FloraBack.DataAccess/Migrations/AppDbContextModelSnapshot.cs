@@ -84,7 +84,7 @@ namespace FloraBack.DataAccess.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("CartItemData");
+                    b.ToTable("CartItems");
                 });
 
             modelBuilder.Entity("FloraBack.Domains.Entities.Order.OrderData", b =>
@@ -157,29 +157,7 @@ namespace FloraBack.DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("CategoryData");
-                });
-
-            modelBuilder.Entity("FloraBack.Domains.Entities.Product.DescriptionAdvanced", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("H")
-                        .HasColumnType("int");
-
-                    b.Property<int>("L")
-                        .HasColumnType("int");
-
-                    b.Property<int>("W")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("DescriptionAdvanced");
+                    b.ToTable("Categories");
                 });
 
             modelBuilder.Entity("FloraBack.Domains.Entities.Product.ProductData", b =>
@@ -195,9 +173,6 @@ namespace FloraBack.DataAccess.Migrations
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
-
-                    b.Property<int>("DescriptionId")
-                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -222,8 +197,6 @@ namespace FloraBack.DataAccess.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.HasIndex("DescriptionId");
-
                     b.ToTable("Products");
                 });
 
@@ -240,14 +213,15 @@ namespace FloraBack.DataAccess.Migrations
                         .HasMaxLength(300)
                         .HasColumnType("nvarchar(300)");
 
-                    b.Property<int>("DescriptionAdvancedId")
+                    b.Property<int>("ProductId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("DescriptionAdvancedId");
+                    b.HasIndex("ProductId")
+                        .IsUnique();
 
-                    b.ToTable("ProductDescriptionData");
+                    b.ToTable("Descriptions");
                 });
 
             modelBuilder.Entity("FloraBack.Domains.Entities.Product.ProductImgData", b =>
@@ -257,9 +231,6 @@ namespace FloraBack.DataAccess.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int?>("ProductDataId")
-                        .HasColumnType("int");
 
                     b.Property<int>("ProductId")
                         .HasColumnType("int");
@@ -271,9 +242,9 @@ namespace FloraBack.DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ProductDataId");
+                    b.HasIndex("ProductId");
 
-                    b.ToTable("ProductImgData");
+                    b.ToTable("Images");
                 });
 
             modelBuilder.Entity("FloraBack.Domains.Entities.ProductReview.ProductReviewData", b =>
@@ -478,52 +449,48 @@ namespace FloraBack.DataAccess.Migrations
             modelBuilder.Entity("FloraBack.Domains.Entities.Product.ProductData", b =>
                 {
                     b.HasOne("FloraBack.Domains.Entities.Product.CategoryData", "Category")
-                        .WithMany()
+                        .WithMany("Products")
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("FloraBack.Domains.Entities.Product.ProductDescriptionData", "Description")
-                        .WithMany()
-                        .HasForeignKey("DescriptionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Category");
-
-                    b.Navigation("Description");
                 });
 
             modelBuilder.Entity("FloraBack.Domains.Entities.Product.ProductDescriptionData", b =>
                 {
-                    b.HasOne("FloraBack.Domains.Entities.Product.DescriptionAdvanced", "DescriptionAdvanced")
-                        .WithMany()
-                        .HasForeignKey("DescriptionAdvancedId")
+                    b.HasOne("FloraBack.Domains.Entities.Product.ProductData", "Product")
+                        .WithOne("Description")
+                        .HasForeignKey("FloraBack.Domains.Entities.Product.ProductDescriptionData", "ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("DescriptionAdvanced");
+                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("FloraBack.Domains.Entities.Product.ProductImgData", b =>
                 {
-                    b.HasOne("FloraBack.Domains.Entities.Product.ProductData", null)
+                    b.HasOne("FloraBack.Domains.Entities.Product.ProductData", "Product")
                         .WithMany("Images")
-                        .HasForeignKey("ProductDataId");
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("FloraBack.Domains.Entities.ProductReview.ProductReviewData", b =>
                 {
                     b.HasOne("FloraBack.Domains.Entities.Product.ProductData", "Product")
-                        .WithMany()
+                        .WithMany("Reviews")
                         .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("FloraBack.Domains.Entities.User.UserData", "User")
-                        .WithMany()
+                        .WithMany("ProductReviews")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Product");
@@ -590,14 +557,26 @@ namespace FloraBack.DataAccess.Migrations
                     b.Navigation("Items");
                 });
 
+            modelBuilder.Entity("FloraBack.Domains.Entities.Product.CategoryData", b =>
+                {
+                    b.Navigation("Products");
+                });
+
             modelBuilder.Entity("FloraBack.Domains.Entities.Product.ProductData", b =>
                 {
+                    b.Navigation("Description")
+                        .IsRequired();
+
                     b.Navigation("Images");
+
+                    b.Navigation("Reviews");
                 });
 
             modelBuilder.Entity("FloraBack.Domains.Entities.User.UserData", b =>
                 {
                     b.Navigation("Orders");
+
+                    b.Navigation("ProductReviews");
 
                     b.Navigation("SiteReview")
                         .IsRequired();

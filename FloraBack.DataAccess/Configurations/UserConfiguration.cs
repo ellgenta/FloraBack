@@ -26,6 +26,11 @@ namespace FloraBack.DataAccess.Configurations
                 .WithOne(o => o.User)
                 .HasForeignKey(o => o.UserId)
                 .OnDelete(DeleteBehavior.NoAction);
+
+            builder.HasMany(u => u.ProductReviews)
+                .WithOne(r => r.User)
+                .HasForeignKey(r => r.UserId)
+                .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }

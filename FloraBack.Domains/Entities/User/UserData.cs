@@ -48,7 +48,7 @@ namespace FloraBack.Domains.Entities.User
 
         public SiteReviewData SiteReview { get; set; }
 
-        //public List<ProductReviewData> ProductReviews { get; set; }
+        public List<ProductReviewData> ProductReviews { get; set; }
 
         //public CartData Cart { get; set; }
 

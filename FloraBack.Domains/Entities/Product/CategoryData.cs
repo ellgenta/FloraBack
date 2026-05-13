@@ -11,5 +11,7 @@ namespace FloraBack.Domains.Entities.Product
 
         [NotMapped]
         public List<string> SubCategories { get; set; }
+
+        public List<ProductData> Products { get; set; }
     }
 }
