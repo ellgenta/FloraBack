@@ -23,7 +23,7 @@ namespace FloraBack.BusinessLogic.Core.SiteReview
                 UpdatedAt = DateTime.Now,
             };
 
-            using (var db = new SiteReviewContext())
+            using (var db = new AppDbContext())
             {
                 db.SiteReviews.Add(_newReview);
                 db.SaveChanges();
@@ -36,7 +36,7 @@ namespace FloraBack.BusinessLogic.Core.SiteReview
         {
             var _SiteReviewRepo = new List<SiteReviewData>();
             
-            using (var db = new SiteReviewContext())
+            using (var db = new AppDbContext())
             {
                 _SiteReviewRepo =  db.SiteReviews.Include(s => s.User).ToList();
             }
@@ -49,7 +49,7 @@ namespace FloraBack.BusinessLogic.Core.SiteReview
         {
             SiteReviewData _review;
 
-            using (var db = new SiteReviewContext())
+            using (var db = new AppDbContext())
             {
                 _review = db.SiteReviews.FirstOrDefault(x => x.Id == id);
 

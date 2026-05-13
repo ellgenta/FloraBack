@@ -15,7 +15,7 @@ namespace FloraBack.BusinessLogic.Core.Order
     {
         public List<OrderData> ExecuteGetUserOrdersByIdAction(int userId)
         {
-            using (var db = new OrderContext())
+            using (var db = new AppDbContext())
             {
                 var _UserOrders = db.Orders.Include(o => o.Items).Where(x => x.UserId == userId).ToList();
 
@@ -26,7 +26,7 @@ namespace FloraBack.BusinessLogic.Core.Order
 
         public OrderData? ExecuteGetOrderByIdAction(int id)
         {
-            using (var db = new OrderContext())
+            using (var db = new AppDbContext())
             {
                 var _order = db.Orders.Include(o => o.Items).FirstOrDefault(x => x.Id == id);
 
@@ -36,7 +36,7 @@ namespace FloraBack.BusinessLogic.Core.Order
 
         public OrderData? ExecuteUpdateOrderStatusAction(int id, OrderStatus newStatus)
         {
-            using (var db = new OrderContext())
+            using (var db = new AppDbContext())
             {
                 var _order = db.Orders.FirstOrDefault(x => x.Id == id);
 
@@ -84,7 +84,7 @@ namespace FloraBack.BusinessLogic.Core.Order
                 UpdatedAt = DateTime.Now,
             };
 
-            using (var db = new OrderContext())
+            using (var db = new AppDbContext())
             {
                 db.Orders.Add(_newOrder);
                 db.SaveChanges();

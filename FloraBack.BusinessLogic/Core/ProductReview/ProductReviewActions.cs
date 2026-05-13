@@ -19,7 +19,7 @@ namespace FloraBack.BusinessLogic.Core.ProductReview
                 UpdatedAt = DateTime.Now,
             };
 
-            using (var db = new ProductReviewContext())
+            using (var db = new AppDbContext())
             {
                 db.ProductReviews.Add(_newReview);
                 db.SaveChanges();
@@ -32,7 +32,7 @@ namespace FloraBack.BusinessLogic.Core.ProductReview
         {
             var _productReviews = new List<ProductReviewData>();
 
-            using (var db = new ProductReviewContext())
+            using (var db = new AppDbContext())
             {
                 _productReviews = db.ProductReviews
                     .Where(r => r.ProductId == productId)
@@ -46,7 +46,7 @@ namespace FloraBack.BusinessLogic.Core.ProductReview
         {
             ProductReviewData _reviewToDelete;
 
-            using (var db = new ProductReviewContext())
+            using (var db = new AppDbContext())
             {
                 _reviewToDelete = db.ProductReviews.FirstOrDefault(r => r.Id == id);
 

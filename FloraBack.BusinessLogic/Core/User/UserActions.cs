@@ -18,7 +18,7 @@ namespace FloraBack.BusinessLogic.Core.User
         {
             var _UserRepo = new List<UserData>();
 
-            using (var db = new UserContext())
+            using (var db = new AppDbContext())
             {
                 _UserRepo = db.Users.ToList();
             }
@@ -28,7 +28,7 @@ namespace FloraBack.BusinessLogic.Core.User
 
         public UserData? ExecuteGetUserByIdAction(int id)
         {
-            using (var db = new UserContext())
+            using (var db = new AppDbContext())
             {
                 //var _user = db.Users.Include(u => u.Orders).Include(u => u.SiteReview).FirstOrDefault(x => x.Id == id);
                 var _user = db.Users.FirstOrDefault(x => x.Id == id);
@@ -40,7 +40,7 @@ namespace FloraBack.BusinessLogic.Core.User
 
         public UserData? ExecuteCreateUserAction(UserCreateDto user)
         {
-            using (var db = new UserContext())
+            using (var db = new AppDbContext())
             {
                 var _user = db.Users.FirstOrDefault(x => x.Email == user.Email);
                 
@@ -72,7 +72,7 @@ namespace FloraBack.BusinessLogic.Core.User
 
         public bool ExecuteDeleteUserAction(int id)
         {
-            using (var db = new UserContext())
+            using (var db = new AppDbContext())
             {
                 var _user = db.Users.FirstOrDefault(x => x.Id == id && x.IsActive == true);
 
@@ -90,7 +90,7 @@ namespace FloraBack.BusinessLogic.Core.User
 
         public UserData? ExecuteUpdateUserAction(int id, UserCreateDto user)
         {
-            using (var db = new UserContext())
+            using (var db = new AppDbContext())
             {
                 var _user = db.Users.FirstOrDefault(x => x.Id == id && x.IsActive == true);
 

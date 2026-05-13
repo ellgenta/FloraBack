@@ -9,7 +9,7 @@ namespace FloraBack.BusinessLogic.Core.Products
     {
         public List<ProductData> ExecuteGetAllProductsAction()
         {
-            using (var db = new ProductContext())
+            using (var db = new AppDbContext())
             {
                 return db.Products
                     .Include(p => p.Images)
@@ -19,7 +19,7 @@ namespace FloraBack.BusinessLogic.Core.Products
 
         public ProductData? ExecuteGetProductByIdAction(int id)
         {
-            using (var db = new ProductContext())
+            using (var db = new AppDbContext())
             {
                 return db.Products
                     .Include(p => p.Images)
@@ -29,7 +29,7 @@ namespace FloraBack.BusinessLogic.Core.Products
 
         public List<ProductData> ExecuteGetProductsByCategoryAction(ProductCategory category)
         {
-            using (var db = new ProductContext())
+            using (var db = new AppDbContext())
             {
                 return db.Products
                     .Include(p => p.Images)
@@ -40,7 +40,7 @@ namespace FloraBack.BusinessLogic.Core.Products
 
         public List<ProductData> ExecuteGetProductsBySubCategoryAction(string subCategory)
         {
-            using (var db = new ProductContext())
+            using (var db = new AppDbContext())
             {
                 return db.Products
                     .Include(p => p.Images)
@@ -64,7 +64,7 @@ namespace FloraBack.BusinessLogic.Core.Products
                 UpdatedAt = DateTime.Now
             };
 
-            using (var db = new ProductContext())
+            using (var db = new AppDbContext())
             {
                 db.Products.Add(newProduct);
                 db.SaveChanges();
@@ -75,7 +75,7 @@ namespace FloraBack.BusinessLogic.Core.Products
 
         public ProductData? ExecuteUpdateProductAction(int id, ProductData product)
         {
-            using (var db = new ProductContext())
+            using (var db = new AppDbContext())
             {
                 var existingProduct = db.Products
                     .Include(p => p.Images)
@@ -115,7 +115,7 @@ namespace FloraBack.BusinessLogic.Core.Products
 
         public bool ExecuteDeleteProductAction(int id)
         {
-            using (var db = new ProductContext())
+            using (var db = new AppDbContext())
             {
                 var product = db.Products
                     .Include(p => p.Images)

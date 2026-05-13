@@ -9,7 +9,7 @@ namespace FloraBack.BusinessLogic.Core.Cart
     {
         public CartData? ExecuteGetCartAction()
         {
-            using (var db = new CartContext())
+            using (var db = new AppDbContext())
             {
                 var cart = db.Carts
                     .Include(c => c.Items)
@@ -21,7 +21,7 @@ namespace FloraBack.BusinessLogic.Core.Cart
 
         public CartData? ExecuteAddItemToCartAction(CartItemData item)
         {
-            using (var db = new CartContext())
+            using (var db = new AppDbContext())
             {
                 var cart = db.Carts
                     .Include(c => c.Items)
@@ -75,7 +75,7 @@ namespace FloraBack.BusinessLogic.Core.Cart
 
         public CartData? ExecuteUpdateCartItemAction(int itemId, CartItemData item)
         {
-            using (var db = new CartContext())
+            using (var db = new AppDbContext())
             {
                 var cart = db.Carts
                     .Include(c => c.Items)
@@ -108,7 +108,7 @@ namespace FloraBack.BusinessLogic.Core.Cart
 
         public bool ExecuteDeleteCartItemAction(int itemId)
         {
-            using (var db = new CartContext())
+            using (var db = new AppDbContext())
             {
                 var cart = db.Carts
                     .Include(c => c.Items)
@@ -138,7 +138,7 @@ namespace FloraBack.BusinessLogic.Core.Cart
 
         public bool ExecuteClearCartAction()
         {
-            using (var db = new CartContext())
+            using (var db = new AppDbContext())
             {
                 var cart = db.Carts
                     .Include(c => c.Items)

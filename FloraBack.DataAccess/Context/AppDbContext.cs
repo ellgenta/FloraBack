@@ -7,6 +7,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using FloraBack.Domains.Entities.Product;
+using FloraBack.Domains.Entities.Cart;
+using FloraBack.Domains.Entities.ProductReview;
 
 namespace FloraBack.DataAccess.Context
 {
@@ -20,9 +23,20 @@ namespace FloraBack.DataAccess.Context
 
         public DbSet<OrderItemData> OrderItems { get; set; }
 
+        public DbSet<ProductData> Products { get; set; }
+
+        public DbSet<CartData> Carts { get; set; }
+
+        public DbSet<ProductReviewData> ProductReviews { get; set; }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer(DbSession.ConnectionStrings);
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly);
         }
     }
 }
