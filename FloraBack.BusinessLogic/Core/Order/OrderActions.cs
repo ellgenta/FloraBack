@@ -13,6 +13,17 @@ namespace FloraBack.BusinessLogic.Core.Order
 {
     public class OrderActions
     {
+        public List<OrderData> ExecuteGetAllOrdersAction()
+        {
+            using (var db = new AppDbContext())
+            {
+                var orders = db.Orders
+                    .Include(o => o.Items)
+                    .ToList();
+
+                return orders;
+            }
+        }
         public List<OrderData> ExecuteGetUserOrdersByIdAction(int userId)
         {
             using (var db = new AppDbContext())

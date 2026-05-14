@@ -19,6 +19,14 @@ namespace FloraBack.Api.Controller
             _orderActions = bl.GetOrderActions();
         }
 
+        [HttpGet("all")]
+        public IActionResult GetAllOrders()
+        {
+            var orders = _orderActions.GetAllOrdersAction();
+
+            return Ok(orders);
+        }
+
         [HttpGet("{userId}/all")]
         public IActionResult GetUserOrdersById(int userId)
         {

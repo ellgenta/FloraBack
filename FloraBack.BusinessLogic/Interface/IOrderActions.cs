@@ -11,6 +11,7 @@ namespace FloraBack.BusinessLogic.Interface
 {
     public interface IOrderActions
     {
+        public List<OrderInfoDto> GetAllOrdersAction();
         public List<OrderInfoDto> GetUserOrdersByIdAction(int userId);
 
         public OrderInfoDto? GetOrderByIdAction(int id);

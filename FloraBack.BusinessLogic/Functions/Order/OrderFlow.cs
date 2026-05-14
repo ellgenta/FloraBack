@@ -1,159 +1,99 @@
 ﻿using FloraBack.BusinessLogic.Core.Order;
 using FloraBack.BusinessLogic.Interface;
 using FloraBack.Domains.Entities.Order;
-using FloraBack.Domains.Entities.User;
 using FloraBack.Domains.Enums;
 using FloraBack.Domains.Models.Order;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FloraBack.BusinessLogic.Functions.Order
 {
     public class OrderFlow : OrderActions, IOrderActions
     {
-        public List<OrderInfoDto> GetUserOrdersByIdAction(int userId)
+        public List<OrderInfoDto> GetAllOrdersAction()
         {
-            var _orders = ExecuteGetUserOrdersByIdAction(userId);
+            var orders = ExecuteGetAllOrdersAction();
 
-            List<OrderInfoDto> _DtoList = new List<OrderInfoDto>();
+            var dtoList = new List<OrderInfoDto>();
 
-            foreach (var _order in _orders)
+            foreach (var order in orders)
             {
-                List<OrderItemInfoDto> _itemsDto = new List<OrderItemInfoDto>();
-
-                foreach (var _item in _order.Items)
-                {
-                    var _itemDto = new OrderItemInfoDto()
-                    {
-                        ProductId = _item.ProductId,
-                        Quantity = _item.Quantity,
-                        Price = _item.Price,
-                    };
-
-                    _itemsDto.Add(_itemDto);
-                }
-
-                var _orderDto = new OrderInfoDto()
-                {
-                    Id = _order.Id,
-                    UserId = _order.UserId,
-                    Items = _itemsDto,
-                    TotalPrice = _order.TotalPrice,
-                    DeliveryAddress = _order.DeliveryAddress,
-                    Status = _order.Status,
-                };
-
-                _DtoList.Add(_orderDto);
+                dtoList.Add(MapToDto(order));
             }
 
-            return _DtoList;
+            return dtoList;
+        }
+
+        public List<OrderInfoDto> GetUserOrdersByIdAction(int userId)
+        {
+            var orders = ExecuteGetUserOrdersByIdAction(userId);
+
+            var dtoList = new List<OrderInfoDto>();
+
+            foreach (var order in orders)
+            {
+                dtoList.Add(MapToDto(order));
+            }
+
+            return dtoList;
         }
 
         public OrderInfoDto? GetOrderByIdAction(int id)
         {
-            var _order = ExecuteGetOrderByIdAction(id);
+            var order = ExecuteGetOrderByIdAction(id);
 
-            if (_order == null)
+            if (order == null)
             {
                 return null;
             }
 
-            List<OrderItemInfoDto> _itemsDto = new List<OrderItemInfoDto>(); 
-            
-            foreach (var _item in _order.Items)
-            {
-                var _itemDto = new OrderItemInfoDto()
-                {
-                    ProductId = _item.ProductId,
-                    Quantity = _item.Quantity,
-                    Price = _item.Price,
-                };
-
-                _itemsDto.Add(_itemDto);
-            }
-
-            var _orderDto = new OrderInfoDto()
-            {
-                Id = _order.Id,
-                UserId = _order.UserId,
-                Items = _itemsDto,
-                TotalPrice = _order.TotalPrice,
-                DeliveryAddress = _order.DeliveryAddress,
-                Status = _order.Status,
-            };
-
-            return _orderDto;
+            return MapToDto(order);
         }
 
         public OrderInfoDto? UpdateOrderStatusAction(int id, OrderStatus newStatus)
         {
-            var _order = ExecuteUpdateOrderStatusAction(id, newStatus);
+            var order = ExecuteUpdateOrderStatusAction(id, newStatus);
 
-            if (_order == null)
+            if (order == null)
             {
                 return null;
             }
 
-            List<OrderItemInfoDto> _itemsDto = new List<OrderItemInfoDto>();
-
-            foreach (var _item in _order.Items)
-            {
-                var _itemDto = new OrderItemInfoDto()
-                {
-                    ProductId = _item.ProductId,
-                    Quantity = _item.Quantity,
-                    Price = _item.Price,
-                };
-
-                _itemsDto.Add(_itemDto);
-            }
-
-            var _orderDto = new OrderInfoDto()
-            {
-                Id = _order.Id,
-                UserId = _order.UserId,
-                Items = _itemsDto,
-                TotalPrice = _order.TotalPrice,
-                DeliveryAddress = _order.DeliveryAddress,
-                Status = _order.Status,
-            };
-
-            return _orderDto;
+            return MapToDto(order);
         }
 
         public OrderInfoDto CreateOrderAction(OrderCreateDto order)
         {
-            var _newOrder = ExecuteCreateOrderAction(order);
+            var newOrder = ExecuteCreateOrderAction(order);
 
-            List<OrderItemInfoDto> _itemsDto = new List<OrderItemInfoDto>();
+            return MapToDto(newOrder);
+        }
 
-            foreach (var _item in _newOrder.Items)
+        private OrderInfoDto MapToDto(OrderData order)
+        {
+            var itemsDto = new List<OrderItemInfoDto>();
+
+            foreach (var item in order.Items)
             {
-                var _itemDto = new OrderItemInfoDto()
+                var itemDto = new OrderItemInfoDto()
                 {
-                    ProductId = _item.ProductId,
-                    Quantity = _item.Quantity,
-                    Price = _item.Price,
+                    ProductId = item.ProductId,
+                    Quantity = item.Quantity,
+                    Price = item.Price,
                 };
 
-                _itemsDto.Add(_itemDto);
+                itemsDto.Add(itemDto);
             }
 
-
-            var _orderDto = new OrderInfoDto()
+            var orderDto = new OrderInfoDto()
             {
-                Id = _newOrder.Id,
-                UserId = _newOrder.UserId,
-                Items = _itemsDto,
-                TotalPrice = _newOrder.TotalPrice,
-                DeliveryAddress = _newOrder.DeliveryAddress,
-                Status = _newOrder.Status,
+                Id = order.Id,
+                UserId = order.UserId,
+                Items = itemsDto,
+                TotalPrice = order.TotalPrice,
+                DeliveryAddress = order.DeliveryAddress,
+                Status = order.Status,
             };
 
-            return _orderDto;
+            return orderDto;
         }
     }
 }
