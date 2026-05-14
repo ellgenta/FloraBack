@@ -17,48 +17,54 @@ namespace FloraBack.BusinessLogic.Functions.ProductReview
                 Mark = review.Mark
             };
 
-            var _newReview = ExecuteCreateProductReviewAction(reviewData);
+            var newReview = ExecuteCreateProductReviewAction(reviewData);
 
-            var _reviewDto = new ProductReviewDto()
+            return MapToDto(newReview);
+        }
+
+        public List<ProductReviewDto> GetAllProductReviewsAction()
+        {
+            var reviews = ExecuteGetAllProductReviewsAction();
+
+            var dtoList = new List<ProductReviewDto>();
+
+            foreach (var review in reviews)
             {
-                Id = _newReview.Id,
-                UserId = _newReview.UserId,
-                ProductId = _newReview.ProductId,
-                Content = _newReview.Content,
-                Mark = _newReview.Mark,
-            };
+                dtoList.Add(MapToDto(review));
+            }
 
-            return _reviewDto;
+            return dtoList;
         }
 
         public List<ProductReviewDto> GetProductReviewsByProductIdAction(int productId)
         {
-            var _reviews = ExecuteGetProductReviewsByProductIdAction(productId);
+            var reviews = ExecuteGetProductReviewsByProductIdAction(productId);
 
-            var _DtoList = new List<ProductReviewDto>();
+            var dtoList = new List<ProductReviewDto>();
 
-            foreach (var _review in _reviews)
+            foreach (var review in reviews)
             {
-                var _reviewDto = new ProductReviewDto()
-                {
-                    Id = _review.Id,
-                    UserId = _review.UserId,
-                    ProductId = _review.ProductId,
-                    Content = _review.Content,
-                    Mark = _review.Mark,
-                };
-
-                _DtoList.Add(_reviewDto);
+                dtoList.Add(MapToDto(review));
             }
 
-            return _DtoList;
+            return dtoList;
         }
 
         public bool DeleteProductReviewAction(int id)
         {
-            var wasDeleted = ExecuteDeleteProductReviewAction(id);
+            return ExecuteDeleteProductReviewAction(id);
+        }
 
-            return wasDeleted;
+        private ProductReviewDto MapToDto(ProductReviewData review)
+        {
+            return new ProductReviewDto()
+            {
+                Id = review.Id,
+                UserId = review.UserId,
+                ProductId = review.ProductId,
+                Content = review.Content,
+                Mark = review.Mark,
+            };
         }
     }
 }

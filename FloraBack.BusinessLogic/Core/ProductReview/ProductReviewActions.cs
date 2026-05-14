@@ -28,6 +28,14 @@ namespace FloraBack.BusinessLogic.Core.ProductReview
             return _newReview;
         }
 
+        public List<ProductReviewData> ExecuteGetAllProductReviewsAction()
+        {
+            using (var db = new AppDbContext())
+            {
+                return db.ProductReviews.ToList();
+            }
+        }
+
         public List<ProductReviewData> ExecuteGetProductReviewsByProductIdAction(int productId)
         {
             var _productReviews = new List<ProductReviewData>();
