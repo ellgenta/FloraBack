@@ -27,9 +27,12 @@ namespace FloraBack.Api.Controller
         {
             var _authStatus = _authActions.LoginActionFlow(data);
             
-            
+            if (!_authStatus.IsSuccess)
+            {
+                return Unauthorized(_authStatus.Message);
+            }
 
-            return Ok(new { token = _authStatus.Message })
+            return Ok(new { token = _authStatus.Message });
         }
     }
 }

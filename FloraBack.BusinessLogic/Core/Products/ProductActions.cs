@@ -13,6 +13,8 @@ namespace FloraBack.BusinessLogic.Core.Products
             {
                 return db.Products
                     .Include(p => p.Images)
+                    .Include(p => p.Category)
+                    .Include(p => p.Description)
                     .ToList();
             }
         }
@@ -23,6 +25,8 @@ namespace FloraBack.BusinessLogic.Core.Products
             {
                 return db.Products
                     .Include(p => p.Images)
+                    .Include(p => p.Category)
+                    .Include(p => p.Description)
                     .FirstOrDefault(p => p.Id == id);
             }
         }
@@ -33,6 +37,8 @@ namespace FloraBack.BusinessLogic.Core.Products
             {
                 return db.Products
                     .Include(p => p.Images)
+                    .Include(p => p.Category)
+                    .Include(p => p.Description)
                     .Where(p => p.Category.Name == category)
                     .ToList();
             }
@@ -44,6 +50,8 @@ namespace FloraBack.BusinessLogic.Core.Products
             {
                 return db.Products
                     .Include(p => p.Images)
+                    .Include(p => p.Category)
+                    .Include(p => p.Description)
                     .Where(p => p.SubCategory.ToLower() == subCategory.ToLower())
                     .ToList();
             }

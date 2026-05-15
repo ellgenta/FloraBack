@@ -36,6 +36,8 @@ namespace FloraBack.Domains.Entities.User
         [EmailAddress]
         public string Email { get; set; }
 
+        public UserRoles Role { get; set; }
+
         public AddressData? DefaultAddress { get; set; }
 
         public PaymentMethods? DefaultPaymentMethod { get; set; }

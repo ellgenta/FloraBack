@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using FloraBack.DataAccess.Context;
+using FloraBack.BusinessLogic.Structure;
 
 namespace FloraBack.BusinessLogic.Core.Auth
 {
@@ -18,15 +19,18 @@ namespace FloraBack.BusinessLogic.Core.Auth
                 return null;
             }
 
+            var passwordHash = PasswordHasher.Hash(data.Password);
+
             using (var db = new AppDbContext())
             {
-                return db.Users.FirstOrDefault(u => (u.UserName == data.Login || u.Email == data.Login) && u.Password == data.Password);
+                return db.Users.FirstOrDefault(u => (u.UserName == data.Login || u.Email == data.Login) && u.Password == passwordHash);
             }
         }
 
-        public string? GenerateUserToken(UserData data)
+        public string? GenerateUserToken(UserData user)
         {
-            return "TOKEN";
+            var token = new TokenService();
+            return token.GenerateToken(user.Id, user.UserName, user.Role.ToString());
         }
     }
 }
