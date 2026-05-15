@@ -1,4 +1,5 @@
-﻿using FloraBack.Domains.Models.User;
+﻿using FloraBack.Domains.Models.Base;
+using FloraBack.Domains.Models.User;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,6 @@ namespace FloraBack.BusinessLogic.Interface
 {
     public interface IAuthActions
     {
-        object? LoginActionFlow(UserAuthAction auth);
+        public ResponseAction LoginActionFlow(UserAuthAction auth);
     }
 }

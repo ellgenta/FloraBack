@@ -6,15 +6,33 @@ using System.Threading.Tasks;
 using FloraBack.BusinessLogic.Core.Auth;
 using FloraBack.BusinessLogic.Interface;
 using FloraBack.Domains.Models.User;
+using FloraBack.Domains.Models.Base;
 
 namespace FloraBack.BusinessLogic.Functions.Auth
 {
     public class AuthFlow : AuthActions, IAuthActions
     {
-        public object? LoginActionFlow(UserAuthAction auth)
+        public ResponseAction LoginActionFlow(UserAuthAction auth)
         {
-            var isValid = ValidateLogin(auth);
-            return isValid ? GenToken(auth) : null;
+            var user = ExecuteValidateLogin(auth);
+
+            if (user == null)
+            {
+                return new ResponseAction
+                {
+                    IsSuccess = false,
+                    Message = "Invalid username or password"
+                };
+            }
+
+            var token = GenerateUserToken(user);
+
+            return new ResponseAction
+            {
+                IsSuccess = true,
+                Message = token,
+                Id = user.Id
+            };
         }
     }
 }

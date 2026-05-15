@@ -5,21 +5,26 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using FloraBack.DataAccess.Context;
 
 namespace FloraBack.BusinessLogic.Core.Auth
 {
     public class AuthActions
     {
-        public bool ValidateLogin(UserAuthAction data)
+        public UserData? ExecuteValidateLogin(UserAuthAction data)
         {
             if (string.IsNullOrEmpty(data.Login) && string.IsNullOrEmpty(data.Password))
             {
-                return false;
+                return null;
             }
-            return true;
+
+            using (var db = new AppDbContext())
+            {
+                return db.Users.FirstOrDefault(u => (u.UserName == data.Login || u.Email == data.Login) && u.Password == data.Password);
+            }
         }
 
-        public string? GenToken(UserAuthAction data)
+        public string? GenerateUserToken(UserData data)
         {
             return "TOKEN";
         }

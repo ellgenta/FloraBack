@@ -22,12 +22,14 @@ namespace FloraBack.Api.Controller
             return Ok(new { Message = "Session is active" });
         }
 
-        [HttpPost]
+        [HttpPost("auth")]
         public IActionResult PostStatus([FromBody] UserAuthAction data)
         {
             var _authStatus = _authActions.LoginActionFlow(data);
-            string token = "";
-            return Ok(token);
+            
+            
+
+            return Ok(new { token = _authStatus.Message })
         }
     }
 }
