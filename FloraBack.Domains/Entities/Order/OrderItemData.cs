@@ -23,8 +23,8 @@ namespace FloraBack.Domains.Entities.Order
 
         public int ProductId { get; set; }
 
-        //[ForeignKey("ProductId")]
-        //public ProductData Product { get; set; }
+        [ForeignKey("ProductId")]
+        public ProductData Product { get; set; }
 
         public int Quantity { get; set; }
 

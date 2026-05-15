@@ -5,6 +5,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using FloraBack.Domains.Entities.Cart;
+using FloraBack.Domains.Entities.Order;
 using FloraBack.Domains.Entities.ProductReview;
 using FloraBack.Domains.Entities.Refs;
 using FloraBack.Domains.Enums;
@@ -34,6 +36,10 @@ namespace FloraBack.Domains.Entities.Product
         public List<ProductImgData> Images { get; set; }
 
         public List<ProductReviewData> Reviews { get; set; }
+
+        public List<CartItemData> CartItems { get; set; }
+
+        public List<OrderItemData> OrderItems { get; set; }
 
         public decimal Price { get; set; }
 

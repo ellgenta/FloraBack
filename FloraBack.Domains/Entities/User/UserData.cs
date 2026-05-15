@@ -50,7 +50,7 @@ namespace FloraBack.Domains.Entities.User
 
         public List<ProductReviewData> ProductReviews { get; set; }
 
-        //public CartData Cart { get; set; }
+        public CartData Cart { get; set; }
 
         public bool IsActive { get; set; } //unhandled yet for the GET operation
     }

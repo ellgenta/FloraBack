@@ -12,6 +12,9 @@ namespace FloraBack.Domains.Entities.Cart
 
         public int CartId { get; set; }
 
+        [ForeignKey("CartId")]
+        public CartData Cart { get; set; }
+
         public int ProductId { get; set; }
 
         [ForeignKey("ProductId")]

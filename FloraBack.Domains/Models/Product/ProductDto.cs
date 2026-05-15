@@ -7,19 +7,15 @@ namespace FloraBack.Domains.Models.Product
     {
         public int Id { get; set; }
 
-        [Required]
-        [StringLength(300)]
         public string Name { get; set; }
 
-        public ProductDescriptionData Description { get; set; }
+        public ProductDescriptionDto Description { get; set; }
 
-        public CategoryData Category { get; set; }
+        public ProductCategoryDto Category { get; set; }
 
-        [Required]
-        [StringLength(300)]
         public string SubCategory { get; set; }
 
-        public List<ProductImgData> Images { get; set; }
+        public List<ProductImgDto> Images { get; set; }
 
         public decimal Price { get; set; }
     }

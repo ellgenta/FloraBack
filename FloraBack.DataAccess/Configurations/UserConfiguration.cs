@@ -1,4 +1,5 @@
-﻿using FloraBack.Domains.Entities.Order;
+﻿using FloraBack.Domains.Entities.Cart;
+using FloraBack.Domains.Entities.Order;
 using FloraBack.Domains.Entities.SiteReview;
 using FloraBack.Domains.Entities.User;
 using Microsoft.EntityFrameworkCore;
@@ -31,6 +32,11 @@ namespace FloraBack.DataAccess.Configurations
                 .WithOne(r => r.User)
                 .HasForeignKey(r => r.UserId)
                 .OnDelete(DeleteBehavior.NoAction);
+
+            builder.HasOne(u => u.Cart)
+                .WithOne(c => c.User)
+                .HasForeignKey<CartData>(c => c.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }
