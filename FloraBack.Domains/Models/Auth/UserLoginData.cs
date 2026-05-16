@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FloraBack.Domains.Models.User
+namespace FloraBack.Domains.Models.Auth
 {
-    public class UserAuthAction
+    public class UserLoginData
     {
         public string Login { get; set; }
 

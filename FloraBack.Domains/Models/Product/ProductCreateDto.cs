@@ -17,7 +17,7 @@ namespace FloraBack.Domains.Models.Product
         [StringLength(50, MinimumLength = 1)]
         public string SubCategory { get; set; }
 
-        public List<ProductImgInfoDto> Images { get; set; } = new();
+        public List<ProductImgCreateDto> Images { get; set; } = new();
 
         public decimal Price { get; set; }
     }

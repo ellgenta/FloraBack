@@ -21,7 +21,7 @@ builder.Services.AddSwaggerGen(c =>
         Scheme = "Bearer",
         BearerFormat = "JWT",
         In = ParameterLocation.Header,
-        Description = "¬ведите JWT-токен, полученный по /api/session/auth."
+        Description = "Enter JWT-token got in /api/session/auth."
     });
 
     c.AddSecurityRequirement(new OpenApiSecurityRequirement

@@ -1,6 +1,7 @@
 ﻿using FloraBack.DataAccess.Context;
 using FloraBack.Domains.Entities.Product;
 using FloraBack.Domains.Enums;
+using FloraBack.Domains.Models.Product;
 using Microsoft.EntityFrameworkCore;
 
 namespace FloraBack.BusinessLogic.Core.Products
@@ -57,36 +58,41 @@ namespace FloraBack.BusinessLogic.Core.Products
             }
         }
 
-        public ProductData? ExecuteCreateProductAction(ProductData product)
+        public ProductData? ExecuteCreateProductAction(ProductCreateDto product)
         {
-            var newProduct = new ProductData()
-            {
-                Name = product.Name,
-                Description = product.Description,
-                Category = product.Category,
-                SubCategory = product.SubCategory,
-                Images = product.Images ?? new List<ProductImgData>(),
-                Price = product.Price,
-                Status = ProductStatus.Active,
-                CreatedAt = DateTime.Now,
-                UpdatedAt = DateTime.Now
-            };
-
             using (var db = new AppDbContext())
             {
+                var newProduct = new ProductData()
+                {
+                    Name = product.Name,
+                    Description = new ProductDescriptionData() { Description = product.Description.Description },
+                    Category = db.Categories.FirstOrDefault(c => c.Id == product.CategoryId),
+                    SubCategory = product.SubCategory,
+                    Images = product.Images.Select(img => new ProductImgData()
+                    {
+                        Url = img.Url,
+                    }).ToList(),
+                    Price = product.Price,
+                    Status = ProductStatus.Active,
+                    CreatedAt = DateTime.Now,
+                    UpdatedAt = DateTime.Now
+                };
+
                 db.Products.Add(newProduct);
                 db.SaveChanges();
-            }
 
-            return newProduct;
+                return newProduct;
+            } 
         }
 
-        public ProductData? ExecuteUpdateProductAction(int id, ProductData product)
+        public ProductData? ExecuteUpdateProductAction(int id, ProductCreateDto product)
         {
             using (var db = new AppDbContext())
             {
                 var existingProduct = db.Products
                     .Include(p => p.Images)
+                    .Include(p => p.Category)
+                    .Include(p => p.Description)
                     .FirstOrDefault(p => p.Id == id);
 
                 if (existingProduct == null)
@@ -95,9 +101,9 @@ namespace FloraBack.BusinessLogic.Core.Products
                 }
 
                 existingProduct.Name = product.Name;
-                existingProduct.Description = product.Description;
-                existingProduct.Category = product.Category;
-                existingProduct.SubCategory = product.SubCategory;
+                existingProduct.Description.Description = product.Description.Description;
+                //existingProduct.Category = product.Category;
+                //existingProduct.SubCategory = product.SubCategory;
                 existingProduct.Price = product.Price;
                 existingProduct.UpdatedAt = DateTime.Now;
 
@@ -126,7 +132,6 @@ namespace FloraBack.BusinessLogic.Core.Products
             using (var db = new AppDbContext())
             {
                 var product = db.Products
-                    .Include(p => p.Images)
                     .FirstOrDefault(p => p.Id == id);
 
                 if (product == null)
@@ -134,7 +139,7 @@ namespace FloraBack.BusinessLogic.Core.Products
                     return false;
                 }
 
-                db.Products.Remove(product);
+                product.Status = ProductStatus.Inactive;
                 db.SaveChanges();
 
                 return true;

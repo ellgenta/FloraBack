@@ -1,6 +1,7 @@
 ﻿using FloraBack.BusinessLogic.Interface;
 using FloraBack.Domains.Enums;
 using FloraBack.Domains.Models.Product;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,6 +11,7 @@ namespace FloraBack.Api.Controller
 {
     [Route("api/product")]
     [ApiController]
+    [Authorize]
     public class ProductController : ControllerBase
     {
         private IProductActions _product;
@@ -21,7 +23,7 @@ namespace FloraBack.Api.Controller
         }
 
         [HttpGet("getAll")]
-
+        [AllowAnonymous]
         public IActionResult GetAllProducts()
         {
             var products = _product.GetAllProductsAction();
@@ -29,6 +31,7 @@ namespace FloraBack.Api.Controller
         }
 
         [HttpGet("getById")]
+        [AllowAnonymous]
         public IActionResult GetProductById(int id)
         {
             if (id <= 0)
@@ -47,6 +50,7 @@ namespace FloraBack.Api.Controller
         }
 
         [HttpGet("category/{category}")]
+        [AllowAnonymous]
         public IActionResult GetProductsByCategory(ProductCategory category)
         {
             var products = _product.GetProductsByCategoryAction(category);
@@ -54,13 +58,14 @@ namespace FloraBack.Api.Controller
         }
 
         [HttpGet("subcategory/{subCategory}")]
-
+        [AllowAnonymous]
         public IActionResult GetProductsBySubCategory(string subCategory)
         {
             var products = _product.GetProductsBySubCategoryAction(subCategory);
             return Ok(products);
         }
 
+        //[Authorize(Roles = "Admin")]
         [HttpPost("create")]
         public IActionResult CreateProduct([FromBody] ProductCreateDto product)
         {
@@ -68,18 +73,24 @@ namespace FloraBack.Api.Controller
             {
                 return BadRequest("Invalid product data");
             }
-
-            if (string.IsNullOrWhiteSpace(product.Name))
+            try
             {
-                return BadRequest("Product name is required");
+                var createdProduct = _product.CreateProductAction(product);
+                return Created($"/api/product/getById/{createdProduct.Id}", createdProduct);
             }
-
-            var createdProduct = _product.CreateProductAction(product);
-
-            return Created($"/api/product/getById/{createdProduct.Id}", createdProduct);
+            catch (Exception ex)
+            {
+                return StatusCode(500, new
+                {
+                    message = ex.Message,
+                    inner = ex.InnerException?.Message,
+                    inner2 = ex.InnerException?.InnerException?.Message
+                });
+            }
         }
 
         [HttpPut("update/{id}")]
+        [Authorize(Roles = "Admin")]
         public IActionResult UpdateProduct(int id, [FromBody] ProductCreateDto product)
         {
             if (product == null)
@@ -102,6 +113,7 @@ namespace FloraBack.Api.Controller
         }
 
         [HttpDelete("delete/{id}")]
+        [Authorize(Roles = "Admin")]
         public IActionResult DeleteProduct(int id)
         {
             var deleted = _product.DeleteProductAction(id);

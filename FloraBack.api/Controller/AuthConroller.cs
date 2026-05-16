@@ -1,6 +1,7 @@
 ﻿using FloraBack.BusinessLogic.Interface;
-using FloraBack.Domains.Models.User;
+using FloraBack.Domains.Models.Auth;
 using Microsoft.AspNetCore.Mvc;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace FloraBack.Api.Controller
 {
@@ -16,23 +17,44 @@ namespace FloraBack.Api.Controller
             _authActions = bl.GetAuthActions();
         }
 
-        [HttpGet("status")]
-        public IActionResult GetStatus()
+        [HttpPost("login")]
+        public IActionResult UserLogin([FromBody] UserLoginData data)
         {
-            return Ok(new { Message = "Session is active" });
-        }
+            var _authStatus = _authActions.UserLoginAction(data);
 
-        [HttpPost("auth")]
-        public IActionResult PostStatus([FromBody] UserAuthAction data)
-        {
-            var _authStatus = _authActions.LoginActionFlow(data);
-            
             if (!_authStatus.IsSuccess)
             {
                 return Unauthorized(_authStatus.Message);
             }
 
             return Ok(new { token = _authStatus.Message });
+        }
+
+        [HttpPost("register")]
+        public IActionResult UserRegister([FromBody] UserRegisterData registerData)
+        {
+            var user = _authActions.UserRegisterAction(registerData);
+
+            if (user == null)
+            {
+                return BadRequest(new { Message = "User registration failed" });
+            }
+
+            return Ok(user);
+
+            //var token = _jwtTokenService.GenerateToken(user);
+
+            //return Ok(new
+            //{
+            //    Token = token,
+            //    User = user
+            //});
+        }
+
+        [HttpGet("status")]
+        public IActionResult GetStatus()
+        {
+            return Ok(new { Message = "Session is active" });
         }
     }
 }

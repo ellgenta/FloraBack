@@ -9,6 +9,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using FloraBack.BusinessLogic.Structure;
 
 namespace FloraBack.BusinessLogic.Core.User
 {
@@ -52,7 +53,7 @@ namespace FloraBack.BusinessLogic.Core.User
                 var _newUser = new UserData()
                 {
                     UserName = user.UserName,
-                    Password = user.Password,
+                    Password = PasswordHasher.Hash(user.Password),
                     Email = user.Email,
                     DefaultAddress = user.DefaultAddress,
                     DefaultPaymentMethod = user.DefaultPaymentMethod,
@@ -101,7 +102,7 @@ namespace FloraBack.BusinessLogic.Core.User
 
                 _user.UserName = user.UserName;
                 _user.Email = user.Email;
-                _user.Password = user.Password;
+                _user.Password = PasswordHasher.Hash(user.Password);
                 _user.DefaultAddress = user.DefaultAddress;
                 _user.DefaultPaymentMethod = user.DefaultPaymentMethod;
                 _user.UpdatedAt = DateTime.Now;

@@ -1,20 +1,38 @@
-﻿using FloraBack.Domains.Entities.User;
+﻿using FloraBack.BusinessLogic.Core.User;
+using FloraBack.BusinessLogic.Structure;
+using FloraBack.DataAccess.Context;
+using FloraBack.Domains.Entities.User;
+using FloraBack.Domains.Models.Auth;
 using FloraBack.Domains.Models.User;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using FloraBack.DataAccess.Context;
-using FloraBack.BusinessLogic.Structure;
 
 namespace FloraBack.BusinessLogic.Core.Auth
 {
     public class AuthActions
     {
-        public UserData? ExecuteValidateLogin(UserAuthAction data)
+        private readonly UserActions _userActions = new();
+
+        public UserData? ExecuteUserRegisterAction(UserRegisterData registerData)
         {
-            if (string.IsNullOrEmpty(data.Login) && string.IsNullOrEmpty(data.Password))
+            var _newUser = new UserCreateDto
+            {
+                UserName = registerData.UserName,
+                Email = registerData.Email,
+                Password = registerData.Password
+            };
+
+            var _user = _userActions.ExecuteCreateUserAction(_newUser);
+
+            return _user;
+        }
+
+        public UserData? ExecuteUserLoginAction(UserLoginData data)
+        {
+            if (string.IsNullOrEmpty(data.Login) || string.IsNullOrEmpty(data.Password))
             {
                 return null;
             }
