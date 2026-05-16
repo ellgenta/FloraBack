@@ -1,9 +1,10 @@
 ﻿using FloraBack.Domains.Entities.Refs;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FloraBack.Domains.Entities.Product
 {
-    public class CategoryData : SharedFields
+    public class SubCategoryData : SharedFields
     {
         [Key]
         public int Id { get; set; }
@@ -12,8 +13,9 @@ namespace FloraBack.Domains.Entities.Product
         [StringLength(100, MinimumLength = 2)]
         public string Name { get; set; }
 
-        public List<SubCategoryData> SubCategories { get; set; } = new();
+        public int CategoryId { get; set; }
 
-        public List<ProductData> Products { get; set; } = new();
+        [ForeignKey("CategoryId")]
+        public CategoryData Category { get; set; }
     }
 }

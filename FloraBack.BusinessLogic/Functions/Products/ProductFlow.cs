@@ -103,7 +103,7 @@ namespace FloraBack.BusinessLogic.Functions.Products
                 Category = product.Category != null ? new ProductCategoryDto()
                 {
                     Id = product.Category.Id,
-                    Name = product.Category.Name
+                    Name = Enum.Parse<ProductCategory>(product.Category.Name)
                 } : null,
                 SubCategory = product.SubCategory,
                 Images = product.Images?.Select(img => new ProductImgInfoDto()

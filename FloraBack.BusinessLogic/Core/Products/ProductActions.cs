@@ -40,7 +40,7 @@ namespace FloraBack.BusinessLogic.Core.Products
                     .Include(p => p.Images)
                     .Include(p => p.Category)
                     .Include(p => p.Description)
-                    .Where(p => p.Category.Name == category)
+                    .Where(p => p.Category.Name == category.ToString())
                     .ToList();
             }
         }

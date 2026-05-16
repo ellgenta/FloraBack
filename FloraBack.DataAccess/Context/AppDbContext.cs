@@ -30,6 +30,7 @@ namespace FloraBack.DataAccess.Context
         public DbSet<ProductDescriptionData> Descriptions { get; set; }
 
         public DbSet<CategoryData> Categories { get; set; }
+        public DbSet<SubCategoryData> SubCategories { get; set; }
 
         public DbSet<ProductImgData> Images { get; set; }
 
