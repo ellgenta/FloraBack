@@ -11,7 +11,7 @@ namespace FloraBack.Domains.Models.Product
 
         public ProductDescriptionCreateDto Description { get; set; }
 
-        public ProductCategoryDto Category { get; set; }
+        public int CategoryId { get; set; }
 
         [Required]
         [StringLength(50, MinimumLength = 1)]
