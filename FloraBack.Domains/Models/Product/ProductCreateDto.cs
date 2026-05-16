@@ -1,5 +1,4 @@
-﻿using FloraBack.Domains.Entities.Product;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace FloraBack.Domains.Models.Product
 {
@@ -11,7 +10,10 @@ namespace FloraBack.Domains.Models.Product
 
         public ProductDescriptionCreateDto Description { get; set; }
 
+        [Range(1, int.MaxValue)]
         public int CategoryId { get; set; }
+
+        [Range(1, int.MaxValue)]
         public int SubCategoryId { get; set; }
 
         public List<ProductImgCreateDto> Images { get; set; } = new();

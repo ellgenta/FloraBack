@@ -15,6 +15,8 @@ namespace FloraBack.BusinessLogic.Core.Products
                 return db.Products
                     .Include(p => p.Images)
                     .Include(p => p.Category)
+                    .ThenInclude(c => c.SubCategories)
+                    .Include(p => p.SubCategory)
                     .Include(p => p.Description)
                     .ToList();
             }
@@ -27,33 +29,39 @@ namespace FloraBack.BusinessLogic.Core.Products
                 return db.Products
                     .Include(p => p.Images)
                     .Include(p => p.Category)
+                        .ThenInclude(c => c.SubCategories)
+                    .Include(p => p.SubCategory)
                     .Include(p => p.Description)
                     .FirstOrDefault(p => p.Id == id);
             }
         }
 
-        public List<ProductData> ExecuteGetProductsByCategoryAction(ProductCategory category)
+        public List<ProductData> ExecuteGetProductsByCategoryAction(int categoryId)
         {
             using (var db = new AppDbContext())
             {
                 return db.Products
                     .Include(p => p.Images)
                     .Include(p => p.Category)
+                    .ThenInclude(c => c.SubCategories)
+                    .Include(p => p.SubCategory)
                     .Include(p => p.Description)
-                    .Where(p => p.Category.Name == category.ToString())
+                    .Where(p => p.CategoryId == categoryId)
                     .ToList();
             }
         }
 
-        public List<ProductData> ExecuteGetProductsBySubCategoryAction(string subCategory)
+        public List<ProductData> ExecuteGetProductsBySubCategoryAction(int subCategoryId)
         {
             using (var db = new AppDbContext())
             {
                 return db.Products
                     .Include(p => p.Images)
                     .Include(p => p.Category)
+                     .ThenInclude(c => c.SubCategories)
+                    .Include(p => p.SubCategory)
                     .Include(p => p.Description)
-                    .Where(p => p.SubCategory.Name.ToLower() == subCategory.ToLower())
+                    .Where(p => p.SubCategoryId == subCategoryId)
                     .ToList();
             }
         }
@@ -62,11 +70,29 @@ namespace FloraBack.BusinessLogic.Core.Products
         {
             using (var db = new AppDbContext())
             {
+                var categoryExists = db.Categories.Any(c => c.Id == product.CategoryId);
+
+                if (!categoryExists)
+                {
+                    return null;
+                }
+
+                var subCategoryExists = db.SubCategories
+                   .Any(sc => sc.Id == product.SubCategoryId && sc.CategoryId == product.CategoryId);
+
+                if (!subCategoryExists)
+                {
+                    return null;
+                }
+
                 var newProduct = new ProductData()
                 {
                     Name = product.Name,
-                    Description = new ProductDescriptionData() { Description = product.Description.Description },
-                    Category = db.Categories.FirstOrDefault(c => c.Id == product.CategoryId),
+                    Description = new ProductDescriptionData()
+                    {
+                        Description = product.Description.Description
+                    },
+                    CategoryId = product.CategoryId,
                     SubCategoryId = product.SubCategoryId,
                     Images = product.Images.Select(img => new ProductImgData()
                     {
@@ -81,10 +107,9 @@ namespace FloraBack.BusinessLogic.Core.Products
                 db.Products.Add(newProduct);
                 db.SaveChanges();
 
-                return newProduct;
-            } 
+                return ExecuteGetProductByIdAction(newProduct.Id);
+            }
         }
-
         public ProductData? ExecuteUpdateProductAction(int id, ProductCreateDto product)
         {
             using (var db = new AppDbContext())
@@ -92,6 +117,7 @@ namespace FloraBack.BusinessLogic.Core.Products
                 var existingProduct = db.Products
                     .Include(p => p.Images)
                     .Include(p => p.Category)
+                    .Include(p => p.SubCategory)
                     .Include(p => p.Description)
                     .FirstOrDefault(p => p.Id == id);
 
@@ -100,15 +126,34 @@ namespace FloraBack.BusinessLogic.Core.Products
                     return null;
                 }
 
+                var categoryExists = db.Categories.Any(c => c.Id == product.CategoryId);
+
+                if (!categoryExists)
+                {
+                    return null;
+                }
+
+                var subCategoryExists = db.SubCategories
+                    .Any(sc => sc.Id == product.SubCategoryId && sc.CategoryId == product.CategoryId);
+
+                if (!subCategoryExists)
+                {
+                    return null;
+                }
                 existingProduct.Name = product.Name;
-                existingProduct.Description.Description = product.Description.Description;
-                //existingProduct.Category = product.Category;
-                //existingProduct.SubCategory = product.SubCategory;
+                existingProduct.CategoryId = product.CategoryId;
+                existingProduct.SubCategoryId = product.SubCategoryId;
                 existingProduct.Price = product.Price;
                 existingProduct.UpdatedAt = DateTime.Now;
 
-                existingProduct.Images.Clear();
+                if (existingProduct.Description == null)
+                {
+                    existingProduct.Description = new ProductDescriptionData();
+                }
 
+                existingProduct.Description.Description = product.Description.Description;
+
+                existingProduct.Images.Clear();
                 if (product.Images != null)
                 {
                     foreach (var image in product.Images)
@@ -123,7 +168,7 @@ namespace FloraBack.BusinessLogic.Core.Products
 
                 db.SaveChanges();
 
-                return existingProduct;
+                return ExecuteGetProductByIdAction(existingProduct.Id);
             }
         }
 
@@ -140,6 +185,8 @@ namespace FloraBack.BusinessLogic.Core.Products
                 }
 
                 product.Status = ProductStatus.Inactive;
+                product.UpdatedAt = DateTime.Now;
+
                 db.SaveChanges();
 
                 return true;

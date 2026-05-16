@@ -1,11 +1,7 @@
 ﻿using FloraBack.BusinessLogic.Interface;
-using FloraBack.Domains.Enums;
 using FloraBack.Domains.Models.Product;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-
-
 
 namespace FloraBack.Api.Controller
 {
@@ -49,19 +45,29 @@ namespace FloraBack.Api.Controller
             return Ok(product);
         }
 
-        [HttpGet("category/{category}")]
+        [HttpGet("category/{categoryId}")]
         [AllowAnonymous]
-        public IActionResult GetProductsByCategory(ProductCategory category)
+        public IActionResult GetProductsByCategory(int categoryId)
         {
-            var products = _product.GetProductsByCategoryAction(category);
+            if (categoryId <= 0)
+            {
+                return BadRequest("Invalid category id");
+            }
+
+            var products = _product.GetProductsByCategoryAction(categoryId);
             return Ok(products);
         }
 
-        [HttpGet("subcategory/{subCategory}")]
+        [HttpGet("subcategory/{subCategoryId}")]
         [AllowAnonymous]
-        public IActionResult GetProductsBySubCategory(string subCategory)
+        public IActionResult GetProductsBySubCategory(int subCategoryId)
         {
-            var products = _product.GetProductsBySubCategoryAction(subCategory);
+            if (subCategoryId <= 0)
+            {
+                return BadRequest("Invalid subcategory id");
+            }
+
+            var products = _product.GetProductsBySubCategoryAction(subCategoryId);
             return Ok(products);
         }
 
@@ -73,10 +79,17 @@ namespace FloraBack.Api.Controller
             {
                 return BadRequest("Invalid product data");
             }
+
             try
             {
                 var createdProduct = _product.CreateProductAction(product);
-                return Created($"/api/product/getById/{createdProduct.Id}", createdProduct);
+
+                if (createdProduct == null)
+                {
+                    return BadRequest("Category or subcategory not found");
+                }
+
+                return CreatedAtAction(nameof(GetProductById), new { id = createdProduct.Id }, createdProduct);
             }
             catch (Exception ex)
             {
@@ -93,6 +106,11 @@ namespace FloraBack.Api.Controller
         [Authorize(Roles = "Admin")]
         public IActionResult UpdateProduct(int id, [FromBody] ProductCreateDto product)
         {
+            if (id <= 0)
+            {
+                return BadRequest("Invalid product id");
+            }
+
             if (product == null)
             {
                 return BadRequest("Invalid product data");
@@ -102,11 +120,12 @@ namespace FloraBack.Api.Controller
             {
                 return BadRequest("Product name is required");
             }
+
             var updatedProduct = _product.UpdateProductAction(id, product);
 
             if (updatedProduct == null)
             {
-                return NotFound("Product not found");
+                return BadRequest("Product not found or category/subcategory is invalid");
             }
 
             return Ok(updatedProduct);
@@ -116,6 +135,11 @@ namespace FloraBack.Api.Controller
         [Authorize(Roles = "Admin")]
         public IActionResult DeleteProduct(int id)
         {
+            if (id <= 0)
+            {
+                return BadRequest("Invalid product id");
+            }
+
             var deleted = _product.DeleteProductAction(id);
 
             if (!deleted)

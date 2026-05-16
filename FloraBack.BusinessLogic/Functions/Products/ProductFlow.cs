@@ -1,9 +1,8 @@
 ﻿using FloraBack.BusinessLogic.Core.Products;
 using FloraBack.BusinessLogic.Interface;
 using FloraBack.Domains.Entities.Product;
-using FloraBack.Domains.Enums;
-using FloraBack.Domains.Models.Product;
 using FloraBack.Domains.Models.Category;
+using FloraBack.Domains.Models.Product;
 
 namespace FloraBack.BusinessLogic.Functions.Products
 {
@@ -34,9 +33,9 @@ namespace FloraBack.BusinessLogic.Functions.Products
             return MapToDto(product);
         }
 
-        public List<ProductInfoDto> GetProductsByCategoryAction(ProductCategory category)
+        public List<ProductInfoDto> GetProductsByCategoryAction(int categoryId)
         {
-            var productsData = ExecuteGetProductsByCategoryAction(category);
+            var productsData = ExecuteGetProductsByCategoryAction(categoryId);
             var productsDto = new List<ProductInfoDto>();
 
             foreach (var product in productsData)
@@ -47,9 +46,9 @@ namespace FloraBack.BusinessLogic.Functions.Products
             return productsDto;
         }
 
-        public List<ProductInfoDto> GetProductsBySubCategoryAction(string subCategory)
+        public List<ProductInfoDto> GetProductsBySubCategoryAction(int subCategoryId)
         {
-            var productsData = ExecuteGetProductsBySubCategoryAction(subCategory);
+            var productsData = ExecuteGetProductsBySubCategoryAction(subCategoryId);
             var productsDto = new List<ProductInfoDto>();
 
             foreach (var product in productsData)
@@ -60,7 +59,7 @@ namespace FloraBack.BusinessLogic.Functions.Products
             return productsDto;
         }
 
-        public ProductInfoDto CreateProductAction(ProductCreateDto product)
+        public ProductInfoDto? CreateProductAction(ProductCreateDto product)
         {
             var createdProduct = ExecuteCreateProductAction(product);
 
@@ -95,6 +94,7 @@ namespace FloraBack.BusinessLogic.Functions.Products
             {
                 Id = product.Id,
                 Name = product.Name,
+
                 Description = product.Description != null ? new ProductDescriptionInfoDto()
                 {
                     Id = product.Description.Id,
@@ -102,31 +102,36 @@ namespace FloraBack.BusinessLogic.Functions.Products
                     ProductId = product.Description.ProductId
                 } : null,
 
-                Category = new CategoryInfoDto()
+                Category = product.Category != null ? new CategoryInfoDto()
                 {
                     Id = product.Category.Id,
                     Name = product.Category.Name,
-                    SubCategories = product.Category.SubCategories.Select(subCategory => new SubCategoryInfoDto()
-                    {
-                        Id = subCategory.Id,
-                        Name = subCategory.Name,
-                        CategoryId = subCategory.CategoryId
-                    }).ToList()
-                },
+                    SubCategories = product.Category.SubCategories != null
+                        ? product.Category.SubCategories.Select(subCategory => new SubCategoryInfoDto()
+                        {
+                            Id = subCategory.Id,
+                            Name = subCategory.Name,
+                            CategoryId = subCategory.CategoryId
+                        }).ToList()
+                        : new List<SubCategoryInfoDto>()
+                } : null,
 
-                SubCategory = new SubCategoryInfoDto()
+                SubCategory = product.SubCategory != null ? new SubCategoryInfoDto()
                 {
                     Id = product.SubCategory.Id,
                     Name = product.SubCategory.Name,
                     CategoryId = product.SubCategory.CategoryId
-                },
+                } : null,
 
-                Images = product.Images?.Select(img => new ProductImgInfoDto()
-                {
-                    Id = img.Id,
-                    Url = img.Url,
-                    ProductId = img.ProductId
-                }).ToList() ?? new List<ProductImgInfoDto>(),
+                Images = product.Images != null
+                    ? product.Images.Select(img => new ProductImgInfoDto()
+                    {
+                        Id = img.Id,
+                        Url = img.Url,
+                        ProductId = img.ProductId
+                    }).ToList()
+                    : new List<ProductImgInfoDto>(),
+
                 Price = product.Price,
                 Status = product.Status,
             };

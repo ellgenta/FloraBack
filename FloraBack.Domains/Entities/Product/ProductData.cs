@@ -1,17 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using FloraBack.Domains.Entities.Cart;
+﻿using FloraBack.Domains.Entities.Cart;
 using FloraBack.Domains.Entities.Category;
 using FloraBack.Domains.Entities.Order;
 using FloraBack.Domains.Entities.ProductReview;
 using FloraBack.Domains.Entities.Refs;
 using FloraBack.Domains.Enums;
-
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FloraBack.Domains.Entities.Product
 {
@@ -25,10 +19,11 @@ namespace FloraBack.Domains.Entities.Product
 
         public ProductDescriptionData Description { get; set; }
 
-        public int CategoryId;
+        public int CategoryId { get; set; }
 
         [ForeignKey("CategoryId")]
         public CategoryData Category { get; set; }
+
         public int SubCategoryId { get; set; }
 
         [ForeignKey("SubCategoryId")]
