@@ -18,7 +18,7 @@ namespace FloraBack.Domains.Entities.Product
         public int Id { get; set; }
 
         [Required]
-        [StringLength(300)]
+        [StringLength(50, MinimumLength = 3)]
         public string Name { get; set; }
 
         public ProductDescriptionData Description { get; set; }
@@ -29,8 +29,7 @@ namespace FloraBack.Domains.Entities.Product
         public CategoryData Category { get; set; }
 
         [Required]
-        [StringLength(300)]
-
+        [StringLength(50, MinimumLength = 1)]
         public string SubCategory { get; set; }
 
         public List<ProductImgData> Images { get; set; }

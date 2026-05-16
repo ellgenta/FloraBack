@@ -8,10 +8,10 @@ namespace FloraBack.BusinessLogic.Functions.Products
 {
     public class ProductFlow : ProductAction, IProductActions
     {
-        public List<ProductDto> GetAllProductsAction()
+        public List<ProductCreateDto> GetAllProductsAction()
         {
             var productsData = ExecuteGetAllProductsAction();
-            var productsDto = new List<ProductDto>();
+            var productsDto = new List<ProductCreateDto>();
 
             foreach (var product in productsData)
             {
@@ -21,7 +21,7 @@ namespace FloraBack.BusinessLogic.Functions.Products
             return productsDto;
         }
 
-        public ProductDto? GetProductByIdAction(int id)
+        public ProductCreateDto? GetProductByIdAction(int id)
         {
             var product = ExecuteGetProductByIdAction(id);
 
@@ -33,10 +33,10 @@ namespace FloraBack.BusinessLogic.Functions.Products
             return MapToDto(product);
         }
 
-        public List<ProductDto> GetProductsByCategoryAction(ProductCategory category)
+        public List<ProductCreateDto> GetProductsByCategoryAction(ProductCategory category)
         {
             var productsData = ExecuteGetProductsByCategoryAction(category);
-            var productsDto = new List<ProductDto>();
+            var productsDto = new List<ProductCreateDto>();
 
             foreach (var product in productsData)
             {
@@ -46,10 +46,10 @@ namespace FloraBack.BusinessLogic.Functions.Products
             return productsDto;
         }
 
-        public List<ProductDto> GetProductsBySubCategoryAction(string subCategory)
+        public List<ProductCreateDto> GetProductsBySubCategoryAction(string subCategory)
         {
             var productsData = ExecuteGetProductsBySubCategoryAction(subCategory);
-            var productsDto = new List<ProductDto>();
+            var productsDto = new List<ProductCreateDto>();
 
             foreach (var product in productsData)
             {
@@ -59,7 +59,7 @@ namespace FloraBack.BusinessLogic.Functions.Products
             return productsDto;
         }
 
-        public ProductDto CreateProductAction(ProductDto product)
+        public ProductCreateDto CreateProductAction(ProductCreateDto product)
         {
             var productData = MapToData(product);
 
@@ -73,7 +73,7 @@ namespace FloraBack.BusinessLogic.Functions.Products
             return MapToDto(createdProduct);
         }
 
-        public ProductDto? UpdateProductAction(int id, ProductDto product)
+        public ProductCreateDto? UpdateProductAction(int id, ProductCreateDto product)
         {
             var productData = MapToData(product);
 
@@ -92,9 +92,9 @@ namespace FloraBack.BusinessLogic.Functions.Products
             return ExecuteDeleteProductAction(id);
         }
 
-        private ProductDto MapToDto(ProductData product)
+        private ProductCreateDto MapToDto(ProductData product)
         {
-            return new ProductDto()
+            return new ProductCreateDto()
             {
                 Id = product.Id,
                 Name = product.Name,
@@ -106,7 +106,7 @@ namespace FloraBack.BusinessLogic.Functions.Products
             };
         }
 
-        private ProductData MapToData(ProductDto product)
+        private ProductData MapToData(ProductCreateDto product)
         {
             return new ProductData()
             {

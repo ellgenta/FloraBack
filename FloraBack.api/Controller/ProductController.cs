@@ -46,14 +46,14 @@ namespace FloraBack.Api.Controller
             return Ok(product);
         }
 
-        [HttpGet("getByCategory/{category}")]
+        [HttpGet("category/{category}")]
         public IActionResult GetProductsByCategory(ProductCategory category)
         {
             var products = _product.GetProductsByCategoryAction(category);
             return Ok(products);
         }
 
-        [HttpGet("getBySubCategory/{subCategory}")]
+        [HttpGet("subcategory/{subCategory}")]
 
         public IActionResult GetProductsBySubCategory(string subCategory)
         {
@@ -62,7 +62,7 @@ namespace FloraBack.Api.Controller
         }
 
         [HttpPost("create")]
-        public IActionResult CreateProduct([FromBody] ProductDto product)
+        public IActionResult CreateProduct([FromBody] ProductCreateDto product)
         {
             if (product == null)
             {
@@ -80,7 +80,7 @@ namespace FloraBack.Api.Controller
         }
 
         [HttpPut("update/{id}")]
-        public IActionResult UpdateProduct(int id, [FromBody] ProductDto product)
+        public IActionResult UpdateProduct(int id, [FromBody] ProductCreateDto product)
         {
             if (product == null)
             {

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FloraBack.Domains.Models.Product
 {
-    public class ProductDescriptionDto
+    public class ProductDescriptionInfoDto
     {
         public string Description { get; set; }
     }

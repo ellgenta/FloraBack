@@ -11,12 +11,12 @@ namespace FloraBack.BusinessLogic.Interface
 {
     public interface IProductActions
     {
-        List<ProductDto> GetAllProductsAction();
-        ProductDto? GetProductByIdAction(int id);
-        List<ProductDto> GetProductsByCategoryAction(ProductCategory category);
-        List<ProductDto> GetProductsBySubCategoryAction(string subCategory);
-        ProductDto CreateProductAction(ProductDto product);
-        ProductDto? UpdateProductAction(int id, ProductDto product);
+        List<ProductCreateDto> GetAllProductsAction();
+        ProductCreateDto? GetProductByIdAction(int id);
+        List<ProductCreateDto> GetProductsByCategoryAction(ProductCategory category);
+        List<ProductCreateDto> GetProductsBySubCategoryAction(string subCategory);
+        ProductCreateDto CreateProductAction(ProductCreateDto product);
+        ProductCreateDto? UpdateProductAction(int id, ProductCreateDto product);
         bool DeleteProductAction(int id);
     }
 }
