@@ -8,6 +8,7 @@ using System.ComponentModel;
 using FloraBack.BusinessLogic.Functions.Cart;
 using FloraBack.BusinessLogic.Functions.ProductReview;
 using FloraBack.BusinessLogic.Functions.Category;
+using FloraBack.BusinessLogic.Functions.SubCategory;
 
 
 namespace FloraBack.BusinessLogic
@@ -53,6 +54,10 @@ namespace FloraBack.BusinessLogic
         public ICategoryActions GetCategoryActions()
         {
             return new CategoryFlow();
+        }
+        public ISubCategoryActions GetSubCategoryActions()
+        {
+            return new SubCategoryFlow();
         }
     }
 }
