@@ -10,7 +10,8 @@ using System.Threading.Tasks;
 using FloraBack.Domains.Entities.Product;
 using FloraBack.Domains.Entities.Cart;
 using FloraBack.Domains.Entities.ProductReview;
-
+using FloraBack.Domains.Entities.Category;
+using FloraBack.Domains.Entities.Category;
 namespace FloraBack.DataAccess.Context
 {
     public class AppDbContext : DbContext
@@ -30,6 +31,7 @@ namespace FloraBack.DataAccess.Context
         public DbSet<ProductDescriptionData> Descriptions { get; set; }
 
         public DbSet<CategoryData> Categories { get; set; }
+
         public DbSet<SubCategoryData> SubCategories { get; set; }
 
         public DbSet<ProductImgData> Images { get; set; }

@@ -6,10 +6,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using FloraBack.Domains.Entities.Cart;
+using FloraBack.Domains.Entities.Category;
 using FloraBack.Domains.Entities.Order;
 using FloraBack.Domains.Entities.ProductReview;
 using FloraBack.Domains.Entities.Refs;
 using FloraBack.Domains.Enums;
+
 
 namespace FloraBack.Domains.Entities.Product
 {
