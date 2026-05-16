@@ -29,10 +29,10 @@ namespace FloraBack.Domains.Entities.Product
 
         [ForeignKey("CategoryId")]
         public CategoryData Category { get; set; }
+        public int SubCategoryId { get; set; }
 
-        [Required]
-        [StringLength(50, MinimumLength = 1)]
-        public string SubCategory { get; set; }
+        [ForeignKey("SubCategoryId")]
+        public SubCategoryData SubCategory { get; set; }
 
         public List<ProductImgData> Images { get; set; }
 

@@ -53,7 +53,7 @@ namespace FloraBack.BusinessLogic.Core.Products
                     .Include(p => p.Images)
                     .Include(p => p.Category)
                     .Include(p => p.Description)
-                    .Where(p => p.SubCategory.ToLower() == subCategory.ToLower())
+                    .Where(p => p.SubCategory.Name.ToLower() == subCategory.ToLower())
                     .ToList();
             }
         }
@@ -67,7 +67,7 @@ namespace FloraBack.BusinessLogic.Core.Products
                     Name = product.Name,
                     Description = new ProductDescriptionData() { Description = product.Description.Description },
                     Category = db.Categories.FirstOrDefault(c => c.Id == product.CategoryId),
-                    SubCategory = product.SubCategory,
+                    SubCategoryId = product.SubCategoryId,
                     Images = product.Images.Select(img => new ProductImgData()
                     {
                         Url = img.Url,

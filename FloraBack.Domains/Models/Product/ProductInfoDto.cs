@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using FloraBack.Domains.Enums;
+using FloraBack.Domains.Models.Category;
 
 namespace FloraBack.Domains.Models.Product
 {
@@ -14,10 +15,8 @@ namespace FloraBack.Domains.Models.Product
         public string Name { get; set; }
 
         public ProductDescriptionInfoDto Description { get; set; }
-
-        public ProductCategoryDto Category { get; set; }
-
-        public string SubCategory { get; set; }
+        public CategoryInfoDto Category { get; set; }
+        public SubCategoryInfoDto SubCategory { get; set; }
 
         public List<ProductImgInfoDto> Images { get; set; }
 

@@ -3,6 +3,7 @@ using FloraBack.BusinessLogic.Interface;
 using FloraBack.Domains.Entities.Product;
 using FloraBack.Domains.Enums;
 using FloraBack.Domains.Models.Product;
+using FloraBack.Domains.Models.Category;
 
 namespace FloraBack.BusinessLogic.Functions.Products
 {
@@ -100,12 +101,26 @@ namespace FloraBack.BusinessLogic.Functions.Products
                     Description = product.Description.Description,
                     ProductId = product.Description.ProductId
                 } : null,
-                Category = product.Category != null ? new ProductCategoryDto()
+
+                Category = new CategoryInfoDto()
                 {
                     Id = product.Category.Id,
-                    Name = Enum.Parse<ProductCategory>(product.Category.Name)
-                } : null,
-                SubCategory = product.SubCategory,
+                    Name = product.Category.Name,
+                    SubCategories = product.Category.SubCategories.Select(subCategory => new SubCategoryInfoDto()
+                    {
+                        Id = subCategory.Id,
+                        Name = subCategory.Name,
+                        CategoryId = subCategory.CategoryId
+                    }).ToList()
+                },
+
+                SubCategory = new SubCategoryInfoDto()
+                {
+                    Id = product.SubCategory.Id,
+                    Name = product.SubCategory.Name,
+                    CategoryId = product.SubCategory.CategoryId
+                },
+
                 Images = product.Images?.Select(img => new ProductImgInfoDto()
                 {
                     Id = img.Id,

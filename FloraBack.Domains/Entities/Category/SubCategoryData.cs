@@ -1,4 +1,5 @@
-﻿using FloraBack.Domains.Entities.Refs;
+﻿using FloraBack.Domains.Entities.Product;
+using FloraBack.Domains.Entities.Refs;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -17,5 +18,6 @@ namespace FloraBack.Domains.Entities.Category
 
         [ForeignKey("CategoryId")]
         public CategoryData Category { get; set; }
+        public List<ProductData> Products { get; set; } = new();
     }
 }

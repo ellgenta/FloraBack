@@ -12,10 +12,7 @@ namespace FloraBack.Domains.Models.Product
         public ProductDescriptionCreateDto Description { get; set; }
 
         public int CategoryId { get; set; }
-
-        [Required]
-        [StringLength(50, MinimumLength = 1)]
-        public string SubCategory { get; set; }
+        public int SubCategoryId { get; set; }
 
         public List<ProductImgCreateDto> Images { get; set; } = new();
 
