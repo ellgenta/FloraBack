@@ -7,6 +7,8 @@ using FloraBack.BusinessLogic.Functions.SiteReview;
 using System.ComponentModel;
 using FloraBack.BusinessLogic.Functions.Cart;
 using FloraBack.BusinessLogic.Functions.ProductReview;
+using FloraBack.BusinessLogic.Functions.Category;
+
 
 namespace FloraBack.BusinessLogic
 {
@@ -46,6 +48,11 @@ namespace FloraBack.BusinessLogic
         public IProductReviewActions GetProductReviewActions()
         {
             return new ProductReviewFlow();
+        }
+
+        public ICategoryActions GetCategoryActions()
+        {
+            return new CategoryFlow();
         }
     }
 }
