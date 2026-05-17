@@ -71,7 +71,7 @@ namespace FloraBack.Api.Controller
             return Ok(products);
         }
 
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         [HttpPost("create")]
         public IActionResult CreateProduct([FromBody] ProductCreateDto product)
         {
@@ -80,26 +80,14 @@ namespace FloraBack.Api.Controller
                 return BadRequest("Invalid product data");
             }
 
-            try
-            {
-                var createdProduct = _product.CreateProductAction(product);
+            var createdProduct = _product.CreateProductAction(product);
 
-                if (createdProduct == null)
-                {
-                    return BadRequest("Category or subcategory not found");
-                }
-
-                return CreatedAtAction(nameof(GetProductById), new { id = createdProduct.Id }, createdProduct);
-            }
-            catch (Exception ex)
+            if (createdProduct == null)
             {
-                return StatusCode(500, new
-                {
-                    message = ex.Message,
-                    inner = ex.InnerException?.Message,
-                    inner2 = ex.InnerException?.InnerException?.Message
-                });
+                return BadRequest("Category or subcategory not found");
             }
+
+            return Created($"api/users{createdProduct.Id}", createdProduct);
         }
 
         [HttpPut("update/{id}")]

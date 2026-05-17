@@ -1,6 +1,7 @@
 ﻿using FloraBack.BusinessLogic.Interface;
 using FloraBack.Domains.Entities.User;
 using FloraBack.Domains.Models.User;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Data;
 
@@ -19,6 +20,7 @@ namespace FloraBack.api.Controller
         }
 
         [HttpGet("all")]
+        [Authorize(Roles = "Admin")]
         public IActionResult GetAllUsers()
         {
             var _users = _userActions.GetAllUsersAction();
@@ -26,6 +28,7 @@ namespace FloraBack.api.Controller
         }
 
         [HttpGet("{id}")]
+        [Authorize]
         public IActionResult GetUserById(int id)
         {
             var _user = _userActions.GetUserByIdAction(id);
@@ -39,6 +42,7 @@ namespace FloraBack.api.Controller
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public IActionResult CreateUser([FromBody] UserCreateDto user)
         {
             var _user = _userActions.CreateUserAction(user);
@@ -52,6 +56,7 @@ namespace FloraBack.api.Controller
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin")]
         public IActionResult DeleteUser(int id)
         {
             var wasDeleted = _userActions.DeleteUserAction(id);
@@ -65,6 +70,7 @@ namespace FloraBack.api.Controller
         }
 
         [HttpPut("{id}")]
+        [Authorize]
         public IActionResult UpdateUser(int id, [FromBody] UserCreateDto user)
         {
             var _user = _userActions.UpdateUserAction(id, user);

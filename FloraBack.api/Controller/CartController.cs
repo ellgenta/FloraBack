@@ -1,5 +1,6 @@
 ﻿using FloraBack.BusinessLogic.Interface;
 using FloraBack.Domains.Models.Cart;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FloraBack.Api.Controller
@@ -17,6 +18,7 @@ namespace FloraBack.Api.Controller
         }
 
         [HttpGet]
+        [Authorize]
         public IActionResult GetCart()
         {
             var cart = _cart.GetCartAction();
@@ -30,6 +32,7 @@ namespace FloraBack.Api.Controller
         }
 
         [HttpPost("items")]
+        [Authorize]
         public IActionResult AddItemToCart([FromBody] CartItemDto item)
         {
             if (item == null)
@@ -63,6 +66,7 @@ namespace FloraBack.Api.Controller
         }
 
         [HttpPut("items/{itemId}")]
+        [Authorize]
         public IActionResult UpdateCartItem(int itemId, [FromBody] CartItemDto item)
         {
             if (item == null)
@@ -91,6 +95,7 @@ namespace FloraBack.Api.Controller
         }
 
         [HttpDelete("items/{itemId}")]
+        [Authorize]
         public IActionResult DeleteCartItem(int itemId)
         {
             var wasDeleted = _cart.DeleteCartItemAction(itemId);
@@ -104,6 +109,7 @@ namespace FloraBack.Api.Controller
         }
 
         [HttpDelete]
+        [Authorize]
         public IActionResult ClearCart()
         {
             var wasCleared = _cart.ClearCartAction();

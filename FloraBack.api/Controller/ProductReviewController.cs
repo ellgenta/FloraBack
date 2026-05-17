@@ -1,5 +1,6 @@
 ﻿using FloraBack.BusinessLogic.Interface;
 using FloraBack.Domains.Models.ProductReview;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FloraBack.Api.Controller
@@ -17,6 +18,7 @@ namespace FloraBack.Api.Controller
         }
 
         [HttpPost]
+        [Authorize]
         public IActionResult CreateProductReview([FromBody] ProductReviewDto review)
         {
             var _newReview = _productReviewActions.CreateProductReviewAction(review);
@@ -25,6 +27,7 @@ namespace FloraBack.Api.Controller
         }
 
         [HttpGet("all")]
+        [AllowAnonymous]
         public IActionResult GetAllProductReviews()
         {
             var reviews = _productReviewActions.GetAllProductReviewsAction();
@@ -33,6 +36,7 @@ namespace FloraBack.Api.Controller
         }
 
         [HttpGet("{productId}")]
+        [AllowAnonymous]
         public IActionResult GetProductReviewsByProductId(int productId)
         {
             var _reviews = _productReviewActions.GetProductReviewsByProductIdAction(productId);
@@ -41,6 +45,7 @@ namespace FloraBack.Api.Controller
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin")]
         public IActionResult DeleteProductReview(int id)
         {
             var wasDeleted = _productReviewActions.DeleteProductReviewAction(id);

@@ -15,7 +15,6 @@ namespace FloraBack.BusinessLogic.Core.Products
                 return db.Products
                     .Include(p => p.Images)
                     .Include(p => p.Category)
-                    .ThenInclude(c => c.SubCategories)
                     .Include(p => p.SubCategory)
                     .Include(p => p.Description)
                     .ToList();
@@ -29,7 +28,6 @@ namespace FloraBack.BusinessLogic.Core.Products
                 return db.Products
                     .Include(p => p.Images)
                     .Include(p => p.Category)
-                        .ThenInclude(c => c.SubCategories)
                     .Include(p => p.SubCategory)
                     .Include(p => p.Description)
                     .FirstOrDefault(p => p.Id == id);
@@ -43,7 +41,6 @@ namespace FloraBack.BusinessLogic.Core.Products
                 return db.Products
                     .Include(p => p.Images)
                     .Include(p => p.Category)
-                    .ThenInclude(c => c.SubCategories)
                     .Include(p => p.SubCategory)
                     .Include(p => p.Description)
                     .Where(p => p.CategoryId == categoryId)
@@ -58,7 +55,6 @@ namespace FloraBack.BusinessLogic.Core.Products
                 return db.Products
                     .Include(p => p.Images)
                     .Include(p => p.Category)
-                     .ThenInclude(c => c.SubCategories)
                     .Include(p => p.SubCategory)
                     .Include(p => p.Description)
                     .Where(p => p.SubCategoryId == subCategoryId)

@@ -10,6 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using FloraBack.BusinessLogic.Structure;
+using FloraBack.Domains.Enums;
 
 namespace FloraBack.BusinessLogic.Core.User
 {
@@ -62,6 +63,7 @@ namespace FloraBack.BusinessLogic.Core.User
                     CreatedAt = DateTime.Now,
                     UpdatedAt = DateTime.Now,
                     IsActive = true,
+                    //Role = UserRoles.Admin,
                 };
 
                 db.Users.Add(_newUser);

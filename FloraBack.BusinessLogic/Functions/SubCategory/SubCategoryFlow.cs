@@ -5,18 +5,11 @@ using FloraBack.Domains.Models.Category;
 
 namespace FloraBack.BusinessLogic.Functions.SubCategory
 {
-    public class SubCategoryFlow : ISubCategoryActions
+    public class SubCategoryFlow : SubCategoryActions, ISubCategoryActions
     {
-        private readonly SubCategoryActions _subCategoryActions;
-
-        public SubCategoryFlow()
+        public SubCategoryInfoDto CreateSubCategoryAction(SubCategoryCreateDto subCategory)
         {
-            _subCategoryActions = new SubCategoryActions();
-        }
-
-        public SubCategoryInfoDto CreateSubCategory(SubCategoryCreateDto subCategory)
-        {
-            var _subCategory = _subCategoryActions.ExecuteCreateSubCategoryAction(subCategory);
+            var _subCategory = ExecuteCreateSubCategoryAction(subCategory);
 
             if (_subCategory == null)
             {
@@ -26,27 +19,27 @@ namespace FloraBack.BusinessLogic.Functions.SubCategory
             return MapSubCategoryToInfoDto(_subCategory);
         }
 
-        public List<SubCategoryInfoDto> GetAllSubCategories()
+        public List<SubCategoryInfoDto> GetAllSubCategoriesAction()
         {
-            var _subCategories = _subCategoryActions.ExecuteGetAllSubCategoriesAction();
+            var _subCategories = ExecuteGetAllSubCategoriesAction();
 
             return _subCategories
                 .Select(subCategory => MapSubCategoryToInfoDto(subCategory))
                 .ToList();
         }
 
-        public List<SubCategoryInfoDto> GetSubCategoriesByCategoryId(int categoryId)
+        public List<SubCategoryInfoDto> GetSubCategoriesByCategoryIdAction(int categoryId)
         {
-            var _subCategories = _subCategoryActions.ExecuteGetSubCategoriesByCategoryIdAction(categoryId);
+            var _subCategories = ExecuteGetSubCategoriesByCategoryIdAction(categoryId);
 
             return _subCategories
                 .Select(subCategory => MapSubCategoryToInfoDto(subCategory))
                 .ToList();
         }
 
-        public SubCategoryInfoDto GetSubCategoryById(int id)
+        public SubCategoryInfoDto GetSubCategoryByIdAction(int id)
         {
-            var _subCategory = _subCategoryActions.ExecuteGetSubCategoryByIdAction(id);
+            var _subCategory = ExecuteGetSubCategoryByIdAction(id);
 
             if (_subCategory == null)
             {
@@ -56,9 +49,9 @@ namespace FloraBack.BusinessLogic.Functions.SubCategory
             return MapSubCategoryToInfoDto(_subCategory);
         }
 
-        public SubCategoryInfoDto UpdateSubCategory(int id, SubCategoryCreateDto subCategory)
+        public SubCategoryInfoDto UpdateSubCategoryAction(int id, SubCategoryCreateDto subCategory)
         {
-            var _subCategory = _subCategoryActions.ExecuteUpdateSubCategoryAction(id, subCategory);
+            var _subCategory = ExecuteUpdateSubCategoryAction(id, subCategory);
 
             if (_subCategory == null)
             {
@@ -68,9 +61,9 @@ namespace FloraBack.BusinessLogic.Functions.SubCategory
             return MapSubCategoryToInfoDto(_subCategory);
         }
 
-        public bool DeleteSubCategory(int id)
+        public bool DeleteSubCategoryAction(int id)
         {
-            return _subCategoryActions.ExecuteDeleteSubCategoryAction(id);
+            return ExecuteDeleteSubCategoryAction(id);
         }
 
         private SubCategoryInfoDto MapSubCategoryToInfoDto(SubCategoryData subCategory)

@@ -4,16 +4,16 @@ namespace FloraBack.BusinessLogic.Interface
 {
     public interface ISubCategoryActions
     {
-        SubCategoryInfoDto CreateSubCategory(SubCategoryCreateDto subCategory);
+        SubCategoryInfoDto CreateSubCategoryAction(SubCategoryCreateDto subCategory);
 
-        List<SubCategoryInfoDto> GetAllSubCategories();
+        List<SubCategoryInfoDto> GetAllSubCategoriesAction();
 
-        List<SubCategoryInfoDto> GetSubCategoriesByCategoryId(int categoryId);
+        List<SubCategoryInfoDto> GetSubCategoriesByCategoryIdAction(int categoryId);
 
-        SubCategoryInfoDto GetSubCategoryById(int id);
+        SubCategoryInfoDto GetSubCategoryByIdAction(int id);
 
-        SubCategoryInfoDto UpdateSubCategory(int id, SubCategoryCreateDto subCategory);
+        SubCategoryInfoDto UpdateSubCategoryAction(int id, SubCategoryCreateDto subCategory);
 
-        bool DeleteSubCategory(int id);
+        bool DeleteSubCategoryAction(int id);
     }
 }

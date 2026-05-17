@@ -8,7 +8,5 @@ namespace FloraBack.Domains.Models.Category
         public int Id { get; set; }
 
         public string Name { get; set; } = string.Empty;
-
-        public List<SubCategoryInfoDto> SubCategories { get; set; } = new();
     }
 }

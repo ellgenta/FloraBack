@@ -31,9 +31,7 @@ namespace FloraBack.BusinessLogic.Core.Category
 
             using (var db = new AppDbContext())
             {
-                _categories = db.Categories
-                    .Include(c => c.SubCategories)
-                    .ToList();
+                _categories = db.Categories.Include(c => c.SubCategories).ToList();
             }
 
             return _categories;
@@ -45,9 +43,7 @@ namespace FloraBack.BusinessLogic.Core.Category
 
             using (var db = new AppDbContext())
             {
-                _category = db.Categories
-                    .Include(c => c.SubCategories)
-                    .FirstOrDefault(c => c.Id == id);
+                _category = db.Categories.Include(c => c.SubCategories).FirstOrDefault(c => c.Id == id);
             }
 
             return _category;
@@ -59,8 +55,7 @@ namespace FloraBack.BusinessLogic.Core.Category
 
             using (var db = new AppDbContext())
             {
-                _category = db.Categories
-                    .FirstOrDefault(c => c.Id == id);
+                _category = db.Categories.FirstOrDefault(c => c.Id == id);
 
                 if (_category == null)
                 {
@@ -81,10 +76,7 @@ namespace FloraBack.BusinessLogic.Core.Category
         {
             using (var db = new AppDbContext())
             {
-                var _category = db.Categories
-                    .Include(c => c.SubCategories)
-                    .Include(c => c.Products)
-                    .FirstOrDefault(c => c.Id == id);
+                var _category = db.Categories.Include(c => c.SubCategories).Include(c => c.Products).FirstOrDefault(c => c.Id == id);
 
                 if (_category == null)
                 {

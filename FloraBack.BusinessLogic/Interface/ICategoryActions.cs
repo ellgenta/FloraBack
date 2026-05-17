@@ -4,14 +4,14 @@ namespace FloraBack.BusinessLogic.Interface
 {
     public interface ICategoryActions
     {
-        CategoryInfoDto CreateCategory(CategoryCreateDto category);
+        CategoryInfoDto CreateCategoryAction(CategoryCreateDto category);
 
-        List<CategoryInfoDto> GetAllCategories();
+        List<CategoryInfoDto> GetAllCategoriesAction();
 
-        CategoryInfoDto GetCategoryById(int id);
+        CategoryInfoDto GetCategoryByIdAction(int id);
 
-        CategoryInfoDto UpdateCategory(int id, CategoryCreateDto category);
+        CategoryInfoDto UpdateCategoryAction(int id, CategoryCreateDto category);
 
-        bool DeleteCategory(int id);
+        bool DeleteCategoryAction(int id);
     }
 }

@@ -1,5 +1,7 @@
-﻿using BusinessLogicFactory = FloraBack.BusinessLogic.BusinessLogic;
+﻿using FloraBack.BusinessLogic.Core.Category;
+using FloraBack.BusinessLogic.Interface;
 using FloraBack.Domains.Models.Category;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FloraBack.Api.Controller
@@ -8,19 +10,19 @@ namespace FloraBack.Api.Controller
     [Route("api/[controller]")]
     public class SubCategoryController : ControllerBase
     {
-        private readonly BusinessLogicFactory _businessLogic;
+        private ISubCategoryActions _subCategoryActions;
 
         public SubCategoryController()
         {
-            _businessLogic = new BusinessLogicFactory();
+            var bl = new BusinessLogic.BusinessLogic();
+            _subCategoryActions = bl.GetSubCategoryActions();
         }
 
         [HttpPost("create")]
+        [Authorize(Roles = "Admin")]
         public IActionResult CreateSubCategory([FromBody] SubCategoryCreateDto subCategory)
         {
-            var _createdSubCategory = _businessLogic
-                .GetSubCategoryActions()
-                .CreateSubCategory(subCategory);
+            var _createdSubCategory = _subCategoryActions.CreateSubCategoryAction(subCategory);
 
             if (_createdSubCategory == null)
             {
@@ -31,21 +33,19 @@ namespace FloraBack.Api.Controller
         }
 
         [HttpGet("all")]
+        [Authorize(Roles = "Admin")]
         public IActionResult GetAllSubCategories()
         {
-            var _subCategories = _businessLogic
-                .GetSubCategoryActions()
-                .GetAllSubCategories();
+            var _subCategories = _subCategoryActions.GetAllSubCategoriesAction();
 
             return Ok(_subCategories);
         }
 
         [HttpGet("{id}")]
+        [AllowAnonymous]
         public IActionResult GetSubCategoryById(int id)
         {
-            var _subCategory = _businessLogic
-                .GetSubCategoryActions()
-                .GetSubCategoryById(id);
+            var _subCategory = _subCategoryActions.GetSubCategoryByIdAction(id);
 
             if (_subCategory == null)
             {
@@ -56,21 +56,19 @@ namespace FloraBack.Api.Controller
         }
 
         [HttpGet("category/{categoryId}")]
+        [AllowAnonymous]
         public IActionResult GetSubCategoriesByCategoryId(int categoryId)
         {
-            var _subCategories = _businessLogic
-                .GetSubCategoryActions()
-                .GetSubCategoriesByCategoryId(categoryId);
+            var _subCategories = _subCategoryActions.GetSubCategoriesByCategoryIdAction(categoryId);
 
             return Ok(_subCategories);
         }
 
         [HttpPut("update/{id}")]
+        [Authorize(Roles = "Admin")]
         public IActionResult UpdateSubCategory(int id, [FromBody] SubCategoryCreateDto subCategory)
         {
-            var _updatedSubCategory = _businessLogic
-                .GetSubCategoryActions()
-                .UpdateSubCategory(id, subCategory);
+            var _updatedSubCategory = _subCategoryActions.UpdateSubCategoryAction(id, subCategory);
 
             if (_updatedSubCategory == null)
             {
@@ -81,11 +79,10 @@ namespace FloraBack.Api.Controller
         }
 
         [HttpDelete("delete/{id}")]
+        [Authorize(Roles = "Admin")]
         public IActionResult DeleteSubCategory(int id)
         {
-            var _isDeleted = _businessLogic
-                .GetSubCategoryActions()
-                .DeleteSubCategory(id);
+            var _isDeleted = _subCategoryActions.DeleteSubCategoryAction(id);
 
             if (!_isDeleted)
             {

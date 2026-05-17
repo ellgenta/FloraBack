@@ -106,14 +106,6 @@ namespace FloraBack.BusinessLogic.Functions.Products
                 {
                     Id = product.Category.Id,
                     Name = product.Category.Name,
-                    SubCategories = product.Category.SubCategories != null
-                        ? product.Category.SubCategories.Select(subCategory => new SubCategoryInfoDto()
-                        {
-                            Id = subCategory.Id,
-                            Name = subCategory.Name,
-                            CategoryId = subCategory.CategoryId
-                        }).ToList()
-                        : new List<SubCategoryInfoDto>()
                 } : null,
 
                 SubCategory = product.SubCategory != null ? new SubCategoryInfoDto()

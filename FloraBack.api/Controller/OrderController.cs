@@ -1,7 +1,8 @@
 ﻿using FloraBack.BusinessLogic.Interface;
 using FloraBack.Domains.Entities.Order;
-using FloraBack.Domains.Models.Order;
 using FloraBack.Domains.Enums;
+using FloraBack.Domains.Models.Order;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -20,6 +21,7 @@ namespace FloraBack.Api.Controller
         }
 
         [HttpGet("all")]
+        [Authorize]
         public IActionResult GetAllOrders()
         {
             var orders = _orderActions.GetAllOrdersAction();
@@ -28,6 +30,7 @@ namespace FloraBack.Api.Controller
         }
 
         [HttpGet("{userId}/all")]
+        [Authorize]
         public IActionResult GetUserOrdersById(int userId)
         {
             var _orders = _orderActions.GetUserOrdersByIdAction(userId);
@@ -35,6 +38,7 @@ namespace FloraBack.Api.Controller
         }
 
         [HttpGet("{id}")]
+        [Authorize]
         public IActionResult GetOrderById(int id)
         {
             var _order = _orderActions.GetOrderByIdAction(id);
@@ -48,6 +52,7 @@ namespace FloraBack.Api.Controller
         }
 
         [HttpPut("{id}/status")]
+        [Authorize(Roles = "Admin")]
         public IActionResult UpdateOrderStatus(int id, OrderStatus newStatus)
         {
             var _order = _orderActions.UpdateOrderStatusAction(id, newStatus);
@@ -61,6 +66,7 @@ namespace FloraBack.Api.Controller
         }
 
         [HttpPost]
+        [Authorize]
         public IActionResult CreateOrder([FromBody] OrderCreateDto order)
         {
             var _order = _orderActions.CreateOrderAction(order);

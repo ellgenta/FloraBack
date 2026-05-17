@@ -5,34 +5,27 @@ using FloraBack.Domains.Models.Category;
 
 namespace FloraBack.BusinessLogic.Functions.Category
 {
-    public class CategoryFlow : ICategoryActions
+    public class CategoryFlow : CategoryActions, ICategoryActions
     {
-        private readonly CategoryActions _categoryActions;
-
-        public CategoryFlow()
+        public CategoryInfoDto CreateCategoryAction(CategoryCreateDto category)
         {
-            _categoryActions = new CategoryActions();
-        }
-
-        public CategoryInfoDto CreateCategory(CategoryCreateDto category)
-        {
-            var _category = _categoryActions.ExecuteCreateCategoryAction(category);
+            var _category = ExecuteCreateCategoryAction(category);
 
             return MapCategoryToInfoDto(_category);
         }
 
-        public List<CategoryInfoDto> GetAllCategories()
+        public List<CategoryInfoDto> GetAllCategoriesAction()
         {
-            var _categories = _categoryActions.ExecuteGetAllCategoriesAction();
+            var _categories = ExecuteGetAllCategoriesAction();
 
             return _categories
                 .Select(category => MapCategoryToInfoDto(category))
                 .ToList();
         }
 
-        public CategoryInfoDto GetCategoryById(int id)
+        public CategoryInfoDto GetCategoryByIdAction(int id)
         {
-            var _category = _categoryActions.ExecuteGetCategoryByIdAction(id);
+            var _category = ExecuteGetCategoryByIdAction(id);
 
             if (_category == null)
             {
@@ -42,9 +35,9 @@ namespace FloraBack.BusinessLogic.Functions.Category
             return MapCategoryToInfoDto(_category);
         }
 
-        public CategoryInfoDto UpdateCategory(int id, CategoryCreateDto category)
+        public CategoryInfoDto UpdateCategoryAction(int id, CategoryCreateDto category)
         {
-            var _category = _categoryActions.ExecuteUpdateCategoryAction(id, category);
+            var _category = ExecuteUpdateCategoryAction(id, category);
 
             if (_category == null)
             {
@@ -54,9 +47,9 @@ namespace FloraBack.BusinessLogic.Functions.Category
             return MapCategoryToInfoDto(_category);
         }
 
-        public bool DeleteCategory(int id)
+        public bool DeleteCategoryAction(int id)
         {
-            return _categoryActions.ExecuteDeleteCategoryAction(id);
+            return ExecuteDeleteCategoryAction(id);
         }
 
         private CategoryInfoDto MapCategoryToInfoDto(CategoryData category)
@@ -65,14 +58,6 @@ namespace FloraBack.BusinessLogic.Functions.Category
             {
                 Id = category.Id,
                 Name = category.Name,
-                SubCategories = category.SubCategories
-                    .Select(subCategory => new SubCategoryInfoDto()
-                    {
-                        Id = subCategory.Id,
-                        Name = subCategory.Name,
-                        CategoryId = subCategory.CategoryId
-                    })
-                    .ToList()
             };
         }
     }

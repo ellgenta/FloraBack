@@ -2,6 +2,7 @@
 using FloraBack.BusinessLogic.Interface;
 using FloraBack.Domains.Entities.SiteReview;
 using FloraBack.Domains.Models.SiteReview;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FloraBack.Api.Controller
@@ -19,6 +20,7 @@ namespace FloraBack.Api.Controller
         }
 
         [HttpPost]
+        [Authorize]
         public IActionResult CreateSiteReview([FromBody] SiteReviewCreateDto review)
         {
             var _newReview = _siteReviewActions.CreateSiteReviewAction(review);
@@ -27,6 +29,7 @@ namespace FloraBack.Api.Controller
         }
 
         [HttpGet("all")]
+        [AllowAnonymous]
         public IActionResult GetAllSiteReviews()
         {
             var _reviews = _siteReviewActions.GetAllSiteReviewsAction();
@@ -35,6 +38,7 @@ namespace FloraBack.Api.Controller
         }
 
         [HttpDelete]
+        [Authorize(Roles = "Admin")]
         public IActionResult DeleteSiteReview(int id)
         {
             var wasDeleted = _siteReviewActions.DeleteSiteReviewAction(id);

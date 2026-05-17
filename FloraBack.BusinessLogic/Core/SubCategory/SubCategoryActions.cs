@@ -37,9 +37,7 @@ namespace FloraBack.BusinessLogic.Core.SubCategory
         {
             using (var db = new AppDbContext())
             {
-                return db.SubCategories
-                    .Include(sc => sc.Category)
-                    .ToList();
+                return db.SubCategories.Include(sc => sc.Category).ToList();
             }
         }
 
@@ -47,10 +45,7 @@ namespace FloraBack.BusinessLogic.Core.SubCategory
         {
             using (var db = new AppDbContext())
             {
-                return db.SubCategories
-                    .Include(sc => sc.Category)
-                    .Where(sc => sc.CategoryId == categoryId)
-                    .ToList();
+                return db.SubCategories.Include(sc => sc.Category).Where(sc => sc.CategoryId == categoryId).ToList();
             }
         }
 
@@ -58,9 +53,7 @@ namespace FloraBack.BusinessLogic.Core.SubCategory
         {
             using (var db = new AppDbContext())
             {
-                return db.SubCategories
-                    .Include(sc => sc.Category)
-                    .FirstOrDefault(sc => sc.Id == id);
+                return db.SubCategories.Include(sc => sc.Category).FirstOrDefault(sc => sc.Id == id);
             }
         }
 
@@ -68,8 +61,7 @@ namespace FloraBack.BusinessLogic.Core.SubCategory
         {
             using (var db = new AppDbContext())
             {
-                var _subCategory = db.SubCategories
-                    .FirstOrDefault(sc => sc.Id == id);
+                var _subCategory = db.SubCategories.FirstOrDefault(sc => sc.Id == id);
 
                 if (_subCategory == null)
                 {
@@ -98,9 +90,7 @@ namespace FloraBack.BusinessLogic.Core.SubCategory
         {
             using (var db = new AppDbContext())
             {
-                var _subCategory = db.SubCategories
-                    .Include(sc => sc.Products)
-                    .FirstOrDefault(sc => sc.Id == id);
+                var _subCategory = db.SubCategories.Include(sc => sc.Products).FirstOrDefault(sc => sc.Id == id);
 
                 if (_subCategory == null)
                 {

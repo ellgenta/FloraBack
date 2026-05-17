@@ -1,7 +1,7 @@
 ﻿using FloraBack.BusinessLogic.Interface;
 using FloraBack.Domains.Models.Auth;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace FloraBack.Api.Controller
 {
@@ -18,6 +18,7 @@ namespace FloraBack.Api.Controller
         }
 
         [HttpPost("login")]
+        [AllowAnonymous]
         public IActionResult UserLogin([FromBody] UserLoginData data)
         {
             var _authStatus = _authActions.UserLoginAction(data);
@@ -31,6 +32,7 @@ namespace FloraBack.Api.Controller
         }
 
         [HttpPost("register")]
+        [AllowAnonymous]
         public IActionResult UserRegister([FromBody] UserRegisterData registerData)
         {
             var user = _authActions.UserRegisterAction(registerData);
