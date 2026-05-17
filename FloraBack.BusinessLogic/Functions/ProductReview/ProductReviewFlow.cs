@@ -7,26 +7,18 @@ namespace FloraBack.BusinessLogic.Functions.ProductReview
 {
     public class ProductReviewFlow : ProductReviewActions, IProductReviewActions
     {
-        public ProductReviewDto CreateProductReviewAction(ProductReviewDto review)
+        public ProductReviewInfoDto CreateProductReviewAction(ProductReviewCreateDto review)
         {
-            var reviewData = new ProductReviewData()
-            {
-                UserId = review.UserId,
-                ProductId = review.ProductId,
-                Content = review.Content,
-                Mark = review.Mark
-            };
-
-            var newReview = ExecuteCreateProductReviewAction(reviewData);
+            var newReview = ExecuteCreateProductReviewAction(review);
 
             return MapToDto(newReview);
         }
 
-        public List<ProductReviewDto> GetAllProductReviewsAction()
+        public List<ProductReviewInfoDto> GetAllProductReviewsAction()
         {
             var reviews = ExecuteGetAllProductReviewsAction();
 
-            var dtoList = new List<ProductReviewDto>();
+            var dtoList = new List<ProductReviewInfoDto>();
 
             foreach (var review in reviews)
             {
@@ -36,11 +28,11 @@ namespace FloraBack.BusinessLogic.Functions.ProductReview
             return dtoList;
         }
 
-        public List<ProductReviewDto> GetProductReviewsByProductIdAction(int productId)
+        public List<ProductReviewInfoDto> GetProductReviewsByProductIdAction(int productId)
         {
             var reviews = ExecuteGetProductReviewsByProductIdAction(productId);
 
-            var dtoList = new List<ProductReviewDto>();
+            var dtoList = new List<ProductReviewInfoDto>();
 
             foreach (var review in reviews)
             {
@@ -55,11 +47,12 @@ namespace FloraBack.BusinessLogic.Functions.ProductReview
             return ExecuteDeleteProductReviewAction(id);
         }
 
-        private ProductReviewDto MapToDto(ProductReviewData review)
+        private ProductReviewInfoDto MapToDto(ProductReviewData review)
         {
-            return new ProductReviewDto()
+            return new ProductReviewInfoDto()
             {
                 Id = review.Id,
+                AuthorName = review.User.UserName,
                 UserId = review.UserId,
                 ProductId = review.ProductId,
                 Content = review.Content,

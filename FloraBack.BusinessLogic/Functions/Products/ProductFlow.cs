@@ -83,6 +83,12 @@ namespace FloraBack.BusinessLogic.Functions.Products
             return MapToDto(updatedProduct);
         }
 
+        public List<ProductInfoDto> GetProductsByFilterAction(ProductFilterDto filter)
+        {
+            var productsData = ExecuteGetProductsByFilterAction(filter);
+            return productsData.Select(MapToDto).ToList();
+        }
+
         public bool DeleteProductAction(int id)
         {
             return ExecuteDeleteProductAction(id);

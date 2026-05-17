@@ -1,4 +1,5 @@
-﻿using FloraBack.Domains.Enums;
+﻿using FloraBack.Domains.Entities.Address;
+using FloraBack.Domains.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,8 +11,15 @@ namespace FloraBack.Domains.Models.User
     public class UserInfoDto
     {
         public int Id { get; set; }
+        
         public string UserName { get; set; }
+        
         public string Email { get; set; }
+        
         public GenderTypes Gender { get; set; }
+
+        public AddressData? DefaultAddress { get; set; }
+        
+        public PaymentMethods? DefaultPaymentMethod { get; set; }
     }
 }

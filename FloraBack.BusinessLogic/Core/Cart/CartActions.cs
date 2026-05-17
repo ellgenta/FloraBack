@@ -148,7 +148,7 @@ namespace FloraBack.BusinessLogic.Core.Cart
             {
                 var cart = db.Carts
                     .Include(c => c.Items)
-                    .FirstOrDefault(x => x.UserId == 1 && x.Status == CartStatus.Active);
+                    .FirstOrDefault(x => x.UserId == userId && x.Status == CartStatus.Active);
 
                 if (cart == null)
                 {

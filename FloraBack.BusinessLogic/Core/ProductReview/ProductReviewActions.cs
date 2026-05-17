@@ -1,38 +1,39 @@
 ﻿using FloraBack.Domains.Entities.ProductReview;
 using FloraBack.Domains.Models.ProductReview;
 using FloraBack.DataAccess.Context;
+using Microsoft.EntityFrameworkCore;
 
 
 namespace FloraBack.BusinessLogic.Core.ProductReview
 {
     public class ProductReviewActions
     {
-        public ProductReviewData ExecuteCreateProductReviewAction(ProductReviewData review)
+        public ProductReviewData ExecuteCreateProductReviewAction(ProductReviewCreateDto review)
         {
-            var _newReview = new ProductReviewData()
-            {
-                UserId = review.UserId,
-                ProductId = review.ProductId,
-                Content = review.Content,
-                Mark = review.Mark,
-                CreatedAt = DateTime.Now,
-                UpdatedAt = DateTime.Now,
-            };
-
             using (var db = new AppDbContext())
             {
+                var _newReview = new ProductReviewData()
+                {
+                    UserId = review.UserId,
+                    ProductId = review.ProductId,
+                    Content = review.Content,
+                    Mark = review.Mark,
+                    CreatedAt = DateTime.Now,
+                    UpdatedAt = DateTime.Now,
+                };
+            
                 db.ProductReviews.Add(_newReview);
                 db.SaveChanges();
-            }
 
-            return _newReview;
+                return db.ProductReviews.Include(r => r.User).FirstOrDefault(r => r.Id == _newReview.Id)!;
+            }
         }
 
         public List<ProductReviewData> ExecuteGetAllProductReviewsAction()
         {
             using (var db = new AppDbContext())
             {
-                return db.ProductReviews.ToList();
+                return db.ProductReviews.Include(p => p.User).ToList();
             }
         }
 
@@ -43,8 +44,7 @@ namespace FloraBack.BusinessLogic.Core.ProductReview
             using (var db = new AppDbContext())
             {
                 _productReviews = db.ProductReviews
-                    .Where(r => r.ProductId == productId)
-                    .ToList();
+                    .Where(r => r.ProductId == productId).Include(p => p.User).ToList();
             }
 
             return _productReviews;

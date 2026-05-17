@@ -19,7 +19,7 @@ namespace FloraBack.Api.Controller
 
         [HttpPost]
         [Authorize]
-        public IActionResult CreateProductReview([FromBody] ProductReviewDto review)
+        public IActionResult CreateProductReview([FromBody] ProductReviewCreateDto review)
         {
             var _newReview = _productReviewActions.CreateProductReviewAction(review);
 

@@ -119,6 +119,14 @@ namespace FloraBack.Api.Controller
             return Ok(updatedProduct);
         }
 
+        [HttpPost("filter")]
+        [AllowAnonymous]
+        public IActionResult GetProductsByFilter([FromBody] ProductFilterDto filter)
+        {
+            var products = _product.GetProductsByFilterAction(filter);
+            return Ok(products);
+        }
+
         [HttpDelete("delete/{id}")]
         [Authorize(Roles = "Admin")]
         public IActionResult DeleteProduct(int id)

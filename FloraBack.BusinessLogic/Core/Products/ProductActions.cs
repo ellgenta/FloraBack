@@ -168,6 +168,30 @@ namespace FloraBack.BusinessLogic.Core.Products
             }
         }
 
+        public List<ProductData> ExecuteGetProductsByFilterAction(ProductFilterDto filter)
+        {
+            using (var db = new AppDbContext())
+            {
+                var query = db.Products
+                    .Include(p => p.Images)
+                    .Include(p => p.Category)
+                    .Include(p => p.SubCategory)
+                    .Include(p => p.Description)
+                    .AsQueryable();
+
+                if (filter.SubCategoryIds != null && filter.SubCategoryIds.Count > 0)
+                {
+                    query = query.Where(p => filter.SubCategoryIds.Contains(p.SubCategoryId));
+                }
+                else if (filter.CategoryIds != null && filter.CategoryIds.Count > 0)
+                {
+                    query = query.Where(p => filter.CategoryIds.Contains(p.CategoryId));
+                }
+
+                return query.ToList();
+            }
+        }
+
         public bool ExecuteDeleteProductAction(int id)
         {
             using (var db = new AppDbContext())
