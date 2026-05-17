@@ -22,13 +22,16 @@ namespace FloraBack.Api.Controller
         public IActionResult UserLogin([FromBody] UserLoginData data)
         {
             var _authStatus = _authActions.UserLoginAction(data);
-
             if (!_authStatus.IsSuccess)
             {
                 return Unauthorized(_authStatus.Message);
             }
+            // Декодируй токен и посмотри userId
+            var handler = new System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler();
+            var jwt = handler.ReadJwtToken(_authStatus.Message);
+            var userId = jwt.Claims.FirstOrDefault(c => c.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier")?.Value;
 
-            return Ok(new { token = _authStatus.Message });
+            return Ok(new { token = _authStatus.Message, debugUserId = userId });
         }
 
         [HttpPost("register")]

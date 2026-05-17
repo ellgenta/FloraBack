@@ -63,7 +63,7 @@ namespace FloraBack.BusinessLogic.Core.User
                     CreatedAt = DateTime.Now,
                     UpdatedAt = DateTime.Now,
                     IsActive = true,
-                    //Role = UserRoles.Admin,
+                    Role = UserRoles.User,
                 };
 
                 db.Users.Add(_newUser);

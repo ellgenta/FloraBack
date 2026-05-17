@@ -7,9 +7,9 @@ namespace FloraBack.BusinessLogic.Functions.Cart
 {
     public class CartFlow : CartActions, ICartActions
     {
-        public CartDto? GetCartAction()
+        public CartDto? GetCartAction(int userId)
         {
-            var _cart = ExecuteGetCartAction();
+            var _cart = ExecuteGetCartAction(userId);
 
             if (_cart == null)
             {
@@ -19,11 +19,11 @@ namespace FloraBack.BusinessLogic.Functions.Cart
             return MapToDto(_cart);
         }
 
-        public CartDto? AddItemToCartAction(CartItemDto item)
+        public CartDto? AddItemToCartAction(int userId, CartItemDto item)
         {
             var cartItem = MapToData(item);
 
-            var _cart = ExecuteAddItemToCartAction(cartItem);
+            var _cart = ExecuteAddItemToCartAction(userId, cartItem);
 
             if (_cart == null)
             {
@@ -33,11 +33,11 @@ namespace FloraBack.BusinessLogic.Functions.Cart
             return MapToDto(_cart);
         }
 
-        public CartDto? UpdateCartItemAction(int itemId, CartItemDto item)
+        public CartDto? UpdateCartItemAction(int userId, int itemId, CartItemDto item)
         {
             var cartItem = MapToData(item);
 
-            var _cart = ExecuteUpdateCartItemAction(itemId, cartItem);
+            var _cart = ExecuteUpdateCartItemAction(userId, itemId, cartItem);
 
             if (_cart == null)
             {
@@ -47,14 +47,14 @@ namespace FloraBack.BusinessLogic.Functions.Cart
             return MapToDto(_cart);
         }
 
-        public bool DeleteCartItemAction(int itemId)
+        public bool DeleteCartItemAction(int userId,int itemId)
         {
-            return ExecuteDeleteCartItemAction(itemId);
+            return ExecuteDeleteCartItemAction(userId, itemId);
         }
 
-        public bool ClearCartAction()
+        public bool ClearCartAction(int userId)
         {
-            return ExecuteClearCartAction();
+            return ExecuteClearCartAction(userId);
         }
 
         private CartDto MapToDto(CartData cart)

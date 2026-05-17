@@ -2,6 +2,7 @@
 using FloraBack.Domains.Models.Cart;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace FloraBack.Api.Controller
 {
@@ -21,7 +22,9 @@ namespace FloraBack.Api.Controller
         [Authorize]
         public IActionResult GetCart()
         {
-            var cart = _cart.GetCartAction();
+            var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+
+            var cart = _cart.GetCartAction(userId);
 
             if (cart == null)
             {
@@ -35,6 +38,8 @@ namespace FloraBack.Api.Controller
         [Authorize]
         public IActionResult AddItemToCart([FromBody] CartItemDto item)
         {
+            var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+
             if (item == null)
             {
                 return BadRequest("Invalid cart item data");
@@ -55,7 +60,7 @@ namespace FloraBack.Api.Controller
                 return BadRequest("Unit price must be greater than 0");
             }
 
-            var updatedCart = _cart.AddItemToCartAction(item);
+            var updatedCart = _cart.AddItemToCartAction(userId, item);
 
             if (updatedCart == null)
             {
@@ -69,6 +74,8 @@ namespace FloraBack.Api.Controller
         [Authorize]
         public IActionResult UpdateCartItem(int itemId, [FromBody] CartItemDto item)
         {
+            var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+
             if (item == null)
             {
                 return BadRequest("Invalid cart item data");
@@ -84,7 +91,7 @@ namespace FloraBack.Api.Controller
                 return BadRequest("Unit price must be greater than 0");
             }
 
-            var updatedCart = _cart.UpdateCartItemAction(itemId, item);
+            var updatedCart = _cart.UpdateCartItemAction(userId, itemId, item);
 
             if (updatedCart == null)
             {
@@ -98,7 +105,9 @@ namespace FloraBack.Api.Controller
         [Authorize]
         public IActionResult DeleteCartItem(int itemId)
         {
-            var wasDeleted = _cart.DeleteCartItemAction(itemId);
+            var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+
+            var wasDeleted = _cart.DeleteCartItemAction(userId, itemId);
 
             if (!wasDeleted)
             {
@@ -112,7 +121,9 @@ namespace FloraBack.Api.Controller
         [Authorize]
         public IActionResult ClearCart()
         {
-            var wasCleared = _cart.ClearCartAction();
+            var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+
+            var wasCleared = _cart.ClearCartAction(userId);
 
             if (!wasCleared)
             {

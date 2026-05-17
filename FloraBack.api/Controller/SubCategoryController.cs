@@ -33,7 +33,7 @@ namespace FloraBack.Api.Controller
         }
 
         [HttpGet("all")]
-        [Authorize(Roles = "Admin")]
+        [AllowAnonymous]
         public IActionResult GetAllSubCategories()
         {
             var _subCategories = _subCategoryActions.GetAllSubCategoriesAction();

@@ -7,31 +7,35 @@ namespace FloraBack.BusinessLogic.Core.Cart
 {
     public class CartActions
     {
-        public CartData? ExecuteGetCartAction()
+        public CartData? ExecuteGetCartAction(int userId)
         {
             using (var db = new AppDbContext())
             {
                 var cart = db.Carts
                     .Include(c => c.Items)
-                    .FirstOrDefault(x => x.UserId == 1 && x.Status == CartStatus.Active);
+                    .FirstOrDefault(x => x.UserId == userId && x.Status == CartStatus.Active);
 
                 return cart;
             }
         }
 
-        public CartData? ExecuteAddItemToCartAction(CartItemData item)
+        public CartData? ExecuteAddItemToCartAction(int userId, CartItemData item)
         {
+            //Console.WriteLine($"AddItemToCart called with userId: {userId}");
             using (var db = new AppDbContext())
             {
                 var cart = db.Carts
-                    .Include(c => c.Items)
-                    .FirstOrDefault(x => x.UserId == 1 && x.Status == CartStatus.Active);
+            .Include(c => c.Items)
+            .FirstOrDefault(x => x.UserId == userId && x.Status == CartStatus.Active);
+
+                //Console.WriteLine($"Existing cart: {(cart == null ? "null" : cart.Id.ToString())}");
 
                 if (cart == null)
                 {
+                    //Console.WriteLine("Creating new cart...");
                     cart = new CartData()
                     {
-                        UserId = 1,
+                        UserId = userId,
                         Items = new List<CartItemData>(),
                         TotalPrice = 0,
                         Status = CartStatus.Active,
@@ -41,6 +45,7 @@ namespace FloraBack.BusinessLogic.Core.Cart
 
                     db.Carts.Add(cart);
                     db.SaveChanges();
+                    //Console.WriteLine($"New cart created with id: {cart.Id}");
                 }
 
                 var existingItem = cart.Items.FirstOrDefault(x => x.ProductId == item.ProductId);
@@ -73,13 +78,13 @@ namespace FloraBack.BusinessLogic.Core.Cart
             }
         }
 
-        public CartData? ExecuteUpdateCartItemAction(int itemId, CartItemData item)
+        public CartData? ExecuteUpdateCartItemAction(int userId, int itemId, CartItemData item)
         {
             using (var db = new AppDbContext())
             {
                 var cart = db.Carts
                     .Include(c => c.Items)
-                    .FirstOrDefault(x => x.UserId == 1 && x.Status == CartStatus.Active);
+                    .FirstOrDefault(x => x.UserId == userId && x.Status == CartStatus.Active);
 
                 if (cart == null)
                 {
@@ -106,13 +111,14 @@ namespace FloraBack.BusinessLogic.Core.Cart
             }
         }
 
-        public bool ExecuteDeleteCartItemAction(int itemId)
+        public bool ExecuteDeleteCartItemAction(int userId, int itemId)
         {
+            //Console.WriteLine($"DeleteCartItem called with userId: {userId}, itemId: {itemId}");
             using (var db = new AppDbContext())
             {
                 var cart = db.Carts
                     .Include(c => c.Items)
-                    .FirstOrDefault(x => x.UserId == 1 && x.Status == CartStatus.Active);
+                    .FirstOrDefault(x => x.UserId == userId && x.Status == CartStatus.Active);
 
                 if (cart == null)
                 {
@@ -136,7 +142,7 @@ namespace FloraBack.BusinessLogic.Core.Cart
             }
         }
 
-        public bool ExecuteClearCartAction()
+        public bool ExecuteClearCartAction(int userId)
         {
             using (var db = new AppDbContext())
             {
