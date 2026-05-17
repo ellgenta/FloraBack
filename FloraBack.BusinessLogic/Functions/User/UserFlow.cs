@@ -28,6 +28,7 @@ namespace FloraBack.BusinessLogic.Functions.User
                     Gender = _user.Gender,
                     DefaultAddress = _user.DefaultAddress,
                     DefaultPaymentMethod = _user.DefaultPaymentMethod,
+                    Role = _user.Role,
                 };
 
                 _DtoList.Add(_userDto);
@@ -53,6 +54,7 @@ namespace FloraBack.BusinessLogic.Functions.User
                 Gender = _user.Gender,
                 DefaultAddress = _user.DefaultAddress,
                 DefaultPaymentMethod = _user.DefaultPaymentMethod,
+                Role = _user.Role,
             };
 
             return _userDto;
@@ -75,6 +77,7 @@ namespace FloraBack.BusinessLogic.Functions.User
                 Gender = _user.Gender,
                 DefaultAddress = _user.DefaultAddress,
                 DefaultPaymentMethod = _user.DefaultPaymentMethod,
+                Role = _user.Role,
             };
 
             return _userDto;
@@ -103,6 +106,7 @@ namespace FloraBack.BusinessLogic.Functions.User
                 Gender = _user.Gender,
                 DefaultAddress = _user.DefaultAddress,
                 DefaultPaymentMethod = _user.DefaultPaymentMethod,
+                Role = _user.Role,
             };
 
             return _userDto;

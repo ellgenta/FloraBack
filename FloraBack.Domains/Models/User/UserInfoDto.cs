@@ -21,5 +21,7 @@ namespace FloraBack.Domains.Models.User
         public AddressData? DefaultAddress { get; set; }
         
         public PaymentMethods? DefaultPaymentMethod { get; set; }
+
+        public UserRoles Role { get; set; }
     }
 }
